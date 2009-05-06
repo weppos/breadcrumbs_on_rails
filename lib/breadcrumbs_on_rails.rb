@@ -14,6 +14,8 @@
 #++
 
 
+require 'breadcrumbs_on_rails/controller_mixin'
+require 'breadcrumbs_on_rails/breadcrumbs'
 require 'breadcrumbs_on_rails/version'
 
 
@@ -21,6 +23,6 @@ module BreadcrumbsOnRails
   
   NAME            = 'Breadcrumbs on Rails'
   GEM             = 'breadcrumbs_on_rails'
-  AUTHOR          = 'Simone Carletti <weppos@weppos.net>'
+  AUTHORS         = ['Simone Carletti <weppos@weppos.net>']
   
 end
