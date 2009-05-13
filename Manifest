@@ -1,0 +1,16 @@
+CHANGELOG.rdoc
+init.rb
+install.rb
+lib/breadcrumbs_on_rails/breadcrumbs.rb
+lib/breadcrumbs_on_rails/controller_mixin.rb
+lib/breadcrumbs_on_rails/version.rb
+lib/breadcrumbs_on_rails.rb
+LICENSE.rdoc
+rails/init.rb
+Rakefile
+README.rdoc
+tasks/tabs_on_rails_tasks.rake
+test/breadcrumbs_on_rails_test.rb
+test/test_helper.rb
+uninstall.rb
+Manifest
