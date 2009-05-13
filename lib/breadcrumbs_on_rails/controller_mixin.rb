@@ -42,7 +42,7 @@ module BreadcrumbsOnRails
       protected
 
       def add_breadcrumb(name, path)
-        self.breadcrumbs << Breadcrumb::Element.new(name, path)
+        self.breadcrumbs << Breadcrumbs::Element.new(name, path)
       end
 
       def breadcrumbs

@@ -1,37 +1,39 @@
 require 'test_helper'
 
-class BuilderTemplate
-  include ActionView::Helpers::TagHelper
-
-  def url_for(params)
-    "http://localhost?" + params.to_param
-  end
-
-  protected
-
-    def method_for_name
-      "name from symbol"
-    end
-
-    def proc_for_name
-      "name from proc"
-    end
-
-    def method_for_path
-      "http://localhost/#symbol"
-    end
-
-    def proc_for_path
-      "http://localhost/#proc"
-    end
-
-end
-
 
 class BuilderTest < ActiveSupport::TestCase
 
+  class TestTemplate
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::UrlHelper
+
+    def url_for(params)
+      "http://localhost?" + params.to_param
+    end
+
+    protected
+
+      def method_for_name
+        "name from symbol"
+      end
+
+      def proc_for_name
+        "name from proc"
+      end
+
+      def method_for_path
+        "http://localhost/#symbol"
+      end
+
+      def proc_for_path
+        "http://localhost/#proc"
+      end
+
+  end
+  
+
   def setup
-    @template = BuilderTemplate.new
+    @template = TestTemplate.new
     @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil)
   end
 
