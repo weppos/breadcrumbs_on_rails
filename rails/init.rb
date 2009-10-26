@@ -2,4 +2,4 @@ require 'breadcrumbs_on_rails'
 
 ActionController::Base.send :include, BreadcrumbsOnRails::ControllerMixin
 
-RAILS_DEFAULT_LOGGER.info("** BreadcrumbsOnRails: initialized properly")
+RAILS_DEFAULT_LOGGER.info("** BreadcrumbsOnRails: initialized properly") if defined?(RAILS_DEFAULT_LOGGER)

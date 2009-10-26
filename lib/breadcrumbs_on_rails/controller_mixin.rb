@@ -90,9 +90,14 @@ module BreadcrumbsOnRails
 
     module HelperMethods
 
-      def render_breadcrumbs(options = {})
+      def render_breadcrumbs(options = {}, &block)
         builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
-        builder.render
+        content = builder.render
+        if block_given?
+          concat(capture(content, &block))
+        else
+          content
+        end
       end  
       
     end
