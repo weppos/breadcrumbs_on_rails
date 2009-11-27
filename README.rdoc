@@ -19,7 +19,7 @@ Note. This documentation file is a work in progress. Please be patient.
 This is the preferred way to install BreadcrumbsOnRails and the best way if you want install a stable version.
 The GEM is hosted on {Gemcutter}[http://gemcutter.org/gems/tabs_on_rails].
 
-  $ gem install breadcrumbs_on_rails --source http://gemcutter.org/
+  $ gem install breadcrumbs_on_rails --source http://gemcutter.org
 
 With Rails >= 2.2, you can specify the GEM dependency in your environment.rb file so that Rails will automatically check the requirement on startup.
 
@@ -28,7 +28,7 @@ With Rails >= 2.2, you can specify the GEM dependency in your environment.rb fil
     # other configurations
     # ...
     
-    config.gem "breadcrumbs_on_rails", :source => "http://gemcutter.org/"
+    config.gem "breadcrumbs_on_rails", :source => "http://gemcutter.org"
     
   end
 
@@ -52,13 +52,13 @@ For the full documentation, development roadmap and more information please visi
 
 == Credits
 
-Author:: {Simone Carletti}[http://www.simonecarletti.com/] <weppos@weppos.net>
+Author:: {Simone Carletti}[http://www.simonecarletti.com] <weppos@weppos.net>
 
 
 == Resources
 
 * {Homepage}[http://code.simonecarletti.com/breadonrails]
-* {GitHub}[http://github.com/weppos/breadcrumbs_on_rails/]
+* {GitHub}[http://github.com/weppos/breadcrumbs_on_rails]
 
 
 == License
