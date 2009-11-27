@@ -1,6 +1,11 @@
 = Changelog
 
 
+== Release 0.2.0
+
+* Releasing the library as open source project.
+
+
 == Release 0.1.1
 
 * ADDED: documentation file.
