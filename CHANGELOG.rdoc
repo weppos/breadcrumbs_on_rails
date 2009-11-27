@@ -1,7 +1,7 @@
 = Changelog
 
 
-== next maintenance
+== Release 0.1.1
 
 * ADDED: documentation file.
 
