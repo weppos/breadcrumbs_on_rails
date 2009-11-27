@@ -65,7 +65,7 @@ In your view, you can render the breadcrumb menu with the <tt>render_breadcrumbs
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>untitled</title>
   </head>
-
+  
   <body>
     <%= render_breadcrumbs %>
   </body>
@@ -95,7 +95,7 @@ When you call <tt>add_breadcrumb</tt>, the method automatically creates a new <t
 If the value is a Symbol, the library calls the corresponding method defined in the same context the and sets the <tt>Element</tt> attribute to the returned value.
 
   class MyController
-
+    
     # The Name is set to the value returned by
     # the :root_name method.
     add_breadcrumb :root_name, root_path
@@ -112,25 +112,25 @@ If the value is a Symbol, the library calls the corresponding method defined in 
 
 If the value is a Proc, the library calls the proc passing the current view context as argument and sets the <tt>Element</tt> attribute to the returned value. This is useful if you want to postpone the execution to get access to some special methods/variables created in your controller action.
 
-class MyController
+  class MyController
 
-  # The Name is set to the value returned by
-  # the :root_name method.
-  add_breadcrumb Proc.new { |c| c.my_helper_method },
-                 root_path
+    # The Name is set to the value returned by
+    # the :root_name method.
+    add_breadcrumb Proc.new { |c| c.my_helper_method },
+                   root_path
   
-end
+  end
 
 ==== String
 
 If the value is a Proc, the library sets the <tt>Element</tt> attribute to the string value.
 
   class MyController
-
+    
     # The Name is set to the value returned by
     # the :root_name method.
     add_breadcrumb "homepage", "http://example.com/"
-  
+    
   end
 
 
@@ -145,10 +145,10 @@ Taking advantage of Rails filter options, you can restrict a tab to a selected g
     add_breadcrumb "admin", admin_path
     add_breadcrumb "posts, posts_path, :only => %w(index show)
   end
-
+  
   class ApplicationController < ActionController::Base
     add_breadcrumb "admin", admin_path, :if => :admin_controller?
-
+    
     def admin_controller?
       self.class.name =~ /^Admin(::|Controller)/
     end
@@ -167,7 +167,7 @@ For example, if you want to localize your menu, define a new breadcrumbs node in
       first: First
       second: Second
       third: Third
-
+  
   # config/locales/it.yml
   it:
     breadcrumbs:
@@ -183,7 +183,7 @@ In your controller, use the <tt>I18n.t</tt> method.
     add_breadcrumb I18n.t("breadcrumbs.second"), second_path, :only => %w(second)
     add_breadcrumb I18n.t("breadcrumbs.third"), third_path, :only => %w(third)
   end
-
+  
   class ApplicationController < ActionController::Base
     add_breadcrumb I18n.t("breadcrumbs.homepage"), root_path
   end
