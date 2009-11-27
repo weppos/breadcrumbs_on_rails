@@ -1,8 +1,11 @@
 = Changelog
 
+
 == next maintenance
 
 * CHANGED: run test against Rails ~> 2.3.0 but ensure compatibility with Rails 2.2.x.
+
+* CHANGED: Removed BUILD and STATUS constants. Added Version::ALPHA constant to be used when I need to package prereleases (see RubyGem --prerelease flag).
 
 
 == Release 0.1.0
