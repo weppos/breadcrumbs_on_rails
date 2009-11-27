@@ -1,2 +1,67 @@
 = Breadcrumbs On Rails
 
+BreadcrumbsOnRails is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project.
+It provides helpers for creating navigation elements with a flexible interface.
+
+Note. This documentation file is a work in progress. Please be patient.
+
+
+== Requirements
+
+* Ruby >= 1.8.6
+* Rails >= 2.2
+
+
+== Rails Installation
+
+=== As a Gem
+
+This is the preferred way to install BreadcrumbsOnRails and the best way if you want install a stable version.
+The GEM is hosted on {Gemcutter}[http://gemcutter.org/gems/tabs_on_rails].
+
+  $ gem install breadcrumbs_on_rails --source http://gemcutter.org/
+
+With Rails >= 2.2, you can specify the GEM dependency in your environment.rb file so that Rails will automatically check the requirement on startup.
+
+  Rails::Initializer.run do |config|
+    
+    # other configurations
+    # ...
+    
+    config.gem "breadcrumbs_on_rails", :source => "http://gemcutter.org/"
+    
+  end
+
+=== As a Plugin
+
+This is the preferred way if you want to live on the edge and install a development version.
+
+  $ script/plugin install git://github.com/weppos/breadcrumbs_on_rails.git
+
+
+== Usage
+
+...
+
+
+== Documentation
+
+The library is still under development and this README file might not be contain the latest changes.
+For the full documentation, development roadmap and more information please visit the {project page}[http://code.simonecarletti.com/wiki/breadonrails].
+
+
+== Credits
+
+Author:: {Simone Carletti}[http://www.simonecarletti.com/] <weppos@weppos.net>
+
+
+== Resources
+
+* {Homepage}[http://code.simonecarletti.com/breadonrails]
+* {GitHub}[http://github.com/weppos/breadcrumbs_on_rails/]
+
+
+== License
+
+Copyright (c) 2009 Simone Carletti, BreadcrumbsOnRails is released under the MIT license.
+
