@@ -85,11 +85,10 @@ A breadcrumbs menu is composed by a number of <tt>Element</tt> objects. Each obj
 
 When you call <tt>add_breadcrumb</tt>, the method automatically creates a new <tt>Element</tt> object for you and append it to the breadcrumbs stack. <tt>Element</tt> name and path can be one of the following Ruby types:
 
-<ul>
-  <li>Symbol</li>
-  <li>Proc</li>
-  <li>String</li>
-</ul>
+* Symbol
+* Proc
+* String
+
 
 ==== Symbol
 
