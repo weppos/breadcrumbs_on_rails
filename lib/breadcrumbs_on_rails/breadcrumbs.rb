@@ -57,7 +57,7 @@ module BreadcrumbsOnRails
         raise NotImplementedError
       end
 
-      
+
       protected
 
         def compute_name(element)

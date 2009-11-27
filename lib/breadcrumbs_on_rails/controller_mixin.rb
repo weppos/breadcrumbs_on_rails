@@ -15,9 +15,9 @@
 
 
 module BreadcrumbsOnRails
-  
+
   module ControllerMixin
-    
+
     def self.included(base)
       base.extend         ClassMethods
       base.send :helper,  HelperMethods
@@ -98,10 +98,10 @@ module BreadcrumbsOnRails
         else
           content
         end
-      end  
-      
+      end
+
     end
-  
+
   end
   
 end
