@@ -15,7 +15,7 @@ It provides helpers for creating navigation elements with a flexible interface.
 === As a Gem
 
 This is the preferred way to install BreadcrumbsOnRails and the best way if you want install a stable version.
-The GEM is hosted on {Gemcutter}[http://gemcutter.org/gems/tabs_on_rails].
+The GEM is hosted on {Gemcutter}[http://gemcutter.org/gems/breadcrumbs_on_rails].
 
   $ gem install breadcrumbs_on_rails --source http://gemcutter.org
 
@@ -39,7 +39,7 @@ This is the preferred way if you want to live on the edge and install a developm
 
 == Usage
 
-Having a breadcrumb navigation menu in your Rails app using BreadcrumbsOnRails is really straightforward.
+Creating a breadcrumb navigation menu in your Rails app using BreadcrumbsOnRails is really straightforward.
 
 In your controller, call <tt>add_breadcrumb</tt> to push a new element on the breadcrumb stack. <tt>add_breadcrumb</tt> requires two arguments: the name of the breadcrumb and the target path.
 
@@ -134,7 +134,7 @@ If the value is a Proc, the library sets the <tt>Element</tt> attribute to the s
   end
 
 
-=== Restricting set_tab scope
+=== Restricting breadcrumb scope
 
 The <tt>add_breadcrumb</tt> method understands all options you are used to pass to a Rails controller filter.
 In fact, behind the scenes this method uses a <tt>before_filter</tt> to store the tab in the <tt>@breadcrumbs</tt> variable.
@@ -195,15 +195,16 @@ The library is still under development and this README file might not be contain
 For the full documentation, development roadmap and more information please visit the {project page}[http://code.simonecarletti.com/wiki/breadonrails].
 
 
-== Credits
+== Author
 
-Author:: {Simone Carletti}[http://www.simonecarletti.com] <weppos@weppos.net>
+* {Simone Carletti}[http://www.simonecarletti.com] <weppos@weppos.net>
 
 
 == Resources
 
-* {Homepage}[http://code.simonecarletti.com/breadonrails]
-* {GitHub}[http://github.com/weppos/breadcrumbs_on_rails]
+* {Homepage}[http://code.simonecarletti.com/breadcrumbsonrails]
+* {Source}[http://github.com/weppos/breadcrumbs_on_rails]
+* {Bugs & Features}[http://github.com/weppos/breadcrumbs_on_rails/issues]
 
 
 == License
