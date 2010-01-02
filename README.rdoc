@@ -192,7 +192,7 @@ In your controller, use the <tt>I18n.t</tt> method.
 == Documentation
 
 The library is still under development and this README file might not be contain the latest changes.
-For the full documentation, development roadmap and more information please visit the {project page}[http://code.simonecarletti.com/wiki/breadonrails].
+For the full documentation, development roadmap and more information please visit the {project page}[http://code.simonecarletti.com/breadcrumbsonrails].
 
 
 == Author
