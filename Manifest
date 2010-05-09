@@ -4,16 +4,12 @@ Manifest
 README.rdoc
 Rakefile
 init.rb
-install.rb
 lib/breadcrumbs_on_rails.rb
 lib/breadcrumbs_on_rails/breadcrumbs.rb
 lib/breadcrumbs_on_rails/controller_mixin.rb
 lib/breadcrumbs_on_rails/version.rb
-rails/init.rb
-tasks/tabs_on_rails_tasks.rake
 test/breadcrumbs_on_rails_test.rb
 test/builder_test.rb
 test/element_test.rb
 test/simple_builder_test.rb
 test/test_helper.rb
-uninstall.rb
