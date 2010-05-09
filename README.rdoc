@@ -7,7 +7,7 @@ It provides helpers for creating navigation elements with a flexible interface.
 == Requirements
 
 * Ruby >= 1.8.6
-* Rails >= 2.2
+* Rails 2.2.x, 2.3.x or 3.0
 
 
 == Rails Installation
@@ -15,20 +15,29 @@ It provides helpers for creating navigation elements with a flexible interface.
 === As a Gem
 
 This is the preferred way to install BreadcrumbsOnRails and the best way if you want install a stable version.
-The GEM is hosted on {Gemcutter}[http://gemcutter.org/gems/breadcrumbs_on_rails].
+The GEM is hosted on {RubyGems}[http://rubygems.org/gems/breadcrumbs_on_rails].
 
-  $ gem install breadcrumbs_on_rails --source http://gemcutter.org
+  $ gem install breadcrumbs_on_rails
 
-With Rails >= 2.2, you can specify the GEM dependency in your environment.rb file so that Rails will automatically check the requirement on startup.
+==== Rails 2.2.x and 2.3.x
+
+With Rails 2.2.x and 2.3.x, you need to specify the GEM dependency in your <tt>environment.rb</tt> file so that Rails will automatically include the library on startup.
 
   Rails::Initializer.run do |config|
     
     # other configurations
     # ...
     
-    config.gem "breadcrumbs_on_rails", :source => "http://gemcutter.org"
+    config.gem "breadcrumbs_on_rails"
     
   end
+
+==== Rails 3
+
+With Rails 3, you need to specify the GEM dependency in your <tt>Gemfile</tt> file so that Bundler can resolve, download and install the library.
+
+  gem "breadcrumbs_on_rails"
+
 
 === As a Plugin
 
@@ -189,12 +198,6 @@ In your controller, use the <tt>I18n.t</tt> method.
   end
 
 
-== Documentation
-
-The library is still under development and this README file might not be contain the latest changes.
-For the full documentation, development roadmap and more information please visit the {project page}[http://code.simonecarletti.com/breadcrumbsonrails].
-
-
 == Author
 
 * {Simone Carletti}[http://www.simonecarletti.com] <weppos@weppos.net>
@@ -202,8 +205,7 @@ For the full documentation, development roadmap and more information please visi
 
 == Resources
 
-* {Homepage}[http://code.simonecarletti.com/breadcrumbsonrails]
-* {Source}[http://github.com/weppos/breadcrumbs_on_rails]
+* {Homepage}[http://github.com/weppos/breadcrumbs_on_rails]
 * {Bugs & Features}[http://github.com/weppos/breadcrumbs_on_rails/issues]
 
 
