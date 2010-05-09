@@ -1,6 +1,13 @@
 = Changelog
 
 
+== master
+
+* CHANGED: Removed empty install/uninstall hooks and tasks folder.
+
+* CHANGED: Removed rails/init hook because deprecated in Rails 3.
+
+
 == Release 0.2.0
 
 * Releasing the library as open source project.
