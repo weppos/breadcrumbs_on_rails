@@ -1,6 +1,11 @@
 = Changelog
 
 
+== Release 1.0.1
+
+* FIXED: Since the removal of rails/init.rb in 7278376ab77651e540e39552384ad9677e32ff7e, Rails fails to load the helpers.
+
+
 == Release 1.0.0
 
 * CHANGED: Removed empty install/uninstall hooks and tasks folder.

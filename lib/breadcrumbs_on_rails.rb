@@ -20,9 +20,9 @@ require 'breadcrumbs_on_rails/version'
 
 
 module BreadcrumbsOnRails
-  
+
   NAME            = 'Breadcrumbs on Rails'
   GEM             = 'breadcrumbs_on_rails'
   AUTHORS         = ['Simone Carletti <weppos@weppos.net>']
-  
+
 end

@@ -8,6 +8,7 @@ lib/breadcrumbs_on_rails.rb
 lib/breadcrumbs_on_rails/breadcrumbs.rb
 lib/breadcrumbs_on_rails/controller_mixin.rb
 lib/breadcrumbs_on_rails/version.rb
+rails/init.rb
 test/breadcrumbs_on_rails_test.rb
 test/builder_test.rb
 test/element_test.rb
