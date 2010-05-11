@@ -10,7 +10,7 @@
 # License::     MIT License
 #
 #--
-# SVN: $Id$
+#
 #++
 
 
