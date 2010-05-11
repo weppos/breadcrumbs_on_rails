@@ -58,7 +58,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w(--main README.rdoc)
 
   # Add any extra files to include in the gem (like your README)
-  s.files             = %w(Rakefile init.rb) + Dir.glob("*.rdoc") + Dir.glob("{test,lib,rails/**/*}")
+  s.files             = %w(Rakefile init.rb) + Dir.glob("*.{rdoc,gemspec}") + Dir.glob("{test,lib,rails}/**/*")
   s.require_paths     = ["lib"]
 
   # If you want to depend on other gems, add them here, along with any
@@ -92,7 +92,7 @@ desc "Remove any generated file"
 task :clobber => [:clobber_rdoc, :clobber_rcov, :clobber_package]
 
 desc "Package the library and generates the gemspec"
-task :package => :gemspec
+task :package => [:gemspec]
 
 begin
   require "rcov/rcovtask"
