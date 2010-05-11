@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
 }
   s.email = %q{weppos@weppos.net}
   s.extra_rdoc_files = ["CHANGELOG.rdoc", "LICENSE.rdoc", "README.rdoc"]
-  s.files = ["Rakefile", "Manifest", "init.rb", "CHANGELOG.rdoc", "LICENSE.rdoc", "README.rdoc", "test", "lib", "rails/init.rb"]
+  s.files = ["Rakefile", "init.rb", "CHANGELOG.rdoc", "LICENSE.rdoc", "README.rdoc", "rails/init.rb"]
   s.homepage = %q{http://www.simonecarletti.com/code/breadcrumbs_on_rails}
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
