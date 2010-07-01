@@ -132,7 +132,7 @@ If the value is a Proc, the library calls the proc passing the current view cont
 
 ==== String
 
-If the value is a Proc, the library sets the <tt>Element</tt> attribute to the string value.
+If the value is a String, the library sets the <tt>Element</tt> attribute to the string value.
 
   class MyController
     
