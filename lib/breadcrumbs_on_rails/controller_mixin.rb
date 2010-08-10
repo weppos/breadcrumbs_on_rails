@@ -40,14 +40,14 @@ module BreadcrumbsOnRails
 
       # This is an horrible method with an horrible name.
       #
-      # convert_to_set_of_strings(nil, [:foo, :bar])
-      # # => nil
-      # convert_to_set_of_strings(true, [:foo, :bar])
-      # # => ["foo", "bar"]
-      # convert_to_set_of_strings(:foo, [:foo, :bar])
-      # # => ["foo"]
-      # convert_to_set_of_strings([:foo, :bar, :baz], [:foo, :bar])
-      # # => ["foo", "bar", "baz"]
+      #   convert_to_set_of_strings(nil, [:foo, :bar])
+      #   # => nil
+      #   convert_to_set_of_strings(true, [:foo, :bar])
+      #   # => ["foo", "bar"]
+      #   convert_to_set_of_strings(:foo, [:foo, :bar])
+      #   # => ["foo"]
+      #   convert_to_set_of_strings([:foo, :bar, :baz], [:foo, :bar])
+      #   # => ["foo", "bar", "baz"]
       #
       def self.convert_to_set_of_strings(value, keys)
         if value == true
@@ -103,5 +103,5 @@ module BreadcrumbsOnRails
     end
 
   end
-  
+
 end

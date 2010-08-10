@@ -50,12 +50,12 @@ This is the preferred way if you want to live on the edge and install a developm
 
 Creating a breadcrumb navigation menu in your Rails app using BreadcrumbsOnRails is really straightforward.
 
-In your controller, call <tt>add_breadcrumb</tt> to push a new element on the breadcrumb stack. <tt>add_breadcrumb</tt> requires two arguments: the name of the breadcrumb and the target path.
+In your controller, call <tt>add_breadcrumb</tt> to push a new element on the breadcrumb stack. <tt>add_breadcrumb</tt> requires two arguments: the name of the breadcrumb and the target path. See the section "Breadcrumb Element" for more details about name and target class types.
 
   class MyController
   
-    add_breadcrumb "home", root_path
-    add_breadcrumb "my", my_path
+    add_breadcrumb "home", :root_path
+    add_breadcrumb "my", :my_path
     
     def index
       # ...
@@ -98,7 +98,6 @@ When you call <tt>add_breadcrumb</tt>, the method automatically creates a new <t
 * Proc
 * String
 
-
 ==== Symbol
 
 If the value is a Symbol, the library calls the corresponding method defined in the same context the and sets the <tt>Element</tt> attribute to the returned value.
@@ -107,7 +106,7 @@ If the value is a Symbol, the library calls the corresponding method defined in 
     
     # The Name is set to the value returned by
     # the :root_name method.
-    add_breadcrumb :root_name, root_path
+    add_breadcrumb :root_name, "/"
     
     protected
     
@@ -126,7 +125,7 @@ If the value is a Proc, the library calls the proc passing the current view cont
     # The Name is set to the value returned by
     # the :root_name method.
     add_breadcrumb Proc.new { |c| c.my_helper_method },
-                   root_path
+                   "/"
   
   end
 
@@ -138,7 +137,7 @@ If the value is a String, the library sets the <tt>Element</tt> attribute to the
     
     # The Name is set to the value returned by
     # the :root_name method.
-    add_breadcrumb "homepage", "http://example.com/"
+    add_breadcrumb "homepage", "/"
     
   end
 
@@ -151,12 +150,12 @@ In fact, behind the scenes this method uses a <tt>before_filter</tt> to store th
 Taking advantage of Rails filter options, you can restrict a tab to a selected group of actions in the same controller.
 
   class PostsController < ApplicationController
-    add_breadcrumb "admin", admin_path
-    add_breadcrumb "posts, posts_path, :only => %w(index show)
+    add_breadcrumb "admin", :admin_path
+    add_breadcrumb "posts,  :posts_path, :only => %w(index show)
   end
   
   class ApplicationController < ActionController::Base
-    add_breadcrumb "admin", admin_path, :if => :admin_controller?
+    add_breadcrumb "admin", :admin_path, :if => :admin_controller?
     
     def admin_controller?
       self.class.name =~ /^Admin(::|Controller)/
@@ -188,13 +187,13 @@ For example, if you want to localize your menu, define a new breadcrumbs node in
 In your controller, use the <tt>I18n.t</tt> method.
 
   class PostsController < ApplicationController
-    add_breadcrumb I18n.t("breadcrumbs.first"), first_path
-    add_breadcrumb I18n.t("breadcrumbs.second"), second_path, :only => %w(second)
-    add_breadcrumb I18n.t("breadcrumbs.third"), third_path, :only => %w(third)
+    add_breadcrumb I18n.t("breadcrumbs.first"),  :first_path
+    add_breadcrumb I18n.t("breadcrumbs.second"), :second_path, :only => %w(second)
+    add_breadcrumb I18n.t("breadcrumbs.third"),  :third_path,  :only => %w(third)
   end
   
   class ApplicationController < ActionController::Base
-    add_breadcrumb I18n.t("breadcrumbs.homepage"), root_path
+    add_breadcrumb I18n.t("breadcrumbs.homepage"), :root_path
   end
 
 === Rails 3

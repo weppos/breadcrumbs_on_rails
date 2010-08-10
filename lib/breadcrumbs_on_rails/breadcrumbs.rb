@@ -26,20 +26,16 @@ module BreadcrumbsOnRails
     # To create a custom Builder, just extend this class
     # and implement the following abstract methods:
     #
-    # render::
-    #   Renders and returns the collection of navigation elements
+    # * <tt>#render</tt>: Renders and returns the collection of navigation elements
     #
     class Builder
 
       # Initializes a new Builder with <tt>context</tt>,
       # <tt>element</tt> and <tt>options</tt>.
       #
-      # context::
-      #   The view context, that is current Rails Template instance
-      # elements::
-      #   The collection of Elements
-      # options::
-      #   Hash with optional prefereces or settings to customize the rendering behavior
+      # * <tt>context</tt>:  The view context, that is current Rails Template instance
+      # * <tt>elements</tt>: The collection of Elements
+      # * <tt>options</tt>:  Hash with optional prefereces or settings to customize the rendering behavior
       #
       def initialize(context, elements, options = {})
         @context  = context
@@ -49,10 +45,7 @@ module BreadcrumbsOnRails
 
       # Renders Elements and returns the Breadcrumb navigation for the view.
       #
-      # ==== Raises
-      #
-      # NotImplemented:: you should implement this method in your custom Builder.
-      #
+      # Raises <tt>NotImplemented</tt>: you should implement this method in your custom Builder.
       def render
         raise NotImplementedError
       end
@@ -96,7 +89,7 @@ module BreadcrumbsOnRails
     #
     # The SimpleBuilder accepts a limited set of options.
     # If you need more flexibility, create a custom Builder and
-    # pass the option :builder => BuilderClass to the render_breadcrumbs helper method. 
+    # pass the option :builder => BuilderClass to the <tt>render_breadcrumbs</tt> helper method.
     #
     class SimpleBuilder < Builder
 
@@ -120,8 +113,7 @@ module BreadcrumbsOnRails
 
     # = Element
     #
-    # Represents a navigation element (probably a breadcrumb level)
-    # in the breadcrumb collection.
+    # Represents a navigation element in the breadcrumb collection.
     #
     class Element
 
@@ -133,7 +125,7 @@ module BreadcrumbsOnRails
       end
 
     end
-    
+
   end
-  
+
 end
