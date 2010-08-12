@@ -1,10 +1,14 @@
 require "rubygems"
 require "rake/testtask"
-require "rake/rdoctask"
 require "rake/gempackagetask"
+begin
+  require "hanna/rdoctask"
+rescue LoadError
+  require "rake/rdoctask"
+end
 
 $:.unshift(File.dirname(__FILE__) + "/lib")
-require 'breadcrumbs_on_rails'
+require "breadcrumbs_on_rails"
 
 
 PKG_NAME    = ENV['PKG_NAME']    || BreadcrumbsOnRails::GEM
@@ -118,4 +122,10 @@ begin
   end
 rescue LoadError
   puts "CodeStatistics (Rails) is not available"
+end
+
+desc "Publish documentation to the site"
+task :publish_rdoc => [:clobber_rdoc, :rdoc] do
+  ENV["username"] || raise(ArgumentError, "Missing ssh username")
+  sh "rsync -avz --delete rdoc/ #{ENV["username"]}@code:/var/www/apps/code/#{PKG_NAME}/api"
 end
