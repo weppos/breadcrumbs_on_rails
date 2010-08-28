@@ -151,7 +151,7 @@ Taking advantage of Rails filter options, you can restrict a tab to a selected g
 
   class PostsController < ApplicationController
     add_breadcrumb "admin", :admin_path
-    add_breadcrumb "posts,  :posts_path, :only => %w(index show)
+    add_breadcrumb "posts", :posts_path, :only => %w(index show)
   end
   
   class ApplicationController < ActionController::Base
@@ -221,11 +221,12 @@ A Rails 3 version will be available very soon.
 
 == Resources
 
-* {Homepage}[http://github.com/weppos/breadcrumbs_on_rails]
+* {Homepage}[http://www.simonecarletti.com/code/breadcrumbs_on_rails]
+* {Source}[http://github.com/weppos/breadcrumbs_on_rails]
+* {API Documentation}[http://www.simonecarletti.com/code/breadcrumbs_on_rails/api/]
 * {Bugs & Features}[http://github.com/weppos/breadcrumbs_on_rails/issues]
 
 
 == License
 
 Copyright (c) 2009-2010 Simone Carletti, BreadcrumbsOnRails is released under the MIT license.
-
