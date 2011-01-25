@@ -100,7 +100,7 @@ module BreadcrumbsOnRails
       end
 
       def render_element(element)
-        content = @context.link_to_unless_current(compute_name(element), compute_path(element))
+        content = @context.link_to_unless_current(h(compute_name(element)), compute_path(element))
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
