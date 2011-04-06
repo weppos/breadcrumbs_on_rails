@@ -1,17 +1,14 @@
-require "rubygems"
-require "rake/testtask"
-require "rake/gempackagetask"
-begin
-  require "hanna/rdoctask"
-rescue LoadError
-  require "rake/rdoctask"
-end
+require 'rubygems'
+require 'bundler'
+require 'rake/testtask'
+require 'rake/gempackagetask'
+require 'hanna/rdoctask'
 
 $:.unshift(File.dirname(__FILE__) + "/lib")
-require "breadcrumbs_on_rails"
+require 'breadcrumbs_on_rails/version'
 
 
-PKG_NAME    = ENV['PKG_NAME']    || BreadcrumbsOnRails::GEM
+PKG_NAME    = ENV['PKG_NAME']    || "breadcrumbs_on_rails"
 PKG_VERSION = ENV['PKG_VERSION'] || BreadcrumbsOnRails::VERSION
 
 if ENV['SNAPSHOT'].to_i == 1
@@ -19,22 +16,8 @@ if ENV['SNAPSHOT'].to_i == 1
 end
 
 
-# Run all the tests in the /test folder
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList["test/**/*_test.rb"]
-  t.verbose = true
-end
-
-# Generate documentation
-Rake::RDocTask.new do |rd|
-  rd.main = "README.rdoc"
-  rd.rdoc_files.include("*.rdoc", "lib/**/*.rb")
-  rd.rdoc_dir = "rdoc"
-end
-
 # Run test by default.
-task :default => ["test"]
+task :default => :test
 
 # This builds the actual gem. For details of what all these options
 # mean, and other ones you can add, check the documentation here:
@@ -42,35 +25,28 @@ task :default => ["test"]
 #   http://rubygems.org/read/chapter/20
 #
 spec = Gem::Specification.new do |s|
-
   s.name              = PKG_NAME
   s.version           = PKG_VERSION
   s.summary           = "A simple Ruby on Rails plugin for creating and managing a breadcrumb navigation."
+  s.description       = "BreadcrumbsOnRails is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project."
+
   s.author            = "Simone Carletti"
   s.email             = "weppos@weppos.net"
   s.homepage          = "http://www.simonecarletti.com/code/breadcrumbs_on_rails"
-  s.description       = <<-EOD
-    BreadcrumbsOnRails is a simple Ruby on Rails plugin for creating and managing \
-    a breadcrumb navigation for a Rails project. \
-    It provides helpers for creating navigation elements with a flexible interface.
-  EOD
 
-  s.has_rdoc          = true
   # You should probably have a README of some kind. Change the filename
   # as appropriate
   s.extra_rdoc_files  = Dir.glob("*.rdoc")
-  s.rdoc_options      = %w(--main README.rdoc)
+  s.rdoc_options      = %w( --main README.rdoc )
 
   # Add any extra files to include in the gem (like your README)
-  s.files             = %w(Rakefile init.rb) + Dir.glob("*.{rdoc,gemspec}") + Dir.glob("{test,lib,rails}/**/*")
-  s.require_paths     = ["lib"]
+  s.files             = %w( Rakefile LICENSE init.rb ) + Dir.glob("*.{rdoc,gemspec}") + Dir.glob("{lib,test,rails}/**/*")
+  s.require_paths     = %w( lib )
 
-  # If you want to depend on other gems, add them here, along with any
-  # relevant versions
-  # s.add_dependency("some_other_gem", "~> 0.1.0")
-
-  # If your tests use any gems, include them here
-  # s.add_development_dependency("mocha") # for example
+  s.add_development_dependency("bundler")
+  s.add_development_dependency("hanna")
+  s.add_development_dependency("rails", "~> 3.0.6")
+  s.add_development_dependency("mocha", "~> 0.9.10")
 end
 
 # This task actually builds the gem. We also regenerate a static
@@ -98,31 +74,21 @@ task :clobber => [:clobber_rdoc, :clobber_rcov, :clobber_package]
 desc "Package the library and generates the gemspec"
 task :package => [:gemspec]
 
-begin
-  require "rcov/rcovtask"
 
-  desc "Create a code coverage report."
-  Rcov::RcovTask.new do |t|
-    t.test_files = FileList["test/**/*_test.rb"]
-    t.ruby_opts << "-Itest -x mocha,rcov,Rakefile"
-    t.verbose = true
-  end
-rescue LoadError
-  task :clobber_rcov
-  puts "RCov is not available"
+# Run all the tests in the /test folder
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.test_files = FileList["test/**/*_test.rb"]
+  t.verbose = true
 end
 
-begin
-  require "code_statistics"
-
-  desc "Show library's code statistics"
-  task :stats do
-    CodeStatistics.new(["BreadcrumbsOnRails", "lib"],
-                       ["Tests", "test"]).to_s
-  end
-rescue LoadError
-  puts "CodeStatistics (Rails) is not available"
+# Generate documentation
+Rake::RDocTask.new do |rd|
+  rd.main = "README.rdoc"
+  rd.rdoc_files.include("*.rdoc", "lib/**/*.rb")
+  rd.rdoc_dir = "rdoc"
 end
+
 
 desc "Publish documentation to the site"
 task :publish_rdoc => [:clobber_rdoc, :rdoc] do

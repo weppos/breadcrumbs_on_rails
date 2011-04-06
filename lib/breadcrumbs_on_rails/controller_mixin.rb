@@ -17,15 +17,13 @@
 module BreadcrumbsOnRails
 
   module ControllerMixin
+    extend ActiveSupport::Concern
 
-    def self.included(base)
-      base.extend         ClassMethods
-      base.send :helper,  HelperMethods
-      base.class_eval do
-        include       InstanceMethods
-        helper        HelperMethods
-        helper_method :add_breadcrumb, :breadcrumbs
-      end
+    included do
+      extend          ClassMethods
+      include         InstanceMethods
+      helper          HelperMethods
+      helper_method   :add_breadcrumb, :breadcrumbs
     end
 
     module Utils
@@ -92,9 +90,9 @@ module BreadcrumbsOnRails
 
       def render_breadcrumbs(options = {}, &block)
         builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
-        content = builder.render
+        content = builder.render.html_safe
         if block_given?
-          concat(capture(content, &block))
+          capture(content, &block)
         else
           content
         end

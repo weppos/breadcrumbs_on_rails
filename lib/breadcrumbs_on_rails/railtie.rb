@@ -14,15 +14,15 @@
 #++
 
 
-require 'breadcrumbs_on_rails/controller_mixin'
-require 'breadcrumbs_on_rails/breadcrumbs'
-require 'breadcrumbs_on_rails/version'
-require 'breadcrumbs_on_rails/railtie'
-
-
 module BreadcrumbsOnRails
 
-  NAME            = 'Breadcrumbs on Rails'
-  GEM             = 'breadcrumbs_on_rails'
+  class Railtie < Rails::Railtie
+    initializer "breadcrumbs_on_rails.initialize" do
+    end
+  end
 
+end
+
+ActiveSupport.on_load(:action_controller) do
+  include BreadcrumbsOnRails::ControllerMixin
 end

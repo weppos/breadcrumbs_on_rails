@@ -3,14 +3,13 @@ require 'test_helper'
 
 class SimpleBuilderTest < ActionView::TestCase
 
-  class TestTemplate
+  Template = Class.new do
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::UrlHelper
   end
 
-  
   def setup
-    @template = TestTemplate.new
+    @template = Template.new
   end
 
   def test_render_should_be_implemented
@@ -70,6 +69,5 @@ class SimpleBuilderTest < ActionView::TestCase
         BreadcrumbsOnRails::Breadcrumbs::Element.new("Element #{index}", "/element/#{index}")
       end
     end
-
 
 end
