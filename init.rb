@@ -1,1 +1,1 @@
-require File.join(File.dirname(__FILE__), 'rails', 'init')
+require 'breadcrumbs_on_rails'
