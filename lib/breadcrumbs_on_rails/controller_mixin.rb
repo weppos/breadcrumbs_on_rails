@@ -92,7 +92,7 @@ module BreadcrumbsOnRails
         builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
         content = builder.render
         if block_given?
-          concat(capture(content, &block))
+          capture(content, &block)
         else
           content
         end
