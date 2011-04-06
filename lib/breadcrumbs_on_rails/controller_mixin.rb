@@ -17,15 +17,13 @@
 module BreadcrumbsOnRails
 
   module ControllerMixin
+    extend ActiveSupport::Concern
 
-    def self.included(base)
-      base.extend         ClassMethods
-      base.send :helper,  HelperMethods
-      base.class_eval do
-        include       InstanceMethods
-        helper        HelperMethods
-        helper_method :add_breadcrumb, :breadcrumbs
-      end
+    included do
+      extend          ClassMethods
+      include         InstanceMethods
+      helper          HelperMethods
+      helper_method   :add_breadcrumb, :breadcrumbs
     end
 
     module Utils

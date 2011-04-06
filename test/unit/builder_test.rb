@@ -1,9 +1,8 @@
 require 'test_helper'
 
-
 class BuilderTest < ActiveSupport::TestCase
 
-  class TestTemplate
+  Template = Class.new do
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::UrlHelper
 
@@ -28,12 +27,10 @@ class BuilderTest < ActiveSupport::TestCase
       def proc_for_path
         "http://localhost/#proc"
       end
-
   end
-  
 
   def setup
-    @template = TestTemplate.new
+    @template = Template.new
     @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil)
   end
 

@@ -17,8 +17,12 @@
 module BreadcrumbsOnRails
 
   class Railtie < Rails::Railtie
+    initializer "breadcrumbs_on_rails.initialize" do
+    end
   end
 
 end
 
-ActionController::Base.send :include, BreadcrumbsOnRails::ControllerMixin
+ActiveSupport.on_load(:action_controller) do
+  include BreadcrumbsOnRails::ControllerMixin
+end
