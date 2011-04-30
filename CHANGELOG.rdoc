@@ -4,6 +4,8 @@
 
 * FIXED: Invalid documentation for Element target in the controller class context (closes #2)
 
+* CHANGED: Upgraded to Rails 3
+
 
 == Release 1.0.1
 
