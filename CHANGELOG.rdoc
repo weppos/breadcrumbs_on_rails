@@ -1,6 +1,7 @@
 = Changelog
 
-== master
+
+== Release 2.0.0
 
 * FIXED: Invalid documentation for Element target in the controller class context (closes #2)
 
