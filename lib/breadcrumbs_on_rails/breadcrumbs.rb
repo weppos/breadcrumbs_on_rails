@@ -60,7 +60,7 @@ module BreadcrumbsOnRails
             when Proc
               name.call(@context)
             else
-              name.to_s
+              h(name.to_s)
           end
         end
 
@@ -100,7 +100,7 @@ module BreadcrumbsOnRails
       end
 
       def render_element(element)
-        content = @context.link_to_unless_current(compute_name(h(element)), compute_path(element))
+        content = @context.link_to_unless_current(compute_name(element), compute_path(element))
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
