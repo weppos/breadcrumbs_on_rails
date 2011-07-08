@@ -10,6 +10,9 @@ class SimpleBuilderTest < ActionView::TestCase
 
   def setup
     @template = Template.new
+    @request = mock()
+    @request.stubs(:post?).returns(false)
+    @template.stubs(:request).returns(@request)
   end
 
   def test_render_should_be_implemented
@@ -55,6 +58,12 @@ class SimpleBuilderTest < ActionView::TestCase
     @template.expects(:current_page?).times(2).returns(false, true)
     assert_dom_equal("<a href=\"/element/1\">Element 1</a> &raquo; Element 2",
                      simplebuilder(@template, generate_elements(2)).render)
+  end
+  
+  def test_render_with_post
+    @request.stubs(:post?).returns(true)
+    assert_dom_equal("<a href=\"/element/1\">Element 1</a> &raquo; <a href=\"/element/2\">Element 2</a> &raquo; Element 3",
+                     simplebuilder(@template, generate_elements(3)).render)
   end
 
 
