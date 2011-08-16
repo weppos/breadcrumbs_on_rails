@@ -100,7 +100,13 @@ module BreadcrumbsOnRails
       end
 
       def render_element(element)
-        content = @context.link_to_unless_current(compute_name(element), compute_path(element))
+        # Force the last breadcrumb to be the active one if the request is a post or put
+        if @context.request.post? || @context.request.put?
+          content = (@elements.last == element) ? element.name : @context.link_to(compute_name(element), compute_path(element))
+        else
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element))      
+        end
+        
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
