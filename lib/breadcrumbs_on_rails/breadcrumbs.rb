@@ -60,7 +60,7 @@ module BreadcrumbsOnRails
             when Proc
               name.call(@context)
             else
-              name.to_s
+              h(name.to_s)
           end
         end
 
