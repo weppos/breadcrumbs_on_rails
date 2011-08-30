@@ -59,25 +59,44 @@ module BreadcrumbsOnRails
 
     module ClassMethods
 
-      def add_breadcrumb(name, path, options = {})
+      def add_breadcrumb_for_current(name, options = {}, &block)
+        activ_klass = "activ"
+        options[:klass] = [] unless options.has_key?(:klass)
+        options[:klass] << activ_klass unless options[:klass].include?(activ_klass)
+        add_breadcrumb(name, nil, options, &block)
+      end
+
+      def add_breadcrumb(name, path = nil, options = {}, &block)
         # This isn't really nice here
         if eval = Utils.convert_to_set_of_strings(options.delete(:eval), %w(name path))
           name = Utils.instance_proc(name) if eval.include?("name")
-          path = Utils.instance_proc(path) if eval.include?("path")
+          if !path.nil?
+            path = Utils.instance_proc(path) if eval.include?("path")
+          end
         end
 
         before_filter(options) do |controller|
-          controller.send(:add_breadcrumb, name, path)
+          if path.nil?
+            path = request.fullpath
+          end
+
+          controller.send(:add_breadcrumb, name, path, options, &block)
         end
       end
-
     end
 
     module InstanceMethods
       protected
 
-      def add_breadcrumb(name, path)
-        self.breadcrumbs << Breadcrumbs::Element.new(name, path)
+      def add_breadcrumb(name, path, options = {}, &block)
+        #self.breadcrumbs << Breadcrumbs::Element.new(name, path)
+        elem = Breadcrumbs::Element.new(name, path)
+
+        # adding css classes
+        elem.klass = options[:klass] if options.has_key?(:klass)
+
+        yield elem if block_given?
+        self.breadcrumbs << elem
       end
 
       def breadcrumbs

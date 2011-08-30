@@ -35,8 +35,18 @@ In your controller, call <tt>add_breadcrumb</tt> to push a new element on the br
 
   class MyController
   
-    add_breadcrumb "home", :root_path
+    add_breadcrumb "home", :root_path, :klass => ["home"]
     add_breadcrumb "my", :my_path
+
+    # to add alternate breadcrumbs for the same level
+    add_breadcrumb "Users", :users_path do |bread|
+      bread.add_child "Accounts", :accounts_path
+      bread.add_child "Profiles", :profiles_path
+    end
+
+    # to add a breadcrumb for current view
+    add_breadcrumb_for_current "My profile"
+
     
     def index
       # ...
@@ -66,6 +76,27 @@ In your view, you can render the breadcrumb menu with the <tt>render_breadcrumbs
   <body>
     <%= render_breadcrumbs :separator => ' / ' %>
   </body>
+
+
+<tt>render_breadcrumbs</tt> include a simple html5 navigation breadcrumbs usable with <tt>:builder</tt> option.
+
+  <body>
+    <%= render_breadcrumbs(:builder => BreadcrumbsOnRails::Breadcrumbs::HtmlBuilder) %>
+  </body>
+
+It will generate breadcrumbs like that :
+  <nav id="breadcrumb">
+    <ul>
+      <li class="home">
+        <a href="/">home</a>
+      </li>
+      <li class="under_menu">
+        <a href="/users"><span class="arrow">Users</span></a>
+        <ul>
+          <li>
+            <a href="/extranet/users">Mon espace</a>
+          </li>
+          ...
 
 More complex customizations require a custom Builder (documentation yet to come).
 
