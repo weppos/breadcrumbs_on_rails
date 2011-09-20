@@ -2,7 +2,8 @@ require 'rubygems'
 require 'bundler'
 require 'rake/testtask'
 require 'rake/gempackagetask'
-require 'hanna/rdoctask'
+require 'yard'
+require 'yard/rake/yardoc_task'
 
 $:.unshift(File.dirname(__FILE__) + "/lib")
 require 'breadcrumbs_on_rails/version'
@@ -40,11 +41,12 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w( --main README.rdoc )
 
   # Add any extra files to include in the gem (like your README)
-  s.files             = %w( Rakefile LICENSE init.rb ) + Dir.glob("*.{rdoc,gemspec}") + Dir.glob("{lib,test,rails}/**/*")
+  s.files             = `git ls-files`.split("\n")
+  s.test_files        = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths     = %w( lib )
 
+  s.add_development_dependency("rake")
   s.add_development_dependency("bundler")
-  s.add_development_dependency("hanna")
   s.add_development_dependency("rails", "~> 3.0.0")
   s.add_development_dependency("mocha", "~> 0.9.10")
 end
@@ -69,7 +71,7 @@ task :clean => [:clobber] do
 end
 
 desc "Remove any generated file"
-task :clobber => [:clobber_rdoc, :clobber_rcov, :clobber_package]
+task :clobber => [:clobber_package]
 
 desc "Package the library and generates the gemspec"
 task :package => [:gemspec]
@@ -79,19 +81,21 @@ task :package => [:gemspec]
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.test_files = FileList["test/**/*_test.rb"]
-  t.verbose = true
+  t.verbose = !!ENV["VERBOSE"]
+  t.warning = !!ENV["WARNING"]
 end
+
 
 # Generate documentation
-Rake::RDocTask.new do |rd|
-  rd.main = "README.rdoc"
-  rd.rdoc_files.include("*.rdoc", "lib/**/*.rb")
-  rd.rdoc_dir = "rdoc"
+YARD::Rake::YardocTask.new(:yardoc) do |y|
+  y.options = ["--output-dir", "yardoc"]
 end
 
-
-desc "Publish documentation to the site"
-task :publish_rdoc => [:clobber_rdoc, :rdoc] do
-  ENV["username"] || raise(ArgumentError, "Missing ssh username")
-  sh "rsync -avz --delete rdoc/ #{ENV["username"]}@code:/var/www/apps/code/#{PKG_NAME}/api"
+namespace :yardoc do
+  desc "Remove YARD products"
+  task :clobber do
+    rm_r "yardoc" rescue nil
+  end
 end
+
+task :clobber => "yardoc:clobber"
