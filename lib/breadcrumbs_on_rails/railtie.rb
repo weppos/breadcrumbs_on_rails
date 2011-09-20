@@ -1,18 +1,10 @@
-# 
-# = Breadcrumbs On Rails
+#--
+# Breadcrumbs On Rails
 #
 # A simple Ruby on Rails plugin for creating and managing a breadcrumb navigation.
-# 
 #
-# Category::    Rails
-# Package::     BreadcrumbsOnRails
-# Author::      Simone Carletti <weppos@weppos.net>
-# License::     MIT License
-#
-#--
-#
+# Copyright (c) 2009-2011 Simone Carletti <weppos@weppos.net>
 #++
-
 
 module BreadcrumbsOnRails
 
