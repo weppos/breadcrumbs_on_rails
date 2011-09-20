@@ -1,6 +1,6 @@
 = Changelog
 
-== master
+== Release 2.1.0
 
 * NEW: Element now accepts a Hash of options. The options can be useful to customize the appearance of the element, for example to set a link title or class.
 
