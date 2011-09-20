@@ -15,12 +15,9 @@
 
 
 module BreadcrumbsOnRails
-  
+
   module Breadcrumbs
 
-    # 
-    # = Builder
-    #
     # The Builder class represents the abstract class for any custom Builder.
     #
     # To create a custom Builder, just extend this class
@@ -33,9 +30,9 @@ module BreadcrumbsOnRails
       # Initializes a new Builder with <tt>context</tt>,
       # <tt>element</tt> and <tt>options</tt>.
       #
-      # * <tt>context</tt>:  The view context, that is current Rails Template instance
-      # * <tt>elements</tt>: The collection of Elements
-      # * <tt>options</tt>:  Hash with optional prefereces or settings to customize the rendering behavior
+      # @param [ActionView::Base] context The view context.
+      # @param [Array<Element>] elements The collection of Elements.
+      # @param [Hash] options Hash of options to customize the rendering behavior.
       #
       def initialize(context, elements, options = {})
         @context  = context
@@ -45,7 +42,9 @@ module BreadcrumbsOnRails
 
       # Renders Elements and returns the Breadcrumb navigation for the view.
       #
-      # Raises <tt>NotImplemented</tt>: you should implement this method in your custom Builder.
+      # @return [String] The result of the breadcrumb rendering.
+      #
+      # @abstract You must implement this method in your custom Builder.
       def render
         raise NotImplementedError
       end
@@ -55,35 +54,31 @@ module BreadcrumbsOnRails
 
         def compute_name(element)
           case name = element.name
-            when Symbol
-              @context.send(name)
-            when Proc
-              name.call(@context)
-            else
-              name.to_s
+          when Symbol
+            @context.send(name)
+          when Proc
+            name.call(@context)
+          else
+            name.to_s
           end
         end
 
         def compute_path(element)
           case path = element.path
-            when Symbol
-              @context.send(path)
-            when Proc
-              path.call(@context)
-            when Hash
-              @context.url_for(path)
-            else
-              path.to_s
+          when Symbol
+            @context.send(path)
+          when Proc
+            path.call(@context)
+          when Hash
+            @context.url_for(path)
+          else
+            path.to_s
           end
-
         end
 
     end
 
 
-    #
-    # = SimpleBuilder
-    #
     # The SimpleBuilder is the default breadcrumb builder.
     # It provides basic functionalities to render a breadcrumb navigation.
     #
@@ -100,7 +95,7 @@ module BreadcrumbsOnRails
       end
 
       def render_element(element)
-        content = @context.link_to_unless_current(compute_name(element), compute_path(element))
+        content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
@@ -111,19 +106,29 @@ module BreadcrumbsOnRails
     end
 
 
-    # = Element
-    #
     # Represents a navigation element in the breadcrumb collection.
     #
     class Element
 
-      attr_accessor :name, :path
+      # @return [String] The element/link name.
+      attr_accessor :name
+      # @return [String] The element/link URL.
+      attr_accessor :path
+      # @return [Hash] The element/link URL.
+      attr_accessor :options
 
-      def initialize(name, path)
-        self.name = name
-        self.path = path
+      # Initializes the Element with given parameters.
+      #
+      # @param  [String] name The element/link name.
+      # @param  [String] path The element/link URL.
+      # @param  [Hash] options The element/link URL.
+      # @return [Element]
+      #
+      def initialize(name, path, options = {})
+        self.name     = name
+        self.path     = path
+        self.options  = options
       end
-
     end
 
   end

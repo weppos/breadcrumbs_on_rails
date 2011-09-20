@@ -1,6 +1,5 @@
 require 'test_helper'
 
-
 class SimpleBuilderTest < ActionView::TestCase
 
   Template = Class.new do

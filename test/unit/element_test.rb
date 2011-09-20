@@ -9,13 +9,18 @@ class ElementTest < ActiveSupport::TestCase
   end
 
   def test_initialize_should_set_name
-    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(:fooname, nil)
-    assert_equal :fooname, element.name
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(:homepage, nil)
+    assert_equal :homepage, element.name
   end
 
   def test_initialize_should_set_path
-    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, :foopath)
-    assert_equal :foopath, element.path
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, "/")
+    assert_equal "/", element.path
+  end
+
+  def test_initialize_should_allow_options
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(:homepage, "/", :title => "Go to the Homepage")
+    assert_equal({ :title => "Go to the Homepage" }, element.options)
   end
 
 
@@ -29,6 +34,12 @@ class ElementTest < ActiveSupport::TestCase
     element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil)
     element.path = { :controller => "index", :action => "index" }
     assert_equal({ :controller => "index", :action => "index" }, element.path)
+  end
+
+  def test_options
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil)
+    element.options = { :title => "Go to the Homepage" }
+    assert_equal({ :title => "Go to the Homepage" }, element.options)
   end
 
 end

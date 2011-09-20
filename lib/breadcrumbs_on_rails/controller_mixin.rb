@@ -59,14 +59,14 @@ module BreadcrumbsOnRails
 
     module ClassMethods
 
-      def add_breadcrumb(name, path, options = {})
+      def add_breadcrumb(name, path, filter_options = {})
         # This isn't really nice here
-        if eval = Utils.convert_to_set_of_strings(options.delete(:eval), %w(name path))
+        if eval = Utils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
           name = Utils.instance_proc(name) if eval.include?("name")
           path = Utils.instance_proc(path) if eval.include?("path")
         end
 
-        before_filter(options) do |controller|
+        before_filter(filter_options) do |controller|
           controller.send(:add_breadcrumb, name, path)
         end
       end
@@ -76,14 +76,13 @@ module BreadcrumbsOnRails
     module InstanceMethods
       protected
 
-      def add_breadcrumb(name, path)
-        self.breadcrumbs << Breadcrumbs::Element.new(name, path)
+      def add_breadcrumb(name, path, options = {})
+        self.breadcrumbs << Breadcrumbs::Element.new(name, path, options)
       end
 
       def breadcrumbs
         @breadcrumbs ||= []
       end
-
     end
 
     module HelperMethods

@@ -46,6 +46,14 @@ In your controller, call <tt>add_breadcrumb</tt> to push a new element on the br
   
   end
 
+The third, optional argument is a Hash of options to customize the breadcrumb link.
+
+  class MyController
+    def index
+      add_breadcrumb "index", index_path, :title => "Back to the Index"
+    end
+  end
+
 In your view, you can render the breadcrumb menu with the <tt>render_breadcrumbs</tt> helper.
 
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -187,7 +195,7 @@ In your controller, use the <tt>I18n.t</tt> method.
 
 * {Homepage}[http://www.simonecarletti.com/code/breadcrumbs_on_rails]
 * {Source}[http://github.com/weppos/breadcrumbs_on_rails]
-* {API Documentation}[http://www.simonecarletti.com/code/breadcrumbs_on_rails/api/]
+* {API Documentation}[http://rubydoc.info/gems/breadcrumbs_on_rails]
 * {Bugs & Features}[http://github.com/weppos/breadcrumbs_on_rails/issues]
 
 
