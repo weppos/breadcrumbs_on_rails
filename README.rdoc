@@ -30,6 +30,24 @@ Use "Bundler":http://gembundler.com and the ":git option":http://gembundler.com/
 == Usage
 
 Creating a breadcrumb navigation menu in your Rails app using BreadcrumbsOnRails is really straightforward.
+There are two kinds of breadcrumbs types, statics and volatiles. The first are kept whereas the second ones are only defined in controllers.
+
+To define static menus, do it only once by creating an initializer, there will be availlable everywhere in your controllers.
+# config/initializers/breadcrumbs_config.rb
+BreadcrumbsOnRails.configure do |config|
+  # define a breadcrumb (by default, the :default breadcrumb is used)
+  config.add_static_breadcrumb :welcome, :root_path #, :breadcrumb => :default
+
+  # define a breadcrumb
+  config.add_static_breadcrumb :home, :root_path, :breadcrumb => :bottomMenu
+
+  # define_static_breadcrumb takes as first argument the symbol name of the breadcrumb to use
+  config.define_static_breadcrumb :sideMenuBreadcrumb, :sideMenuKey, :root_path do |menu|
+    menu.add_child(:accounts, :accounts_path)
+    menu.add_child("?", :help_path)
+  end
+end
+
 
 In your controller, call <tt>add_breadcrumb</tt> to push a new element on the breadcrumb stack. <tt>add_breadcrumb</tt> requires two arguments: the name of the breadcrumb and the target path. See the section "Breadcrumb Element" for more details about name and target class types.
 
@@ -37,7 +55,21 @@ In your controller, call <tt>add_breadcrumb</tt> to push a new element on the br
   
     add_breadcrumb "home", :root_path
     add_breadcrumb "my", :my_path
+
+    # you may specify the breadcrumbs you want to use instead of the default one
+    add_breadcrumb "my", :my_path, :breadcrumb => :bottomMenu
     
+    # to add sub-menu (alternate breadcrumbs for the same level)
+    add_breadcrumb :users, :users_path do |bread|
+      # add submenu using a symbol
+      bread.add_child :accounts, :accounts_path
+      # or a string (or a proc, see below)
+      bread.add_child "Profiles", :profiles_path
+    end
+
+    # to add a breadcrumb for current view
+    add_breadcrumb_for_current "My profile"
+
     def index
       # ...
       
@@ -46,7 +78,7 @@ In your controller, call <tt>add_breadcrumb</tt> to push a new element on the br
   
   end
 
-The third, optional argument is a Hash of options to customize the breadcrumb link.
+The third, optional argument is a Hash of options to customize the breadcrumb.
 
   class MyController
     def index
@@ -69,10 +101,10 @@ In your view, you can render the breadcrumb menu with the <tt>render_breadcrumbs
   </body>
   </html>
 
-<tt>render_breadcrumbs</tt> understands a limited set of options. For example, you can pass change the default separator with the <tt>:separator</tt> option.
+<tt>render_breadcrumbs</tt> understands a limited set of options. For example, you can pass change the default separator with the <tt>:separator</tt> option, or the default breadcrumb to use with the <tt>:breadcrumb</tt> option.
 
   <body>
-    <%= render_breadcrumbs :separator => ' / ' %>
+    <%= render_breadcrumbs :separator => ' / ', :breadcrumb => :sideMenuBreadcrumb %>
   </body>
 
 More complex customizations require a custom Builder (documentation yet to come).
@@ -89,20 +121,23 @@ When you call <tt>add_breadcrumb</tt>, the method automatically creates a new <t
 
 ==== Symbol
 
-If the value is a Symbol, the library calls the corresponding method defined in the same context the and sets the <tt>Element</tt> attribute to the returned value.
+If the value is a Symbol, it can be used for two things.
+At first, the library try to call the corresponding method in the same context and sets the <tt>Element</tt> attribute to the returned value.
+Then, if no method are found with that name, the library search for a key in the translation. (see below for translation keys examples)
 
   class MyController
-    
+
     # The Name is set to the value returned by
     # the :root_name method.
     add_breadcrumb :root_name, "/"
+    add_breadcrumb :translateMe, "/"
     
     protected
-    
+
       def root_name
         "the name"
       end
-    
+
   end
 
 ==== Proc
@@ -160,25 +195,44 @@ For example, if you want to localize your menu, define a new breadcrumbs node in
   # config/locales/en.yml
   en:
     breadcrumbs:
-      homepage: Homepage
-      first: First
-      second: Second
-      third: Third
+      menus:
+        default:
+          translateMe: "Translated"
+          users:
+            root: "Menu title"
+            accounts: "Accounts sub menu"
+    events:
+      newYear: "Happy new year"
   
   # config/locales/it.yml
   it:
     breadcrumbs:
-      homepage: Homepage
-      first: Primo
-      second: Secondo
-      third: Terzo
+      menus:
+        default:
+          translateMe: "Traduto"
+          users:
+            root: "Tittoro del menu"
+            accounts: "Sotto-menu dei conti"
+    events:
+      newYear: "Felice anno nuovo"
 
-In your controller, use the <tt>I18n.t</tt> method.
+  # config/locales/fr.yml
+  fr:
+    breadcrumbs:
+      menus:
+        default:
+          translateMe: "Traduit"
+          users:
+            root: "Titre du menu"
+            accounts: "Sous-menu des comptes"
+    events:
+      newYear: "Bonne annee"
+
+In your controller, you can also use the <tt>I18n.t</tt> method directly.
 
   class PostsController < ApplicationController
-    add_breadcrumb I18n.t("breadcrumbs.first"),  :first_path
-    add_breadcrumb I18n.t("breadcrumbs.second"), :second_path, :only => %w(second)
-    add_breadcrumb I18n.t("breadcrumbs.third"),  :third_path,  :only => %w(third)
+    add_breadcrumb I18n.t("events.newYear"),  :events_path
+    add_breadcrumb I18n.t("events.holidays"),  :events_path, :only => %w(holidays)
   end
   
   class ApplicationController < ActionController::Base

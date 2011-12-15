@@ -51,15 +51,24 @@ module BreadcrumbsOnRails
 
     module ClassMethods
 
-      def add_breadcrumb(name, path, filter_options = {})
+      def add_breadcrumb_for_current(name, options = {}, &block)
+        add_breadcrumb(name, nil, options, &block)
+      end
+
+      def add_breadcrumb(name, path, filter_options = {}, &block)
         # This isn't really nice here
         if eval = Utils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
           name = Utils.instance_proc(name) if eval.include?("name")
-          path = Utils.instance_proc(path) if eval.include?("path")
+          unless path.nil?
+            path = Utils.instance_proc(path) if eval.include?("path")
+          end
         end
 
         before_filter(filter_options) do |controller|
-          controller.send(:add_breadcrumb, name, path)
+          # if path isn't defined, use current path
+          path = request.fullpath if path.nil?
+
+          controller.send(:add_breadcrumb, name, path, filter_options, &block)
         end
       end
 
@@ -68,19 +77,41 @@ module BreadcrumbsOnRails
     module InstanceMethods
       protected
 
-      def add_breadcrumb(name, path, options = {})
-        self.breadcrumbs << Breadcrumbs::Element.new(name, path, options)
+      # return volatile breadcrumbs defined in the current instance
+      def volatile_breadcrumbs(breadcrumb = nil)
+        breadcrumb = :default if breadcrumb.nil? 
+        @breadcrumbs ||= {}
+        @breadcrumbs[breadcrumb] ||= []
       end
 
-      def breadcrumbs
-        @breadcrumbs ||= []
+      # return static breadcrumbs defined in the configuration
+      def static_breadcrumbs(breadcrumb = nil)
+        BreadcrumbsOnRails.static_breadcrumbs(breadcrumb)
+      end
+
+      # add a static breadcrumb, which will be kept for next instances
+      def add_static_breadcrumb(name, path, options = {}, &block)
+        breadcrumb = options[:breadcrumb]
+        BreadcrumbsOnRails.add_breadcrumb_to(static_breadcrumbs(breadcrumb), name, path, options, &block)
+      end
+
+      # add a volatile breadcrumb, only valid in the current instances
+      def add_volatile_breadcrumb(name, path, options = {}, &block)
+        breadcrumb = options[:breadcrumb]
+        BreadcrumbsOnRails.add_breadcrumb_to(volatile_breadcrumbs(breadcrumb), name, path, options, &block)
+      end
+      alias :add_breadcrumb :add_volatile_breadcrumb
+
+      # return all defined breadcrumbs, static ones first then volatile ones
+      def breadcrumbs(breadcrumb = nil)
+        static_breadcrumbs(breadcrumb) + volatile_breadcrumbs(breadcrumb)
       end
     end
 
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
-        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
+        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs(options[:breadcrumb]), options)
         content = builder.render.html_safe
         if block_given?
           capture(content, &block)
