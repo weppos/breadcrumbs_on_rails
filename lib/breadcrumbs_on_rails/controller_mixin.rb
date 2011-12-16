@@ -72,10 +72,27 @@ module BreadcrumbsOnRails
         end
       end
 
+      # define breadcrumbs in a block
+      def define_breadcrumb(breadcrumb = nil, &block)
+        before_filter do |controller|
+          controller.send(:define_breadcrumb, breadcrumb, &block)
+        end
+      end
+
     end
 
     module InstanceMethods
       protected
+
+      # define volatile breadcrumbs in a block
+      def define_volatile_breadcrumb(breadcrumb = nil, &block)
+        #options[:breadcrumb] = breadcrumb
+        breadcrumb = volatile_breadcrumbs(breadcrumb)
+        definer = BreadcrumbsOnRails::BreadcrumbsDefiner.new(breadcrumb)
+        #yield breadcrumb if block_given?
+        yield definer if block_given?
+      end
+      alias :define_breadcrumb :define_volatile_breadcrumb
 
       # return volatile breadcrumbs defined in the current instance
       def volatile_breadcrumbs(breadcrumb = nil)
