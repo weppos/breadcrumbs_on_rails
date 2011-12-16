@@ -42,11 +42,14 @@ To define static menus, do it only once by creating an initializer, there will b
     # define a breadcrumb
     config.add_static_breadcrumb :home, :root_path, :breadcrumb => :bottomMenu
   
-    # define_static_breadcrumb takes as first argument the symbol name of the breadcrumb to use
-    config.define_static_breadcrumb :sideMenuBreadcrumb, :sideMenuKey, :root_path do |menu|
-      menu.add_child(:accounts, :accounts_path)
-      menu.add_child("?", :help_path)
+    # define_static_breadcrumb takes as argument the symbol name of the breadcrumb to use
+    config.define_static_breadcrumb :mainMenu do |b|
+      # add_breadcrumb takes the sames arguments as in a controller
+      b.add_breadcrumb :home, :root_path
+      b.add_breadcrumb :account, :root_path
+      b.add_breadcrumb :bien, :root_path
     end
+
   end
 
 
