@@ -325,6 +325,12 @@ And do not forget to add /lib to rails autoload_paths by adding the following li
     end
   end
 
+Use your new builder by adding the builder option to the renderer.
+
+  <%= render_breadcrumbs(:builder => BreadcrumbsOnRails::Breadcrumbs::HtmlBuilder) %>
+
+
+
 == Author
 
 * {Simone Carletti}[http://www.simonecarletti.com] <weppos@weppos.net>
