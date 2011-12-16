@@ -44,7 +44,7 @@ To define static menus, do it only once by creating an initializer, there will b
   
     # define_static_breadcrumb takes as argument the symbol name of the breadcrumb to use
     config.define_static_breadcrumb :mainMenu do |b|
-      # add_breadcrumb takes the sames arguments as in a controller
+      # add_breadcrumb method here takes the sames arguments as in a controller (see below)
       b.add_breadcrumb :home, :root_path
       b.add_breadcrumb :account, :root_path
       b.add_breadcrumb :bien, :root_path
@@ -111,7 +111,7 @@ In your view, you can render the breadcrumb menu with the <tt>render_breadcrumbs
     <%= render_breadcrumbs :separator => ' / ', :breadcrumb => :sideMenuBreadcrumb %>
   </body>
 
-More complex customizations require a custom Builder (documentation yet to come).
+More complex customizations require a custom Builder (see custom builder below).
 
 === Breadcrumb Element
 
@@ -251,6 +251,79 @@ In your controller, you can also use the <tt>I18n.t</tt> method directly.
     add_breadcrumb I18n.t("breadcrumbs.homepage"), :root_path
   end
 
+=== Custom builder
+
+If you need a more complex breadcrumb, or a menu, you'll need to define a custom builder.
+To create such builder, add a file like the following.
+
+  # /lib/breadcrumbs_on_rails/breadcrumbs/html_builder.rb
+  module BreadcrumbsOnRails
+    module Breadcrumbs
+      # The HtmlBuilder is an html5 breadcrumb builder.
+      # It provides a simple way to render breadcrumb navigation as html5 tags.
+      #
+      # To use this custom Builder pass the option :builder => BuilderClass to the <tt>render_breadcrumbs</tt> helper method.
+      #
+      class HtmlBuilder < Builder
+
+        def render
+          # creating nav id=breadcrumb
+          @context.content_tag(:nav, :id => 'breadcrumb') do
+            render_elements(@elements)
+          end
+        end
+
+        def render_elements(elements)
+          content = nil
+          elements.each do |element|
+            if content.nil?
+              content = render_element(element)
+            else
+              content << render_element(element)
+            end
+          end
+          @context.content_tag(:ul, content)
+        end
+
+        def render_element(element)
+          # preparing element
+          if (element.childs.length > 0)
+            content = @context.link_to(compute_path(element)) do
+              @context.content_tag(:span, compute_name(element)) #, :class => "arrow")
+            end
+          else
+            content = @context.link_to(compute_name(element), compute_path(element))
+          end
+
+          # rendering sub-elements
+          if element.childs.length > 0
+            content = content + render_elements(element.childs)
+          end
+
+          # adding element and it's sub-elements
+          @context.content_tag(:li, content) #, :class => klass)
+        end
+      end
+    end
+  end
+
+
+And do not forget to add /lib to rails autoload_paths by adding the following line.
+
+  # config/application.rb
+  module MyNiceRailsApplication
+    class Application < Rails::Application
+
+      ...
+
+      # Custom directories with classes and modules you want to be autoloadable.
+      # config.autoload_paths += %W(#{config.root}/extras)
+      config.autoload_paths += %W( #{config.root}/lib )
+
+      ...
+
+    end
+  end
 
 == Author
 

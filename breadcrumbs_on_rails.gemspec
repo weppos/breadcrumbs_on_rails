@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = "2011-09-20"
   s.description = "BreadcrumbsOnRails is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project."
   s.email = "weppos@weppos.net"
-  s.files = [".gitignore", "CHANGELOG.rdoc", "Gemfile", "Gemfile.lock", "LICENSE", "README.rdoc", "Rakefile", "breadcrumbs_on_rails.gemspec", "init.rb", "lib/breadcrumbs_on_rails.rb", "lib/breadcrumbs_on_rails/breadcrumbs.rb", "lib/breadcrumbs_on_rails/controller_mixin.rb", "lib/breadcrumbs_on_rails/railtie.rb", "lib/breadcrumbs_on_rails/version.rb", "test/test_helper.rb", "test/unit/builder_test.rb", "test/unit/element_test.rb", "test/unit/simple_builder_test.rb"]
+  s.files = [".gitignore", "CHANGELOG.rdoc", "Gemfile", "Gemfile.lock", "LICENSE", "README.rdoc", "Rakefile", "breadcrumbs_on_rails.gemspec", "init.rb", "lib/breadcrumbs_on_rails.rb", "lib/breadcrumbs_on_rails/breadcrumbs.rb", "lib/breadcrumbs_on_rails/config.rb", "lib/breadcrumbs_on_rails/controller_mixin.rb", "lib/breadcrumbs_on_rails/railtie.rb", "lib/breadcrumbs_on_rails/version.rb", "test/test_helper.rb", "test/unit/builder_test.rb", "test/unit/element_test.rb", "test/unit/simple_builder_test.rb"]
   s.homepage = "http://www.simonecarletti.com/code/breadcrumbs_on_rails"
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
