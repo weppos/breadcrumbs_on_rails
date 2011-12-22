@@ -52,8 +52,11 @@ To define static menus, do it only once by creating an initializer, there will b
     end
 
     # definer have an optional argument to pass options.
-    # The main option is ':flag_for_breadcrumb'. Turn it to 'true' and your definer will associate a flag of the same name for each breadcrumb created.
-    # The flag is an option set in the breadcrumb element, and is later accessible in the builder, use it at your own convenience.
+    # The main option is ':flag_for_breadcrumb'.
+    # Turn it to 'true' and your definer will associate a flag of the same name for each breadcrumb
+    # created. The flag is an option set in the breadcrumb element, and is later accessible in the
+    # builder, use it at your own convenience.
+    #
     config.definer :mainMenu, :flag_for_breadcrumb => true do |d|
       # add_breadcrumb method here takes the sames arguments as in a controller (see below)
       d.add_breadcrumb :home, :root_path
@@ -77,6 +80,7 @@ To define static menus, do it only once by creating an initializer, there will b
 
 In your controller, call <tt>add_breadcrumb</tt> to push a new element on the breadcrumb stack. <tt>add_breadcrumb</tt> requires two arguments: the name of the breadcrumb and the target path. See the section "Breadcrumb Element" for more details about name and target class types.
 The third, optional argument is a Hash of options to customize the breadcrumb.
+
 You can use the same definer as in the configuration, by calling <tt>definer</tt>, except that it will create a volatile block by default.
 During the rendering, volatile breadcrumbs/flags will merge with statics ones or override them if they have the same name.
 Doing that, you can define default flags in the configuration, and change their values in the controllers.
@@ -308,7 +312,7 @@ In your controller, you can also use the <tt>I18n.t</tt> method directly as it r
 
 If you need a more complex breadcrumb, or a menu, you'll need to define a custom builder.
 To create such builder, add a file like the following.
-In your builder, you can use <tt>flag_for(element, [:name_of_the_flag])</tt>, without its optional argument to get the flag named ':flag'
+In your builder, you can use <tt>flag_for(element, [:name_of_the_flag])</tt>, without its optional argument you'll get the flag named ':flag'
 
   # /lib/breadcrumbs_on_rails/breadcrumbs/html_builder.rb
   module BreadcrumbsOnRails
