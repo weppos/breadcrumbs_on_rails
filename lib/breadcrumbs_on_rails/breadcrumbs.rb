@@ -41,6 +41,14 @@ module BreadcrumbsOnRails
         raise NotImplementedError
       end
 
+      def flag_for(element, option = :flag)
+        flag = nil
+        flag_selector = element.options[option]
+        unless flag_selector.nil?
+          flag = @options[:flags][flag_selector] if @options[:flags].include?(flag_selector)
+        end
+        return flag
+      end
 
       protected
 
