@@ -16,7 +16,7 @@ module BreadcrumbsOnRails
       helper          HelperMethods
       helper_method   :add_breadcrumb, :breadcrumbs
     end
-    
+
     protected
 
     def add_breadcrumb(name, path, options = {})
