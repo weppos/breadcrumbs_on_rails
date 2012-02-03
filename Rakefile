@@ -13,11 +13,6 @@ PKG_VERSION = ENV['PKG_VERSION'] || BreadcrumbsOnRails::VERSION
 # Run test by default.
 task :default => :test
 
-# This builds the actual gem. For details of what all these options
-# mean, and other ones you can add, check the documentation here:
-#
-#   http://rubygems.org/read/chapter/20
-#
 spec = Gem::Specification.new do |s|
   s.name              = PKG_NAME
   s.version           = PKG_VERSION
@@ -28,16 +23,14 @@ spec = Gem::Specification.new do |s|
   s.email             = "weppos@weppos.net"
   s.homepage          = "http://www.simonecarletti.com/code/breadcrumbs_on_rails"
 
-  # Add any extra files to include in the gem (like your README)
   s.files             = `git ls-files`.split("\n")
   s.test_files        = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths     = %w( lib )
 
-  s.add_development_dependency("rake")
-  s.add_development_dependency("bundler")
-  s.add_development_dependency("rails", "~> 3.0.0")
-  s.add_development_dependency("mocha", "~> 0.9.10")
-  s.add_development_dependency("yard")
+  s.add_development_dependency "rails", ">= 3.0"
+  s.add_development_dependency "appraisal"
+  s.add_development_dependency "mocha", "~> 0.9.10"
+  s.add_development_dependency "yard"
 end
 
 
