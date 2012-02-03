@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: /Users/weppos/Code/breadcrumbs_on_rails
   specs:
     breadcrumbs_on_rails (2.1.0)
 
@@ -92,6 +92,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord (~> 3.1)
   appraisal
   breadcrumbs_on_rails!
   mocha (~> 0.9.10)
