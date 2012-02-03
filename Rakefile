@@ -1,9 +1,6 @@
 require 'rubygems'
-require 'rubygems/package_task'
 require 'bundler'
-require 'rake/testtask'
-require 'yard'
-require 'yard/rake/yardoc_task'
+require 'appraisal'
 
 $:.unshift(File.dirname(__FILE__) + "/lib")
 require 'breadcrumbs_on_rails/version'
@@ -40,7 +37,11 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency("bundler")
   s.add_development_dependency("rails", "~> 3.0.0")
   s.add_development_dependency("mocha", "~> 0.9.10")
+  s.add_development_dependency("yard")
 end
+
+
+require 'rubygems/package_task'
 
 Gem::PackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
@@ -64,7 +65,8 @@ desc "Package the library and generates the gemspec"
 task :package => [:gemspec]
 
 
-# Run all the tests in the /test folder
+require 'rake/testtask'
+
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.test_files = FileList["test/**/*_test.rb"]
@@ -73,7 +75,9 @@ Rake::TestTask.new do |t|
 end
 
 
-# Generate documentation
+require 'yard'
+require 'yard/rake/yardoc_task'
+
 YARD::Rake::YardocTask.new(:yardoc) do |y|
   y.options = ["--output-dir", "yardoc"]
 end
