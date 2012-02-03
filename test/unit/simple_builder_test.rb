@@ -2,14 +2,10 @@ require 'test_helper'
 
 class SimpleBuilderTest < ActionView::TestCase
 
-  Template = Class.new do
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::UrlHelper
+  def setup
+    @template = self
   end
 
-  def setup
-    @template = Template.new
-  end
 
   def test_render_should_be_implemented
     assert_nothing_raised { simplebuilder(@template, []).render }
@@ -59,14 +55,14 @@ class SimpleBuilderTest < ActionView::TestCase
 
   protected
 
-    def simplebuilder(*args)
-      BreadcrumbsOnRails::Breadcrumbs::SimpleBuilder.new(*args)
-    end
+  def simplebuilder(*args)
+    BreadcrumbsOnRails::Breadcrumbs::SimpleBuilder.new(*args)
+  end
 
-    def generate_elements(number)
-      (1..number).collect do |index|
-        BreadcrumbsOnRails::Breadcrumbs::Element.new("Element #{index}", "/element/#{index}")
-      end
+  def generate_elements(number)
+    (1..number).collect do |index|
+      BreadcrumbsOnRails::Breadcrumbs::Element.new("Element #{index}", "/element/#{index}")
     end
+  end
 
 end

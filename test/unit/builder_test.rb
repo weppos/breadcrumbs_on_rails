@@ -1,37 +1,9 @@
 require 'test_helper'
 
-class BuilderTest < ActiveSupport::TestCase
-
-  Template = Class.new do
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::UrlHelper
-
-    def url_for(params)
-      "http://localhost?" + params.to_param
-    end
-
-    protected
-
-      def method_for_name
-        "name from symbol"
-      end
-
-      def proc_for_name
-        "name from proc"
-      end
-
-      def method_for_path
-        "http://localhost/#symbol"
-      end
-
-      def proc_for_path
-        "http://localhost/#proc"
-      end
-  end
+class BuilderTest < ActionView::TestCase
 
   def setup
-    @template = Template.new
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil)
+    @template = self
   end
 
 
@@ -46,64 +18,88 @@ class BuilderTest < ActiveSupport::TestCase
   end
 
   def test_initialize_should_set_context
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    assert_equal(@template, @builder.instance_variable_get(:'@context'))
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    assert_equal(@template, builder.instance_variable_get(:'@context'))
   end
 
   def test_initialize_should_set_elements
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [1, 2])
-    assert_equal([1, 2], @builder.instance_variable_get(:'@elements'))
+    builder= BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [1, 2])
+    assert_equal([1, 2], builder.instance_variable_get(:'@elements'))
   end
 
 
   def test_compute_name_with_symbol
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(:method_for_name, nil)
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(:method_for_name, nil)
 
-    assert_equal("name from symbol", @builder.send(:compute_name, @element))
+    assert_equal("name from symbol", builder.send(:compute_name, element))
   end
 
   def test_compute_name_with_proc
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(proc { |template| template.send(:proc_for_name) }, nil)
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(proc { |template| template.send(:proc_for_name) }, nil)
 
-    assert_equal("name from proc", @builder.send(:compute_name, @element))
+    assert_equal("name from proc", builder.send(:compute_name, element))
   end
 
   def test_compute_name_with_string
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new("name from string", nil)
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new("name from string", nil)
 
-    assert_equal("name from string", @builder.send(:compute_name, @element))
+    assert_equal("name from string", builder.send(:compute_name, element))
   end
 
 
   def test_compute_path_with_symbol
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, :method_for_path)
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, :method_for_path)
 
-    assert_equal("http://localhost/#symbol", @builder.send(:compute_path, @element))
+    assert_equal("http://localhost/#symbol", builder.send(:compute_path, element))
   end
 
   def test_compute_path_with_proc
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, proc { |template| template.send(:proc_for_path) })
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, proc { |template| template.send(:proc_for_path) })
 
-    assert_equal("http://localhost/#proc", @builder.send(:compute_path, @element))
+    assert_equal("http://localhost/#proc", builder.send(:compute_path, element))
   end
 
   def test_compute_path_with_hash
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, { :foo => "bar" })
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, { :foo => "bar" })
 
-    assert_equal("http://localhost?foo=bar", @builder.send(:compute_path, @element))
+    assert_equal("http://localhost?foo=bar", builder.send(:compute_path, element))
   end
 
   def test_compute_path_with_string
-    @builder  = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
-    @element  = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, "http://localhost/#string")
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, "http://localhost/#string")
 
-    assert_equal("http://localhost/#string", @builder.send(:compute_path, @element))
+    assert_equal("http://localhost/#string", builder.send(:compute_path, element))
+  end
+
+
+
+  def url_for(params)
+    "http://localhost?" + params.to_param
+  end
+
+  protected
+
+  def method_for_name
+    "name from symbol"
+  end
+
+  def proc_for_name
+    "name from proc"
+  end
+
+  def method_for_path
+    "http://localhost/#symbol"
+  end
+
+  def proc_for_path
+    "http://localhost/#proc"
   end
 
 end
