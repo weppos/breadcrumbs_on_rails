@@ -12,10 +12,6 @@ require 'breadcrumbs_on_rails/version'
 PKG_NAME    = ENV['PKG_NAME']    || "breadcrumbs_on_rails"
 PKG_VERSION = ENV['PKG_VERSION'] || BreadcrumbsOnRails::VERSION
 
-if ENV['SNAPSHOT'].to_i == 1
-  PKG_VERSION << "." << Time.now.utc.strftime("%Y%m%d%H%M%S")
-end
-
 
 # Run test by default.
 task :default => :test
