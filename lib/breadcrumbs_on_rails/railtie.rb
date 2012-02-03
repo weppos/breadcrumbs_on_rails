@@ -16,5 +16,5 @@ module BreadcrumbsOnRails
 end
 
 ActiveSupport.on_load(:action_controller) do
-  include BreadcrumbsOnRails::ControllerMixin
+  include BreadcrumbsOnRails::ActionController
 end

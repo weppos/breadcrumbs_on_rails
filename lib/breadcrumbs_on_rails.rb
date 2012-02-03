@@ -6,9 +6,9 @@
 # Copyright (c) 2009-2012 Simone Carletti <weppos@weppos.net>
 #++
 
-require 'breadcrumbs_on_rails/controller_mixin'
 require 'breadcrumbs_on_rails/breadcrumbs'
 require 'breadcrumbs_on_rails/version'
+require 'breadcrumbs_on_rails/action_controller'
 require 'breadcrumbs_on_rails/railtie'
 
 

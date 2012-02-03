@@ -8,7 +8,7 @@
 
 module BreadcrumbsOnRails
 
-  module ControllerMixin
+  module ActionController
     extend ActiveSupport::Concern
 
     included do
