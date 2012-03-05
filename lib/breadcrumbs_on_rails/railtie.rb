@@ -10,11 +10,10 @@ module BreadcrumbsOnRails
 
   class Railtie < Rails::Railtie
     initializer "breadcrumbs_on_rails.initialize" do
+      ActiveSupport.on_load(:action_controller) do
+        include BreadcrumbsOnRails::ActionController
+      end
     end
   end
 
-end
-
-ActiveSupport.on_load(:action_controller) do
-  include BreadcrumbsOnRails::ActionController
 end
