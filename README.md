@@ -85,66 +85,65 @@ You can use the same definer as in the configuration, by calling `definer`, exce
 During the rendering, volatile breadcrumbs/flags will merge with statics ones or override them if they have the same name.
 Doing that, you can define default flags in the configuration, and change their values in the controllers.
 
-  class MyController
-  
-    add_breadcrumb "home", :root_path
-    add_breadcrumb "my", :my_path
-
-    # you may specify the breadcrumbs you want to use instead of the default one
-    add_breadcrumb "my", :my_path, :breadcrumb => :bottomMenu
+    class MyController
     
-    # to add sub-menu (alternate breadcrumbs for the same level)
-    add_breadcrumb :users, :users_path do |bread|
-      # add submenu using a symbol for translation (see translation below)
-      bread.add_child :accounts, :accounts_path
-      # or a string
-      bread.add_child "Profiles", :profiles_path
-    end
-
-    # to add a breadcrumb for current view
-    add_breadcrumb_for_current "My profile"
-
-    # definer takes as argument the symbol name of the breadcrumb/flags to use
-    definer :mainMenu do |d|
-      d.add_breadcrumb :home, :root_path
-      d.add_breadcrumb :bien, :root_path
-    end
-
-    # definer in the controller takes the same optional argument as in the configuration, to pass options.
-    definer :mainMenu, :flag_for_breadcrumb => true do |d|
-      d.add_breadcrumb :folder, :folders_path
-
-      # volatile flags override statics ones
-      d.set_flag :visits_icon_flag, :valid
-    end
-
-
-    def index
-      # ...
+      add_breadcrumb "home", :root_path
+      add_breadcrumb "my", :my_path
+    
+      # you may specify the breadcrumbs you want to use instead of the default one
+      add_breadcrumb "my", :my_path, :breadcrumb => :bottomMenu
       
-      add_breadcrumb "index", index_path
-    end
-
-    def create
+      # to add sub-menu (alternate breadcrumbs for the same level)
+      add_breadcrumb :users, :users_path do |bread|
+        # add submenu using a symbol for translation (see translation below)
+        bread.add_child :accounts, :accounts_path
+        # or a string
+        bread.add_child "Profiles", :profiles_path
+      end
+    
+      # to add a breadcrumb for current view
+      add_breadcrumb_for_current "My profile"
+    
+      # definer takes as argument the symbol name of the breadcrumb/flags to use
+      definer :mainMenu do |d|
+        d.add_breadcrumb :home, :root_path
+        d.add_breadcrumb :bien, :root_path
+      end
+    
       # definer in the controller takes the same optional argument as in the configuration, to pass options.
-      # By default, volatile blocks are defined in the controller. You may use the <tt>static</tt> option to create static block.
-      definer :mainMenu, :flag_for_breadcrumb => true, :static => true do |d|
-        d.add_breadcrumb :account, :account_path
-
-        # flags attributes can be set here
-        d.set_flag :home, true
-        d.set_flag :bien, false
-
-        # you can use as may flag as you need.
-        # theses options are accessible in your builders (see below)
-        d.add_breadcrumb :cart, :cart_path, :right_icon => :cart_icon_flag
-
-        # and flag can be set with any value, boolean, or symbols for example
-        d.set_flag :cart_icon_flag, :waiting
+      definer :mainMenu, :flag_for_breadcrumb => true do |d|
+        d.add_breadcrumb :folder, :folders_path
+    
+        # volatile flags override statics ones
+        d.set_flag :visits_icon_flag, :valid
+      end
+    
+    
+      def index
+        # ...
+        
+        add_breadcrumb "index", index_path
+      end
+    
+      def create
+        # definer in the controller takes the same optional argument as in the configuration, to pass options.
+        # By default, volatile blocks are defined in the controller. You may use the <tt>static</tt> option to create static block.
+        definer :mainMenu, :flag_for_breadcrumb => true, :static => true do |d|
+          d.add_breadcrumb :account, :account_path
+    
+          # flags attributes can be set here
+          d.set_flag :home, true
+          d.set_flag :bien, false
+    
+          # you can use as may flag as you need.
+          # theses options are accessible in your builders (see below)
+          d.add_breadcrumb :cart, :cart_path, :right_icon => :cart_icon_flag
+    
+          # and flag can be set with any value, boolean, or symbols for example
+          d.set_flag :cart_icon_flag, :waiting
+        end
       end
     end
-  
-  end
 
 In your view, you can render the breadcrumb menu with the `render_breadcrumbs` helper.
 
