@@ -23,6 +23,13 @@ class ElementTest < ActiveSupport::TestCase
     assert_equal({ :title => "Go to the Homepage" }, element.options)
   end
 
+  def test_initialize_should_allow_childs
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(:homepage, "/", :title => "Go to the Homepage")
+    element.add_child(nil, '/')
+    element.add_child(:homepage, nil)
+    assert_equal(2, element.childs.count)
+  end
+
 
   def test_name
     element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil)
