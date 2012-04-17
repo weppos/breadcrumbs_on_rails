@@ -85,65 +85,66 @@ You can use the same definer as in the configuration, by calling `definer`, exce
 During the rendering, volatile breadcrumbs/flags will merge with statics ones or override them if they have the same name.
 Doing that, you can define default flags in the configuration, and change their values in the controllers.
 
-    class MyController
+  class MyController
+  
+    add_breadcrumb "home", :root_path
+    add_breadcrumb "my", :my_path
+
+    # you may specify the breadcrumbs you want to use instead of the default one
+    add_breadcrumb "my", :my_path, :breadcrumb => :bottomMenu
     
-      add_breadcrumb "home", :root_path
-      add_breadcrumb "my", :my_path
-    
-      # you may specify the breadcrumbs you want to use instead of the default one
-      add_breadcrumb "my", :my_path, :breadcrumb => :bottomMenu
+    # to add sub-menu (alternate breadcrumbs for the same level)
+    add_breadcrumb :users, :users_path do |bread|
+      # add submenu using a symbol for translation (see translation below)
+      bread.add_child :accounts, :accounts_path
+      # or a string
+      bread.add_child "Profiles", :profiles_path
+    end
+
+    # to add a breadcrumb for current view
+    add_breadcrumb_for_current "My profile"
+
+    # definer takes as argument the symbol name of the breadcrumb/flags to use
+    definer :mainMenu do |d|
+      d.add_breadcrumb :home, :root_path
+      d.add_breadcrumb :bien, :root_path
+    end
+
+    # definer in the controller takes the same optional argument as in the configuration, to pass options.
+    definer :mainMenu, :flag_for_breadcrumb => true do |d|
+      d.add_breadcrumb :folder, :folders_path
+
+      # volatile flags override statics ones
+      d.set_flag :visits_icon_flag, :valid
+    end
+
+
+    def index
+      # ...
       
-      # to add sub-menu (alternate breadcrumbs for the same level)
-      add_breadcrumb :users, :users_path do |bread|
-        # add submenu using a symbol for translation (see translation below)
-        bread.add_child :accounts, :accounts_path
-        # or a string
-        bread.add_child "Profiles", :profiles_path
-      end
-    
-      # to add a breadcrumb for current view
-      add_breadcrumb_for_current "My profile"
-    
-      # definer takes as argument the symbol name of the breadcrumb/flags to use
-      definer :mainMenu do |d|
-        d.add_breadcrumb :home, :root_path
-        d.add_breadcrumb :bien, :root_path
-      end
-    
+      add_breadcrumb "index", index_path
+    end
+
+    def create
       # definer in the controller takes the same optional argument as in the configuration, to pass options.
-      definer :mainMenu, :flag_for_breadcrumb => true do |d|
-        d.add_breadcrumb :folder, :folders_path
-    
-        # volatile flags override statics ones
-        d.set_flag :visits_icon_flag, :valid
-      end
-    
-    
-      def index
-        # ...
-        
-        add_breadcrumb "index", index_path
-      end
-    
-      def create
-        # definer in the controller takes the same optional argument as in the configuration, to pass options.
-        # By default, volatile blocks are defined in the controller. You may use the <tt>static</tt> option to create static block.
-        definer :mainMenu, :flag_for_breadcrumb => true, :static => true do |d|
-          d.add_breadcrumb :account, :account_path
-    
-          # flags attributes can be set here
-          d.set_flag :home, true
-          d.set_flag :bien, false
-    
-          # you can use as may flag as you need.
-          # theses options are accessible in your builders (see below)
-          d.add_breadcrumb :cart, :cart_path, :right_icon => :cart_icon_flag
-    
-          # and flag can be set with any value, boolean, or symbols for example
-          d.set_flag :cart_icon_flag, :waiting
-        end
+      # By default, volatile blocks are defined in the controller. You may use the <tt>static</tt> option to create static block.
+      definer :mainMenu, :flag_for_breadcrumb => true, :static => true do |d|
+        d.add_breadcrumb :account, :account_path
+
+        # flags attributes can be set here
+        d.set_flag :home, true
+        d.set_flag :bien, false
+
+        # you can use as may flag as you need.
+        # theses options are accessible in your builders (see below)
+        d.add_breadcrumb :cart, :cart_path, :right_icon => :cart_icon_flag
+
+        # and flag can be set with any value, boolean, or symbols for example
+        d.set_flag :cart_icon_flag, :waiting
       end
     end
+  
+  end
 
 In your view, you can render the breadcrumb menu with the `render_breadcrumbs` helper.
 
@@ -163,7 +164,7 @@ In your view, you can render the breadcrumb menu with the `render_breadcrumbs` h
 `render_breadcrumbs` understands a limited set of options. For example, you can pass change the default separator with the `:separator` option, or the default breadcrumb to use with the `:breadcrumb` option.
 
     <body>
-      <%= render_breadcrumbs :separator => ' / ', :breadcrumb => :sideMenuBreadcrumb %>
+      <%= render_breadcrumbs :separator => ' / ', :breadcrumb => :side_menu_breadcrumb %>
     </body>
 
 More complex customizations require a custom Builder, see custom builder below or read the [documentation](http://www.simonecarletti.com/code/breadcrumbs_on_rails/docs/) to learn more about advanced usage and builders.
@@ -189,7 +190,7 @@ Then, if no method are found with that name, the library search for a key in the
       # The Name is set to the value returned by
       # the :root_name method.
       add_breadcrumb :function_name, "/"
-      add_breadcrumb :translateMe, "/"
+      add_breadcrumb :translate_me, "/"
       
       protected
   
@@ -264,41 +265,41 @@ The menu itself is translated here by 'breadcrumbs.menus.default.users.root', an
       breadcrumbs:
         menus:
           default:
-            translateMe: "Translated"
+            translate_me: "Translated"
             users:
               root: "Menu title"
               accounts: "Accounts sub menu"
       events:
-        newYear: "Happy new year"
+        new_year: "Happy new year"
     
     # config/locales/it.yml
     it:
       breadcrumbs:
         menus:
           default:
-            translateMe: "Traduto"
+            translate_me: "Traduto"
             users:
               root: "Tittoro del menu"
               accounts: "Sotto-menu dei conti"
       events:
-        newYear: "Felice anno nuovo"
+        new_year: "Felice anno nuovo"
     
     # config/locales/fr.yml
     fr:
       breadcrumbs:
         menus:
           default:
-            translateMe: "Traduit"
+            translate_me: "Traduit"
             users:
               root: "Titre du menu"
               accounts: "Sous-menu des comptes"
       events:
-        newYear: "Bonne annee"
+        new_year: "Bonne annee"
 
 In your controller, you can also use the `I18n.t` method directly as it returns a string.
 
     class PostsController < ApplicationController
-      add_breadcrumb I18n.t("events.newYear"),  :events_path
+      add_breadcrumb I18n.t("events.new_year"),  :events_path
       add_breadcrumb I18n.t("events.holidays"),  :events_path, :only => %w(holidays)
     end
     
