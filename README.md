@@ -29,7 +29,7 @@ Use [Bundler](http://gembundler.com) and the [:git option](http://gembundler.com
 
 ## Basic Usage
 
-Creating a navigation menu in your Rails app using *BreadcrumbsOnRails* is really straightforward.
+Creating a navigation menu in your Rails app using **BreadcrumbsOnRails** is really straightforward.
 There are two kinds of breadcrumbs types, statics and volatiles. The first are kept whereas the second ones are only defined in controllers.
 Aside to the menu, you may want to set flags to interact with you menu generator.
 
@@ -41,10 +41,10 @@ To define static menus, do it only once by creating an initializer, there will b
       config.add_breadcrumb :welcome, :root_path #, :breadcrumb => :default
     
       # define a breadcrumb
-      config.add_breadcrumb :home, :root_path, :breadcrumb => :bottomMenu
+      config.add_breadcrumb :home, :root_path, :breadcrumb => :bottom_menu
     
       # definer takes as argument the symbol name of the breadcrumb/flags to use
-      config.definer :mainMenu do |d|
+      config.definer :main_menu do |d|
         # add_breadcrumb method here takes the sames arguments as in a controller (see below)
         d.add_breadcrumb :home, :root_path
         d.add_breadcrumb :account, :root_path
@@ -57,7 +57,7 @@ To define static menus, do it only once by creating an initializer, there will b
       # created. The flag is an option set in the breadcrumb element, and is later accessible in the
       # builder, use it at your own convenience.
       #
-      config.definer :mainMenu, :flag_for_breadcrumb => true do |d|
+      config.definer :main_menu, :flag_for_breadcrumb => true do |d|
         # add_breadcrumb method here takes the sames arguments as in a controller (see below)
         d.add_breadcrumb :home, :root_path
         d.add_breadcrumb :account, :root_path
@@ -78,73 +78,73 @@ To define static menus, do it only once by creating an initializer, there will b
     end
 
 
-In your controller, call `add_breadcrumb` to push a new element on the breadcrumb stack. <tt>add_breadcrumb</tt> requires two arguments: the name of the breadcrumb and the target path. See the section "Breadcrumb Element" for more details about name and target class types.
+In your controller, call `add_breadcrumb` to push a new element on the breadcrumb stack. `add_breadcrumb` requires two arguments: the name of the breadcrumb and the target path. See the section "Breadcrumb Element" for more details about name and target class types.
 The third, optional argument is a Hash of options to customize the breadcrumb.
 
 You can use the same definer as in the configuration, by calling `definer`, except that it will create a volatile block by default.
 During the rendering, volatile breadcrumbs/flags will merge with statics ones or override them if they have the same name.
 Doing that, you can define default flags in the configuration, and change their values in the controllers.
 
-  class MyController
-  
-    add_breadcrumb "home", :root_path
-    add_breadcrumb "my", :my_path
-
-    # you may specify the breadcrumbs you want to use instead of the default one
-    add_breadcrumb "my", :my_path, :breadcrumb => :bottomMenu
+    class MyController
     
-    # to add sub-menu (alternate breadcrumbs for the same level)
-    add_breadcrumb :users, :users_path do |bread|
-      # add submenu using a symbol for translation (see translation below)
-      bread.add_child :accounts, :accounts_path
-      # or a string
-      bread.add_child "Profiles", :profiles_path
-    end
+      add_breadcrumb "home", :root_path
+      add_breadcrumb "my", :my_path
 
-    # to add a breadcrumb for current view
-    add_breadcrumb_for_current "My profile"
-
-    # definer takes as argument the symbol name of the breadcrumb/flags to use
-    definer :mainMenu do |d|
-      d.add_breadcrumb :home, :root_path
-      d.add_breadcrumb :bien, :root_path
-    end
-
-    # definer in the controller takes the same optional argument as in the configuration, to pass options.
-    definer :mainMenu, :flag_for_breadcrumb => true do |d|
-      d.add_breadcrumb :folder, :folders_path
-
-      # volatile flags override statics ones
-      d.set_flag :visits_icon_flag, :valid
-    end
-
-
-    def index
-      # ...
+      # you may specify the breadcrumbs you want to use instead of the default one
+      add_breadcrumb "my", :my_path, :breadcrumb => :bottom_menu
       
-      add_breadcrumb "index", index_path
-    end
-
-    def create
-      # definer in the controller takes the same optional argument as in the configuration, to pass options.
-      # By default, volatile blocks are defined in the controller. You may use the <tt>static</tt> option to create static block.
-      definer :mainMenu, :flag_for_breadcrumb => true, :static => true do |d|
-        d.add_breadcrumb :account, :account_path
-
-        # flags attributes can be set here
-        d.set_flag :home, true
-        d.set_flag :bien, false
-
-        # you can use as may flag as you need.
-        # theses options are accessible in your builders (see below)
-        d.add_breadcrumb :cart, :cart_path, :right_icon => :cart_icon_flag
-
-        # and flag can be set with any value, boolean, or symbols for example
-        d.set_flag :cart_icon_flag, :waiting
+      # to add sub-menu (alternate breadcrumbs for the same level)
+      add_breadcrumb :users, :users_path do |bread|
+        # add submenu using a symbol for translation (see translation below)
+        bread.add_child :accounts, :accounts_path
+        # or a string
+        bread.add_child "Profiles", :profiles_path
       end
+
+      # to add a breadcrumb for current view
+      add_breadcrumb_for_current "My profile"
+
+      # definer takes as argument the symbol name of the breadcrumb/flags to use
+      definer :main_menu do |d|
+        d.add_breadcrumb :home, :root_path
+        d.add_breadcrumb :bien, :root_path
+      end
+
+      # definer in the controller takes the same optional argument as in the configuration, to pass options.
+      definer :main_menu, :flag_for_breadcrumb => true do |d|
+        d.add_breadcrumb :folder, :folders_path
+
+        # volatile flags override statics ones
+        d.set_flag :visits_icon_flag, :valid
+      end
+
+
+      def index
+        # ...
+        
+        add_breadcrumb "index", index_path
+      end
+
+      def create
+        # definer in the controller takes the same optional argument as in the configuration, to pass options.
+        # By default, volatile blocks are defined in the controller. You may use the <tt>static</tt> option to create static block.
+        definer :main_menu, :flag_for_breadcrumb => true, :static => true do |d|
+          d.add_breadcrumb :account, :account_path
+
+          # flags attributes can be set here
+          d.set_flag :home, true
+          d.set_flag :bien, false
+
+          # you can use as may flag as you need.
+          # theses options are accessible in your builders (see below)
+          d.add_breadcrumb :cart, :cart_path, :right_icon => :cart_icon_flag
+
+          # and flag can be set with any value, boolean, or symbols for example
+          d.set_flag :cart_icon_flag, :waiting
+        end
+      end
+    
     end
-  
-  end
 
 In your view, you can render the breadcrumb menu with the `render_breadcrumbs` helper.
 
@@ -319,7 +319,7 @@ In your builder, you can use `flag_for(element, [:name_of_the_flag])`, without i
         # The HtmlBuilder is an html5 breadcrumb builder.
         # It provides a simple way to render breadcrumb navigation as html5 tags.
         #
-        # To use this custom Builder pass the option :builder => BuilderClass to the <tt>render_breadcrumbs</tt> helper method.
+        # To use this custom Builder pass the option :builder => BuilderClass to the `render_breadcrumbs` helper method.
         #
         class HtmlBuilder < Builder
     
