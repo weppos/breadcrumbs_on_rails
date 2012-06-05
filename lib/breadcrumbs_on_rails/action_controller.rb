@@ -250,6 +250,7 @@ module BreadcrumbsOnRails
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
+        # passing all flags to Builder (static + volatile)
         options[:flags] = flags(options[:breadcrumb])
         builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs(options[:breadcrumb]), options)
         content = builder.render.html_safe

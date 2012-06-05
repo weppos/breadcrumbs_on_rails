@@ -41,6 +41,7 @@ module BreadcrumbsOnRails
         raise NotImplementedError
       end
 
+      # get flag associated to element
       def flag_for(element, option = :flag)
         flag = nil
         flag_selector = element.options[option]

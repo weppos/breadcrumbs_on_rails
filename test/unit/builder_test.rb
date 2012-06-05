@@ -78,7 +78,19 @@ class BuilderTest < ActionView::TestCase
     assert_equal("http://localhost/#string", builder.send(:compute_path, element))
   end
 
+  def test_empty_associated_flagset
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [])
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, "http://localhost/")
 
+    assert_equal(nil, builder.send(:flag_for, element))
+  end
+
+  def test_associated_flagset
+    builder = BreadcrumbsOnRails::Breadcrumbs::Builder.new(@template, [], :flags => {:activated => true, :seen => 5})
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, "http://localhost/", :flag => :activated)
+
+    assert_equal(true, builder.send(:flag_for, element, :flag))
+  end
 
   def url_for(params)
     "http://localhost?" + params.to_param
