@@ -164,8 +164,9 @@ module BreadcrumbsOnRails
         return key
       end
 
-      def add_child(name, path)
-        self.childs << Breadcrumbs::Element.new(name, path, :parent => self)
+      def add_child(name, path, options = {})
+        opts = options.merge({:parent => self})
+        self.childs << Breadcrumbs::Element.new(name, path, opts)
       end
     end
 
