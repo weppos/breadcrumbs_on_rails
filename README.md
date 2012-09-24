@@ -29,29 +29,121 @@ Use [Bundler](http://gembundler.com) and the [:git option](http://gembundler.com
 
 ## Basic Usage
 
-Creating a breadcrumb navigation menu in your Rails app using *BreadcrumbsOnRails* is really straightforward.
+Creating a navigation menu in your Rails app using **BreadcrumbsOnRails** is really straightforward.
+There are two kinds of breadcrumbs types, statics and volatiles. The first are kept whereas the second ones are only defined in controllers.
+Aside to the menu, you may want to set flags to interact with you menu generator.
 
-In your controller, call `add_breadcrumb` to push a new element on the breadcrumb stack. `add_breadcrumb` requires two arguments: the name of the breadcrumb and the target path.
+To define static menus, do it only once by creating an initializer, there will be availlable everywhere in your controllers.
+
+    # config/initializers/breadcrumbs_config.rb
+    BreadcrumbsOnRails.configure do |config|
+      # define a breadcrumb (by default, the :default breadcrumb is used)
+      config.add_breadcrumb :welcome, :root_path #, :breadcrumb => :default
+    
+      # define a breadcrumb
+      config.add_breadcrumb :home, :root_path, :breadcrumb => :bottom_menu
+    
+      # definer takes as argument the symbol name of the breadcrumb/flags to use
+      config.definer :main_menu do |d|
+        # add_breadcrumb method here takes the sames arguments as in a controller (see below)
+        d.add_breadcrumb :home, :root_path
+        d.add_breadcrumb :account, :root_path
+        d.add_breadcrumb :bien, :root_path
+      end
+    
+      # definer have an optional argument to pass options.
+      # The main option is ':flag_for_breadcrumb'.
+      # Turn it to 'true' and your definer will associate a flag of the same name for each breadcrumb
+      # created. The flag is an option set in the breadcrumb element, and is later accessible in the
+      # builder, use it at your own convenience.
+      #
+      config.definer :main_menu, :flag_for_breadcrumb => true do |d|
+        # add_breadcrumb method here takes the sames arguments as in a controller (see below)
+        d.add_breadcrumb :home, :root_path
+        d.add_breadcrumb :account, :root_path
+        d.add_breadcrumb :bien, :root_path
+    
+        # flags attributes can be set here
+        d.set_flag :home, true
+        d.set_flag :bien, false
+    
+        # you can use as may flag as you need.
+        # theses options are accessible in your builders (see below)
+        d.add_breadcrumb :visits, :users_path, :right_icon => :visits_icon_flag
+    
+        # and flag can be set with any value, boolean, or symbols for example
+        d.set_flag :visits_icon_flag, :waiting
+      end
+    
+    end
+
+
+In your controller, call `add_breadcrumb` to push a new element on the breadcrumb stack. `add_breadcrumb` requires two arguments: the name of the breadcrumb and the target path. See the section "Breadcrumb Element" for more details about name and target class types.
+The third, optional argument is a Hash of options to customize the breadcrumb.
+
+You can use the same definer as in the configuration, by calling `definer`, except that it will create a volatile block by default.
+During the rendering, volatile breadcrumbs/flags will merge with statics ones or override them if they have the same name.
+Doing that, you can define default flags in the configuration, and change their values in the controllers.
 
     class MyController
     
       add_breadcrumb "home", :root_path
       add_breadcrumb "my", :my_path
+
+      # you may specify the breadcrumbs you want to use instead of the default one
+      add_breadcrumb "my", :my_path, :breadcrumb => :bottom_menu
       
+      # to add sub-menu (alternate breadcrumbs for the same level)
+      add_breadcrumb :users, :users_path do |bread|
+        # add submenu using a symbol for translation (see translation below)
+        bread.add_breadcrumb :accounts, :accounts_path
+        # or a string
+        bread.add_breadcrumb "Profiles", :profiles_path
+      end
+
+      # to add a breadcrumb for current view
+      add_breadcrumb_for_current "My profile"
+
+      # definer takes as argument the symbol name of the breadcrumb/flags to use
+      definer :main_menu do |d|
+        d.add_breadcrumb :home, :root_path
+        d.add_breadcrumb :bien, :root_path
+      end
+
+      # definer in the controller takes the same optional argument as in the configuration, to pass options.
+      definer :main_menu, :flag_for_breadcrumb => true do |d|
+        d.add_breadcrumb :folder, :folders_path
+
+        # volatile flags override statics ones
+        d.set_flag :visits_icon_flag, :valid
+      end
+
+
       def index
         # ...
         
         add_breadcrumb "index", index_path
       end
-    
-    end
 
-The third, optional argument is a Hash of options to customize the breadcrumb link.
+      def create
+        # definer in the controller takes the same optional argument as in the configuration, to pass options.
+        # By default, volatile blocks are defined in the controller. You may use the <tt>static</tt> option to create static block.
+        definer :main_menu, :flag_for_breadcrumb => true, :static => true do |d|
+          d.add_breadcrumb :account, :account_path
 
-    class MyController
-      def index
-        add_breadcrumb "index", index_path, :title => "Back to the Index"
+          # flags attributes can be set here
+          d.set_flag :home, true
+          d.set_flag :bien, false
+
+          # you can use as may flag as you need.
+          # theses options are accessible in your builders (see below)
+          d.add_breadcrumb :cart, :cart_path, :right_icon => :cart_icon_flag
+
+          # and flag can be set with any value, boolean, or symbols for example
+          d.set_flag :cart_icon_flag, :waiting
+        end
       end
+    
     end
 
 In your view, you can render the breadcrumb menu with the `render_breadcrumbs` helper.
@@ -69,16 +161,247 @@ In your view, you can render the breadcrumb menu with the `render_breadcrumbs` h
     </body>
     </html>
 
-`render_breadcrumbs` understands a limited set of options. For example, you can pass change the default separator with the `:separator` option.
+`render_breadcrumbs` understands a limited set of options. For example, you can pass change the default separator with the `:separator` option, or the default breadcrumb to use with the `:breadcrumb` option.
 
     <body>
-      <%= render_breadcrumbs :separator => ' / ' %>
+      <%= render_breadcrumbs :separator => ' / ', :breadcrumb => :side_menu_breadcrumb %>
     </body>
 
-More complex customizations require a custom Builder.
+More complex customizations require a custom Builder, see custom builder below or read the [documentation](http://www.simonecarletti.com/code/breadcrumbs_on_rails/docs/) to learn more about advanced usage and builders.
 
-Read the [documentation](http://www.simonecarletti.com/code/breadcrumbs_on_rails/docs/) to learn more about advanced usage and builders.
+### Breadcrumb Element
 
+A breadcrumbs menu is composed by a number of `Element` objects. Each object contains two attributes: the name of the breadcrumb and the target path.
+
+When you call `add_breadcrumb`, the method automatically creates a new `Element` object for you and append it to the breadcrumbs stack. `Element` name and path can be one of the following Ruby types:
+
+* Symbol
+* Proc
+* String
+
+#### Symbol
+
+If the value is a Symbol, it can be used for two different things.
+At first, the library try to call the corresponding method in the same context and sets the `Element` attribute to the returned value.
+Then, if no method are found with that name, the library search for a key in the translation. (see below for translation keys examples)
+
+    class MyController
+    
+      # The Name is set to the value returned by
+      # the :root_name method.
+      add_breadcrumb :function_name, "/"
+      add_breadcrumb :translate_me, "/"
+      
+      protected
+  
+        def function_name
+          "the name"
+        end
+    
+    end
+
+#### Proc
+
+If the value is a Proc, the library calls the proc passing the current view context as argument and sets the `Element` attribute to the returned value. This is useful if you want to postpone the execution to get access to some special methods/variables created in your controller action.
+
+    class MyController
+    
+      # The Name is set to the value returned by
+      # the :root_name method.
+      add_breadcrumb Proc.new { |c| c.my_helper_method },
+                     "/"
+      
+    end
+
+#### String
+
+If the value is a String, the library sets the `Element` attribute to the string value.
+
+    class MyController
+      
+      # The Name is set to the value returned by
+      # the :root_name method.
+      add_breadcrumb "homepage", "/"
+    
+    end
+
+
+### Restricting breadcrumb scope
+
+The `add_breadcrumb` method understands all options you are used to pass to a Rails controller filter.
+In fact, behind the scenes this method uses a `before_filter` to store the tab in the `@breadcrumbs` variable.
+
+Taking advantage of Rails filter options, you can restrict a tab to a selected group of actions in the same controller.
+
+    class PostsController < ApplicationController
+      add_breadcrumb "admin", :admin_path
+      add_breadcrumb "posts", :posts_path, :only => %w(index show)
+    end
+    
+    class ApplicationController < ActionController::Base
+      add_breadcrumb "admin", :admin_path, :if => :admin_controller?
+      
+      def admin_controller?
+        self.class.name =~ /^Admin(::|Controller)/
+      end
+    end
+
+### Internationalization and Localization
+
+BreadcrumbsOnRails is compatible with the standard Rails internationalization framework. 
+
+For our previous example, if you want to localize your menu, define a new breadcrumbs node in your .yml file with all the keys for your elements.
+The convention is 'breadcrumbs.menus' followed by your breadcrumbs symbol (:default by default) then by the menu hierachy.
+
+    add_breadcrumb :users, :users_path do |bread|
+      # add submenu using a symbol for translation (see translation below)
+      bread.add_child :accounts, :accounts_path 
+    end
+
+The menu itself is translated here by 'breadcrumbs.menus.default.users.root', and the sub-menu is 'breadcrumbs.menus.default.users.accounts'.
+
+    # config/locales/en.yml
+    en:
+      breadcrumbs:
+        menus:
+          default:
+            translate_me: "Translated"
+            users:
+              root: "Menu title"
+              accounts: "Accounts sub menu"
+      events:
+        new_year: "Happy new year"
+    
+    # config/locales/it.yml
+    it:
+      breadcrumbs:
+        menus:
+          default:
+            translate_me: "Traduto"
+            users:
+              root: "Tittoro del menu"
+              accounts: "Sotto-menu dei conti"
+      events:
+        new_year: "Felice anno nuovo"
+    
+    # config/locales/fr.yml
+    fr:
+      breadcrumbs:
+        menus:
+          default:
+            translate_me: "Traduit"
+            users:
+              root: "Titre du menu"
+              accounts: "Sous-menu des comptes"
+      events:
+        new_year: "Bonne annee"
+
+In your controller, you can also use the `I18n.t` method directly as it returns a string.
+
+    class PostsController < ApplicationController
+      add_breadcrumb I18n.t("events.new_year"),  :events_path
+      add_breadcrumb I18n.t("events.holidays"),  :events_path, :only => %w(holidays)
+    end
+    
+    class ApplicationController < ActionController::Base
+      add_breadcrumb I18n.t("breadcrumbs.homepage"), :root_path
+    end
+
+### Custom builder
+
+If you need a more complex breadcrumb, or a menu, you'll need to define a custom builder.
+To create such builder, add a file like the following.
+In your builder, you can use `flag_for(element, [:name_of_the_flag])`, without its optional argument you'll get the flag named ':flag'
+
+    # /lib/breadcrumbs_on_rails/breadcrumbs/html_builder.rb
+    module BreadcrumbsOnRails
+      module Breadcrumbs
+        # The HtmlBuilder is an html5 breadcrumb builder.
+        # It provides a simple way to render breadcrumb navigation as html5 tags.
+        #
+        # To use this custom Builder pass the option :builder => BuilderClass to the `render_breadcrumbs` helper method.
+        #
+        class HtmlBuilder < Builder
+    
+          def render
+            # creating nav id=breadcrumb
+            @context.content_tag(:nav, :id => 'breadcrumb') do
+              render_elements(@elements)
+            end
+          end
+    
+          def render_elements(elements)
+            content = nil
+            elements.each do |element|
+              if content.nil?
+                content = render_element(element)
+              else
+                content << render_element(element)
+              end
+            end
+            @context.content_tag(:ul, content)
+          end
+    
+          def render_element(element)
+            # preparing element
+            name = compute_name(element)
+            path = compute_path(element)
+            name_class = ''
+
+            left_icon_class = element.options[:left_icon_class]
+            left_icon_class = element.name if left_icon_class.nil?
+            
+            case left_icon_class
+              when Symbol
+                name_class = left_icon_class.to_s
+              when String
+                name_class = left_icon_class
+            end
+            
+            span_class = "icons sprite-#{name_class}"
+            content = @context.link_to(path, :title => name) do
+              @context.content_tag(:span, '', :class => span_class) + @context.content_tag(:span, "#{name}", :class => 'label')
+            end
+
+            # rendering sub-elements
+            if element.childs.length > 0
+              content = content + render_elements(element.childs)
+            end
+
+            # adding element and it's sub-elements
+            # activ ?
+            class_arr = []
+            class_arr << 'activ' if flag_for(element) == true
+            class_arr << 'highlight' if element.childs.length > 0
+            activ_class = nil
+            activ_class = class_arr.join(" ") if class_arr.count > 0
+            @context.content_tag(:li, content, :class => activ_class)
+          end
+        end
+      end
+    end
+
+
+And do not forget to add /lib to rails autoload_paths by adding the following line.
+
+    # config/application.rb
+    module MyNiceRailsApplication
+      class Application < Rails::Application
+    
+        ...
+
+        # Custom directories with classes and modules you want to be autoloadable.
+        # config.autoload_paths += %W(#{config.root}/extras)
+        config.autoload_paths += %W( #{config.root}/lib )
+    
+        ...
+    
+      end
+    end
+
+Use your new builder by adding the builder option to the renderer.
+
+    <%= render_breadcrumbs(:builder => BreadcrumbsOnRails::Breadcrumbs::HtmlBuilder) %>
 
 ## Credits
 

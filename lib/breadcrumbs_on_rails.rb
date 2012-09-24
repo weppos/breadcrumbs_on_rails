@@ -10,7 +10,9 @@ require 'breadcrumbs_on_rails/breadcrumbs'
 require 'breadcrumbs_on_rails/version'
 require 'breadcrumbs_on_rails/action_controller'
 require 'breadcrumbs_on_rails/railtie'
-
+require 'breadcrumbs_on_rails/breadcrumbs_methods'
+require 'breadcrumbs_on_rails/breadcrumbs_definer'
+require 'breadcrumbs_on_rails/config'
 
 module BreadcrumbsOnRails
 
