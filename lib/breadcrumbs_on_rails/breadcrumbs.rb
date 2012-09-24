@@ -41,13 +41,27 @@ module BreadcrumbsOnRails
         raise NotImplementedError
       end
 
+      # get flag associated to element
+      def flag_for(element, option = :flag)
+        flag = nil
+        flag_selector = element.options[option]
+        unless flag_selector.nil?
+          flag = @options[:flags][flag_selector] if @options[:flags].include?(flag_selector)
+        end
+        return flag
+      end
 
       protected
 
         def compute_name(element)
           case name = element.name
           when Symbol
-            @context.send(name)
+            begin
+              @context.send(name)
+            rescue NoMethodError
+              key = 'breadcrumbs.menus.' + @options[:breadcrumb].to_s + element.translation_key
+              I18n.t(key)
+            end
           when Proc
             name.call(@context)
           else
@@ -88,6 +102,15 @@ module BreadcrumbsOnRails
 
       def render_element(element)
         content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+
+        # rendering sub-elements
+        if (element.childs.length > 0)
+          content = content + " |"
+          element.childs.each do |child|
+            content = content + @context.link_to_unless_current(compute_name(child), compute_path(child)) + "|"
+          end
+        end
+
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
@@ -106,6 +129,10 @@ module BreadcrumbsOnRails
       attr_accessor :name
       # @return [String] The element/link URL.
       attr_accessor :path
+      # @return [Hash] The element/link childs
+      attr_accessor :childs
+      # @return [Element] The element/link parent
+      attr_accessor :parent
       # @return [Hash] The element/link URL.
       attr_accessor :options
 
@@ -119,8 +146,30 @@ module BreadcrumbsOnRails
       def initialize(name, path, options = {})
         self.name     = name
         self.path     = path
+        self.childs   = []
+        #self.parent   = @options[:parent]
+        self.parent   = options.delete(:parent)
         self.options  = options
       end
+
+      def translation_key
+        key = ''
+        elem = self
+        while !elem.nil? do
+          key = '.' + elem.name.to_s + key if elem.name.is_a?(Symbol)
+          key = '.' + elem.name.to_sym.to_s + key if elem.name.is_a?(String)
+          elem = elem.parent
+        end
+        key += '.root' if self.childs.count > 0
+        return key
+      end
+
+      def add_breadcrumb(name, path, options = {}, &block)
+        opts = options.merge({:parent => self})
+        #self.childs << Breadcrumbs::Element.new(name, path, opts)
+        self.childs << BreadcrumbsOnRails.new_breadcrumbs_element(name, path, opts, &block)
+      end
+      alias :add_child :add_breadcrumb
     end
 
   end
