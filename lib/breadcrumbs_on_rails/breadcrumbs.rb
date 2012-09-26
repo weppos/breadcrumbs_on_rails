@@ -87,7 +87,11 @@ module BreadcrumbsOnRails
       end
 
       def render_element(element)
-        content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+        if element.path == nil
+          content = compute_name(element)
+        else
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+        end
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
@@ -116,7 +120,7 @@ module BreadcrumbsOnRails
       # @param  [Hash] options The element/link URL.
       # @return [Element]
       #
-      def initialize(name, path, options = {})
+      def initialize(name, path = nil, options = {})
         self.name     = name
         self.path     = path
         self.options  = options

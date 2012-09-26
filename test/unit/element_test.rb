@@ -2,10 +2,9 @@ require 'test_helper'
 
 class ElementTest < ActiveSupport::TestCase
 
-  def test_initialize_should_require_name_and_path
+  def test_initialize_should_require_name
     assert_raise(ArgumentError) { BreadcrumbsOnRails::Breadcrumbs::Element.new }
-    assert_raise(ArgumentError) { BreadcrumbsOnRails::Breadcrumbs::Element.new(nil) }
-    assert_nothing_raised { BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil) }
+    assert_nothing_raised { BreadcrumbsOnRails::Breadcrumbs::Element.new(nil) }
   end
 
   def test_initialize_should_set_name
@@ -40,6 +39,11 @@ class ElementTest < ActiveSupport::TestCase
     element = BreadcrumbsOnRails::Breadcrumbs::Element.new(nil, nil)
     element.options = { :title => "Go to the Homepage" }
     assert_equal({ :title => "Go to the Homepage" }, element.options)
+  end
+  
+  def test_path_is_optional
+    element = BreadcrumbsOnRails::Breadcrumbs::Element.new(:homepage)
+    assert_nil element.path
   end
 
 end
