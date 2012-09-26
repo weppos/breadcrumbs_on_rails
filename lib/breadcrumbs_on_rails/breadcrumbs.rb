@@ -120,7 +120,7 @@ module BreadcrumbsOnRails
       # @param  [Hash] options The element/link URL.
       # @return [Element]
       #
-      def initialize(name, path, options = {})
+      def initialize(name, path = nil, options = {})
         self.name     = name
         self.path     = path
         self.options  = options
