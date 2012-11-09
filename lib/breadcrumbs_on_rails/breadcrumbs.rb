@@ -99,6 +99,7 @@ module BreadcrumbsOnRails
 
     # If you want to render Twitter Bootstrap compatible breadcrumbs use this builder.
     # Pass the option :builder => BootstrapBuilder to the <tt>render_breadcrumbs</tt> helper method.
+    #
     class BootstrapBuilder < Builder
       def render
         ul_content = @elements.collect do |element|
@@ -106,7 +107,7 @@ module BreadcrumbsOnRails
           content += @context.content_tag(:span, @options[:separator] || " &raquo; ", :class => :divider)
           @context.content_tag(:li, content)
         end.join("\n")      
-        @context.content_tag(:ul, ul_content, :class => :breadcrumb)
+        @context.content_tag(:ul, ul_content, :class => :breadcrumb).html_safe
       end
     end
 
