@@ -97,6 +97,18 @@ module BreadcrumbsOnRails
 
     end
 
+    # If you want to render Twitter Bootstrap compatible breadcrumbs use this builder.
+    # Pass the option :builder => BootstrapBuilder to the <tt>render_breadcrumbs</tt> helper method.
+    class BootstrapBuilder < Builder
+      def render
+        ul_content = @elements.collect do |element|
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+          content += @context.content_tag(:span, @options[:separator] || " &raquo; ", :class => :divider)
+          @context.content_tag(:li, content)
+        end.join("\n")      
+        @context.content_tag(:ul, ul_content, :class => :breadcrumb)
+      end
+    end
 
     # Represents a navigation element in the breadcrumb collection.
     #
