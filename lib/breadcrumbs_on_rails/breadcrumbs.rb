@@ -104,7 +104,7 @@ module BreadcrumbsOnRails
       def render
         ul_content = @elements.collect do |element|
           content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
-          content += @context.content_tag(:span, @options[:separator] || " &raquo; ".html_safe, :class => :divider)
+          content += @context.content_tag(:span, @options[:separator] || " &raquo; ".html_safe, :class => :divider) unless @elements.last == element          
           @context.content_tag(:li, content.html_safe).html_safe
         end.join("\n").html_safe      
         @context.content_tag(:ul, ul_content.html_safe, :class => :breadcrumb).html_safe
