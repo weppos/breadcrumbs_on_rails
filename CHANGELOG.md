@@ -1,5 +1,8 @@
 # Changelog
 
+## master
+
+* NEW: Support for Rails 4
 
 ## master
 
