@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/revans/breadcrumbs_on_rails.png)](https://travis-ci.org/revans/breadcrumbs_on_rails)
+
 # Breadcrumbs On Rails
 
 *BreadcrumbsOnRails* is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project.

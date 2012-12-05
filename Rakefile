@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'bundler'
-require 'appraisal'
 
 $:.unshift(File.dirname(__FILE__) + "/lib")
 require 'breadcrumbs_on_rails/version'
@@ -28,7 +27,6 @@ spec = Gem::Specification.new do |s|
   s.require_paths     = %w( lib )
 
   s.add_development_dependency "rails", ">= 3.0"
-  s.add_development_dependency "appraisal"
   s.add_development_dependency "mocha", "~> 0.9.10"
   s.add_development_dependency "yard"
 end

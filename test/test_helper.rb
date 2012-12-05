@@ -14,7 +14,7 @@ ActionController::Base.view_paths = File.join(File.dirname(__FILE__), 'views')
 
 BreadcrumbsOnRails::Routes = ActionDispatch::Routing::RouteSet.new
 BreadcrumbsOnRails::Routes.draw do
-  match ':controller(/:action(/:id))'
+  get ':controller(/:action(/:id))'
 end
 
 ActionController::Base.send :include, BreadcrumbsOnRails::Routes.url_helpers

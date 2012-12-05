@@ -70,34 +70,6 @@ module BreadcrumbsOnRails
 
     end
 
-
-    # The SimpleBuilder is the default breadcrumb builder.
-    # It provides basic functionalities to render a breadcrumb navigation.
-    #
-    # The SimpleBuilder accepts a limited set of options.
-    # If you need more flexibility, create a custom Builder and
-    # pass the option :builder => BuilderClass to the <tt>render_breadcrumbs</tt> helper method.
-    #
-    class SimpleBuilder < Builder
-
-      def render
-        @elements.collect do |element|
-          render_element(element)
-        end.join(@options[:separator] || " &raquo; ")
-      end
-
-      def render_element(element)
-        content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
-        if @options[:tag]
-          @context.content_tag(@options[:tag], content)
-        else
-          content
-        end
-      end
-
-    end
-
-
     # Represents a navigation element in the breadcrumb collection.
     #
     class Element
@@ -116,7 +88,7 @@ module BreadcrumbsOnRails
       # @param  [Hash] options The element/link URL.
       # @return [Element]
       #
-      def initialize(name, path, options = {})
+      def initialize(name, path = nil, options = {})
         self.name     = name
         self.path     = path
         self.options  = options
