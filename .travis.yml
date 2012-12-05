@@ -9,4 +9,4 @@ gemfile:
   - gemfiles/3.2.gemfile
 notifications:
   recipients:
-    - weppos@weppos.net
+    - robert@codewranglers.org
