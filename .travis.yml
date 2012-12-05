@@ -1,8 +1,8 @@
 rvm:
-  - 1.9.2
   - 1.9.3
 gemfile:
   - gemfiles/Gemfile.rails-3-2
+  - gemfiles/Gemfile.rails-edge
 notifications:
   recipients:
     - robert@codewranglers.org
