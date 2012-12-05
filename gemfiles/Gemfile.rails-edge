@@ -1,0 +1,7 @@
+source :rubygems
+
+git 'git://github.com/rails/rails.git' do
+  gem 'activerecord'
+end
+
+gemspec :path=>"../"
