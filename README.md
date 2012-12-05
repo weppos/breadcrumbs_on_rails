@@ -1,5 +1,4 @@
-[![Build
-Status](https://travis-ci.org/[revans]/[breadcrumbs_on_rails].png)](https://travis-ci.org/[revans]/[breadcrumbs_on_rails])
+[![Build Status](https://travis-ci.org/revans/breadcrumbs_on_rails.png)](https://travis-ci.org/revans/breadcrumbs_on_rails)
 
 # Breadcrumbs On Rails
 

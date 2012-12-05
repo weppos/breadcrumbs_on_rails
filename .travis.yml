@@ -2,9 +2,7 @@ rvm:
   - 1.9.2
   - 1.9.3
 gemfile:
-  - gemfiles/3.0.gemfile
-  - gemfiles/3.1.gemfile
-  - gemfiles/3.2.gemfile
+  - gemfiles/Gemfile.rails-3-2
 notifications:
   recipients:
     - robert@codewranglers.org
