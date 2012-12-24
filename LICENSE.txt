@@ -1,4 +1,4 @@
-Copyright (c) 2009-2012 Simone Carletti
+Copyright (c) 2009-2012 Simone Carletti <weppos@weppos.net>
 
 MIT License
 
