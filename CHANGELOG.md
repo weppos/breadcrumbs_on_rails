@@ -5,6 +5,8 @@
 
 * FIXED: In some circumstances the BreadcrumbsOnRails::ActionController::HelperMethods is not mixed into the controller.
 
+* CHANGED: Second argument on `add_breadcrumb` is now optional (GH-6, GH-32). [Thanks @mpartel]
+
 
 ## Release 2.2.0
 
