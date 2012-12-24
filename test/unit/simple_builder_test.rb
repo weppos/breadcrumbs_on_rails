@@ -52,6 +52,14 @@ class SimpleBuilderTest < ActionView::TestCase
                      simplebuilder(@template, generate_elements(2)).render)
   end
 
+  def test_render_with_no_links
+    elements = (1..2).collect do |index|
+      BreadcrumbsOnRails::Breadcrumbs::Element.new("Element #{index}", nil)
+    end
+    assert_dom_equal("Element 1 &raquo; Element 2",
+                     simplebuilder(@template, elements).render)
+  end
+
 
   protected
 
