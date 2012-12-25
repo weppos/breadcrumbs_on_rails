@@ -1,7 +1,7 @@
 # Changelog
 
 
-## master
+## Release 2.3.0
 
 * FIXED: In some circumstances the BreadcrumbsOnRails::ActionController::HelperMethods is not mixed into the controller.
 
