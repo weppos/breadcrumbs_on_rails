@@ -81,7 +81,12 @@ class BuilderTest < ActionView::TestCase
 
 
   def url_for(params)
-    "http://localhost?" + params.to_param
+    case params
+    when String
+      params
+    else
+      "http://localhost?" + params.to_param
+    end
   end
 
   protected

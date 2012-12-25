@@ -16,6 +16,7 @@ class ExampleController < ActionController::Base
   def action_compute_paths
     add_breadcrumb "String", "/"
     add_breadcrumb "Proc", proc { |c| "/?proc" }
+    add_breadcrumb "Polymorfic", [:admin, :namespace]
     execute("action_default")
   end
 
@@ -27,6 +28,11 @@ class ExampleController < ActionController::Base
       render :action => (params[:template] || 'default')
     end
   end
+
+  def admin_namespace_path(*)
+    "/?polymorfic"
+  end
+  helper_method :admin_namespace_path
 
 end
 
@@ -41,7 +47,7 @@ class ExampleControllerTest < ActionController::TestCase
 
   def test_render_compute_paths
     get :action_compute_paths
-    assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a>),
+    assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a> &raquo; <a href="/?polymorfic">Polymorfic</a>),
                       @response.body
   end
 

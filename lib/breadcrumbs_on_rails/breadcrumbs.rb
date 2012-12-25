@@ -61,10 +61,8 @@ module BreadcrumbsOnRails
             @context.send(path)
           when Proc
             path.call(@context)
-          when Hash
-            @context.url_for(path)
           else
-            path.to_s
+            @context.url_for(path)
           end
         end
 

@@ -5,7 +5,11 @@
 
 * FIXED: In some circumstances the BreadcrumbsOnRails::ActionController::HelperMethods is not mixed into the controller.
 
+* FIXED: Breadcrumbs now accepts a polymorphic path (GH-15).
+
 * CHANGED: Second argument on `add_breadcrumb` is now optional (GH-6, GH-32). [Thanks @mpartel]
+
+* CHANGED: Breadcrumb path computation fallbacks to url_for in case of unknown arguments.
 
 
 ## Release 2.2.0
