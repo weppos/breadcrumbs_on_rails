@@ -9,6 +9,10 @@
 module BreadcrumbsOnRails
 
   module Breadcrumbs
+    
+    def self.config 
+      @config ||= OpenStruct.new 
+    end
 
     # The Builder class represents the abstract class for any custom Builder.
     #
@@ -81,7 +85,7 @@ module BreadcrumbsOnRails
       def render
         @elements.collect do |element|
           render_element(element)
-        end.join(@options[:separator] || " &raquo; ")
+        end.join(@options[:separator] || Breadcrumbs::config.separator || " &raquo; ")
       end
 
       def render_element(element)
@@ -90,8 +94,8 @@ module BreadcrumbsOnRails
         else
           content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
         end
-        if @options[:tag]
-          @context.content_tag(@options[:tag], content)
+        if @options[:tag] || Breadcrumbs::config.tag
+          @context.content_tag((@options[:tag] || Breadcrumbs::config.tag), content)
         else
           content
         end
