@@ -51,7 +51,11 @@ module BreadcrumbsOnRails
           when Proc
             name.call(@context)
           else
-            name.to_s
+            if element.safe
+              name.html_safe
+            else
+              ERB::Util.h(name)
+            end
           end
         end
 
@@ -110,17 +114,20 @@ module BreadcrumbsOnRails
       attr_accessor :path
       # @return [Hash] The element/link URL.
       attr_accessor :options
+      # @return [Boolean] The element's safety
+      attr_accessor :safe
 
       # Initializes the Element with given parameters.
       #
       # @param  [String] name The element/link name.
       # @param  [String] path The element/link URL.
-      # @param  [Hash] options The element/link URL.
+      # @param  [Hash] options for element/link URL and name's safety
       # @return [Element]
       #
       def initialize(name, path = nil, options = {})
         self.name     = name
         self.path     = path
+        self.safe     = options.delete(:safe)
         self.options  = options
       end
     end
