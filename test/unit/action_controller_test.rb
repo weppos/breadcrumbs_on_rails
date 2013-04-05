@@ -20,6 +20,16 @@ class ExampleController < ActionController::Base
     execute("action_default")
   end
 
+  def action_unsafe_names
+    add_breadcrumb "<strong>Hello</strong>", "/"
+    execute("action_default")
+  end
+
+  def action_safe_names
+    add_breadcrumb "<strong>Hello</strong>", "/", :safe => true
+    execute("action_default")
+  end
+
 
   private
 
@@ -48,6 +58,18 @@ class ExampleControllerTest < ActionController::TestCase
   def test_render_compute_paths
     get :action_compute_paths
     assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a> &raquo; <a href="/?polymorfic">Polymorfic</a>),
+                      @response.body
+  end
+
+  def test_action_unsafe_names
+    get :action_unsafe_names
+    assert_dom_equal  %(<a href="/">&lt;strong&gt;Hello&lt;/strong&gt;</a>),
+                      @response.body
+  end
+
+  def test_action_safe_names
+    get :action_safe_names
+    assert_dom_equal  %(<a href="/"><strong>Hello</strong></a>),
                       @response.body
   end
 
