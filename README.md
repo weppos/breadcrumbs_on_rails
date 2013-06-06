@@ -49,6 +49,8 @@ In your controller, call `add_breadcrumb` to push a new element on the breadcrum
 The third, optional argument is a Hash of options to customize the breadcrumb link.
 
     class MyController
+      add_breadcrumb "home", :root_path, :options => { :title => "Home" }
+
       def index
         add_breadcrumb "index", index_path, :title => "Back to the Index"
       end
