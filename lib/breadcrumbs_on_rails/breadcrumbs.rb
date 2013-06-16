@@ -1,3 +1,5 @@
+require 'ostruct'
+
 #--
 # Breadcrumbs On Rails
 #
