@@ -6,7 +6,7 @@ It provides helpers for creating navigation elements with a flexible interface.
 
 ## Requirements
 
-* Rails 3
+* Rails 3 or Rails 4
 
 Please note 
 
