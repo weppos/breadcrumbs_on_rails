@@ -68,7 +68,7 @@ module BreadcrumbsOnRails
         end
 
         before_filter(filter_options) do |controller|
-          controller.send(:add_breadcrumb, name, path)
+          controller.send(:add_breadcrumb, name, path, filter_options)
         end
       end
 
