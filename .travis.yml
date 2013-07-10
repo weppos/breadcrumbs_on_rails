@@ -1,9 +1,7 @@
 rvm:
-  - 1.8.7
   - 1.9.2
   - 1.9.3
   - 2.0.0
-  - ree
 gemfile:
   - gemfiles/3.0.gemfile
   - gemfiles/3.1.gemfile
