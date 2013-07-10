@@ -10,3 +10,7 @@ gemfile:
 notifications:
   recipients:
     - weppos@weppos.net
+matrix:
+  exclude:
+    - rvm: 1.9.2
+      gemfile: gemfiles/4.0.gemfile
