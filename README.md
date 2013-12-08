@@ -75,6 +75,18 @@ In your view, you can render the breadcrumb menu with the `render_breadcrumbs` h
       <%= render_breadcrumbs :separator => ' / ' %>
     </body>
 
+Current possible options are:
+* :separator
+* :tag
+
+To use with Bootstrap you might use the following:
+
+    <body>
+        <ol class="breadcrumb">
+            <%= render_breadcrumbs :tag => :li, :separator => ""
+        </ol>
+    </body>
+
 More complex customizations require a custom Builder.
 
 Read the [documentation](http://www.simonecarletti.com/code/breadcrumbs_on_rails/docs/) to learn more about advanced usage and builders.
