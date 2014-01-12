@@ -83,7 +83,7 @@ To use with Bootstrap you might use the following:
 
     <body>
         <ol class="breadcrumb">
-            <%= render_breadcrumbs :tag => :li, :separator => ""
+            <%= render_breadcrumbs :tag => :li, :separator => "" %>
         </ol>
     </body>
 
