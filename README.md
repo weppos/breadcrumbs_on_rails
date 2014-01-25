@@ -1,35 +1,34 @@
 # Breadcrumbs On Rails
 
-*BreadcrumbsOnRails* is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project.
-It provides helpers for creating navigation elements with a flexible interface.
+<tt>BreadcrumbsOnRails</tt> is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project. It provides helpers for creating navigation elements with a flexible interface.
 
 
 ## Requirements
 
-* Rails 3 or Rails 4
+- Rails 3 or Rails 4
 
 Please note 
 
-* BreadcrumbsOnRails 2.x requires Rails 3. Use BreadcrumbsOnRails 1.x with Rails 2.
-* BreadcrumbsOnRails doesn't work with Rails 2.1 or lower.
+- <tt>BreadcrumbsOnRails</tt> 2.x requires Rails 3. Use <tt>BreadcrumbsOnRails</tt> 1.x with Rails 2.
+- <tt>BreadcrumbsOnRails</tt> doesn't work with Rails 2.1 or lower.
 
 
 ## Installation
 
-[RubyGems](http://rubygems.org) is the preferred way to install *BreadcrumbsOnRails* and the best way if you want install a stable version.
+[RubyGems](http://rubygems.org) is the preferred way to install <tt>BreadcrumbsOnRails</tt> and the best way if you want install a stable version.
 
     $ gem install breadcrumbs_on_rails
 
-Specify the Gem dependency in the [Bundler](http://gembundler.com) `Gemfile`.
+Specify the Gem dependency in the [Bundler](http://bundler.io/) `Gemfile`.
 
     gem "breadcrumbs_on_rails"
 
-Use [Bundler](http://gembundler.com) and the [:git option](http://gembundler.com/v1.0/git.html) if you want to grab the latest version from the Git repository.
+Use [Bundler](http://bundler.io/) and the `:git` option if you want to grab the latest version from the Git repository.
 
 
 ## Basic Usage
 
-Creating a breadcrumb navigation menu in your Rails app using *BreadcrumbsOnRails* is really straightforward.
+Creating a breadcrumb navigation menu in your Rails app using <tt>BreadcrumbsOnRails</tt> is really straightforward.
 
 In your controller, call `add_breadcrumb` to push a new element on the breadcrumb stack. `add_breadcrumb` requires two arguments: the name of the breadcrumb and the target path.
 
@@ -58,11 +57,9 @@ The third, optional argument is a Hash of options to customize the breadcrumb li
 
 In your view, you can render the breadcrumb menu with the `render_breadcrumbs` helper.
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <!DOCTYPE html>
+    <html>
     <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
       <title>untitled</title>
     </head>
     
@@ -78,36 +75,44 @@ In your view, you can render the breadcrumb menu with the `render_breadcrumbs` h
     </body>
 
 Current possible options are:
-* :separator
-* :tag
+- `:separator`
+- `:tag`
 
 To use with Bootstrap you might use the following:
 
     <body>
-        <ol class="breadcrumb">
-            <%= render_breadcrumbs :tag => :li, :separator => "" %>
-        </ol>
+      <ol class="breadcrumb">
+        <%= render_breadcrumbs :tag => :li, :separator => "" %>
+      </ol>
     </body>
 
 More complex customizations require a custom Builder.
 
-Read the [documentation](http://www.simonecarletti.com/code/breadcrumbs_on_rails/docs/) to learn more about advanced usage and builders.
+Read the [documentation](http://simonecarletti.com/code/breadcrumbs_on_rails/docs/) to learn more about advanced usage and builders.
 
 
 ## Credits
 
-* [Simone Carletti](http://www.simonecarletti.com/) <weppos@weppos.net> - The Author
+<tt>BreadcrumbsOnRails</tt> was created and is maintained by [Simone Carletti](http://simonecarletti.com/). Many improvements and bugfixes were contributed by the [open source community](https://github.com/weppos/whois/graphs/contributors).
 
 
-## Resources
+## Contributing
 
-* [Homepage](http://www.simonecarletti.com/code/breadcrumbs_on_rails)
-* [Documentation](http://www.simonecarletti.com/code/breadcrumbs_on_rails/docs/)
-* [API](http://rubydoc.info/gems/breadcrumbs_on_rails)
-* [Repository](https://github.com/weppos/breadcrumbs_on_rails)
-* [Issue Tracker](http://github.com/weppos/breadcrumbs_on_rails/issues)
+Direct questions and discussions to [Stack Overflow](http://stackoverflow.com/questions/tagged/breadcrumbs-on-rails).
+
+[Pull requests](https://github.com/weppos/whois/breadcrumbs_on_rails) are very welcome! Please include tests for every patch, and create a topic branch for every separate change you make.
+
+Report issues or feature requests to [GitHub Issues](https://github.com/weppos/breadcrumbs_on_rails/issues).
+
+
+## More Information
+
+- [Homepage](http://simonecarletti.com/code/breadcrumbs_on_rails)
+- [RubyGems](http://rubygems.org/gems/breadcrumbs_on_rails)
+- [Documentation](http://simonecarletti.com/code/breadcrumbs_on_rails/docs/)
+- [Issues](https://github.com/weppos/breadcrumbs_on_rails/issues)
 
 
 ## License
 
-*BreadcrumbsOnRails* is Copyright (c) 2009-2012 Simone Carletti. This is Free Software distributed under the MIT license.
+<tt>BreadcrumbsOnRails</tt> is Copyright (c) 2009-2014 Simone Carletti. This is Free Software distributed under the MIT license.
