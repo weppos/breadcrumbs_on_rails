@@ -16,7 +16,7 @@ class ExampleController < ActionController::Base
   def action_compute_paths
     add_breadcrumb "String", "/"
     add_breadcrumb "Proc", proc { |c| "/?proc" }
-    add_breadcrumb "Polymorfic", [:admin, :namespace]
+    add_breadcrumb "Polymorphic", [:admin, :namespace]
     execute("action_default")
   end
 
@@ -30,7 +30,7 @@ class ExampleController < ActionController::Base
   end
 
   def admin_namespace_path(*)
-    "/?polymorfic"
+    "/?polymorphic"
   end
   helper_method :admin_namespace_path
 
@@ -47,8 +47,45 @@ class ExampleControllerTest < ActionController::TestCase
 
   def test_render_compute_paths
     get :action_compute_paths
-    assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a> &raquo; <a href="/?polymorfic">Polymorfic</a>),
+    assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a> &raquo; <a href="/?polymorphic">Polymorphic</a>),
                       @response.body
+  end
+
+end
+
+class ClassLevelExampleController < ActionController::Base
+  include BreadcrumbsOnRails::ActionController
+
+  add_breadcrumb "String", "/"
+  add_breadcrumb "Proc", proc { |c| "/?proc" }
+  add_breadcrumb "Polymorphic", [:admin, :namespace]
+  add_breadcrumb "With options", "/", :options => { :title => "Awesome" }
+
+  def action_default
+    render 'example/default'
+  end
+
+  private
+
+  def admin_namespace_path(*)
+    "/?polymorphic"
+  end
+  helper_method :admin_namespace_path
+
+end
+
+class ClassLevelExampleControllerTest < ActionController::TestCase
+
+  def test_render_default
+    expected = [].tap { |links|
+      links << "<a href=\"/\">String</a>"
+      links << "<a href=\"/?proc\">Proc</a>"
+      links << "<a href=\"/?polymorphic\">Polymorphic</a>"
+      links << "<a href=\"/\" title=\"Awesome\">With options</a>"
+    }
+
+    get :action_default
+    assert_dom_equal %(#{expected.join(" &raquo; ")}), @response.body
   end
 
 end
