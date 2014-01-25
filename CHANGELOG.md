@@ -1,5 +1,9 @@
 # Changelog
 
+# master
+
+- FIXED: Using `add_breadcrumbs` did not properly pass `options` (GH-46). [Thanks @link664]
+
 
 ## Release 2.3.0
 
