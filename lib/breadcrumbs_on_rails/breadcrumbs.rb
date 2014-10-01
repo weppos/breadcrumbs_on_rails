@@ -73,9 +73,7 @@ module BreadcrumbsOnRails
     # It provides basic functionalities to render a breadcrumb navigation.
     #
     # The SimpleBuilder accepts a limited set of options.
-    # If you need more flexibility, create a custom Builder and
-    # pass the option :builder => BuilderClass to the <tt>render_breadcrumbs</tt> helper method.
-    #
+    # To use it, pass the option :builder => BreadcrumbsOnRails::Breadcrumbs::SimpleBuilder to the <tt>render_breadcrumbs</tt> helper method.
     class SimpleBuilder < Builder
 
       def render
@@ -99,9 +97,9 @@ module BreadcrumbsOnRails
 
     end
 
-    # The MicroDataBuilder construct the breadcrumbs according to http://data-vocabulary.org/Breadcrumb
-    # To use it, pass the option :builder => MicroDataBuilder to the <tt>render_breadcrumbs</tt> helper method.
-    class MicroDataBuilder < Builder
+    # The MicrodataBuilder is the default breadcrumb duilder.
+    # It construct the breadcrumbs according to http://data-vocabulary.org/Breadcrumb
+    class MicrodataBuilder < Builder
 
       def render
         @elements.collect do |element|
