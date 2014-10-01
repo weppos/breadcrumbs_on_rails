@@ -99,6 +99,24 @@ module BreadcrumbsOnRails
 
     end
 
+    # The MicroDataBuilder construct the breadcrumbs according to http://data-vocabulary.org/Breadcrumb
+    # To use it, pass the option :builder => MicroDataBuilder to the <tt>render_breadcrumbs</tt> helper method.
+    class MicroDataBuilder < Builder
+
+      def render
+        @elements.collect do |element|
+          render_element(element)
+        end.join(@options[:separator] || '<span class="breadcrumbs-separator">&raquo;</span>')
+      end
+
+      def render_element(element)
+        url = (compute_path(element).present? ? compute_path(element) : '#')
+        subcontent = @context.content_tag(:span, compute_name(element), :itemprop => 'title')
+        content = @context.link_to_unless_current(subcontent, url, element.options.merge({:itemprop => 'url', :title => compute_name(element)}))
+        @context.content_tag(:div, content, :itemscope => "", :itemtype => "http://data-vocabulary.org/Breadcrumb")
+      end
+    end
+
 
     # Represents a navigation element in the breadcrumb collection.
     #
