@@ -10,7 +10,7 @@ module BreadcrumbsOnRails
 
   module Version
     MAJOR = 2
-    MINOR = 3
+    MINOR = 4
     PATCH = 0
     BUILD = nil
 
