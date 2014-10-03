@@ -93,7 +93,7 @@ module BreadcrumbsOnRails
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
-          "".html_safe + content
+          ERB::Util.h(content)
         end
       end
 

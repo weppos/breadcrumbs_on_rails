@@ -66,6 +66,23 @@ class SimpleBuilderTest < ActionView::TestCase
                      simplebuilder(@template, elements).render)
   end
 
+  def test_render_with_embedded_html_and_tags
+    elements = [BreadcrumbsOnRails::Breadcrumbs::Element.new("Element <b>One</b>", nil)]
+    assert_dom_equal("<li>Element &lt;b&gt;One&lt;/b&gt;</li>",
+                     simplebuilder(@template, elements, {tag: :li} ).render)
+  end
+
+  def test_render_with_safe_embedded_html
+    elements = [BreadcrumbsOnRails::Breadcrumbs::Element.new("Element <b>One</b>".html_safe, nil)]
+    assert_dom_equal("Element <b>One</b>",
+                     simplebuilder(@template, elements).render)
+  end
+
+  def test_render_with_embedded_html_and_tags
+    elements = [BreadcrumbsOnRails::Breadcrumbs::Element.new("Element <b>One</b>".html_safe, nil)]
+    assert_dom_equal("<li>Element <b>One</b></li>",
+                     simplebuilder(@template, elements, {tag: :li} ).render)
+  end
 
   protected
 

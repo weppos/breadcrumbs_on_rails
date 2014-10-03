@@ -7,7 +7,7 @@
 
 - Rails 3 or Rails 4
 
-Please note 
+Please note
 
 - <tt>BreadcrumbsOnRails</tt> 2.x requires Rails 3. Use <tt>BreadcrumbsOnRails</tt> 1.x with Rails 2.
 - <tt>BreadcrumbsOnRails</tt> doesn't work with Rails 2.1 or lower.
@@ -33,16 +33,16 @@ Creating a breadcrumb navigation menu in your Rails app using <tt>BreadcrumbsOnR
 In your controller, call `add_breadcrumb` to push a new element on the breadcrumb stack. `add_breadcrumb` requires two arguments: the name of the breadcrumb and the target path.
 
     class MyController
-    
+
       add_breadcrumb "home", :root_path
       add_breadcrumb "my", :my_path
-      
+
       def index
         # ...
-        
+
         add_breadcrumb "index", index_path
       end
-    
+
     end
 
 The third, optional argument is a Hash of options to customize the breadcrumb link.
@@ -55,6 +55,19 @@ The third, optional argument is a Hash of options to customize the breadcrumb li
       end
     end
 
+The text of the breadcrumb will be html-escaped unless it is a SafeBuffer to prevent XSS attacks.
+
+    class MyController
+      add_breadcrumb "This is the <b>Main</b> page".html_safe
+
+      def profile
+        add_breadcrumb "#{@user_name} Profile", users_profile
+      end
+    end
+
+    In this case, if @user_name is "<script>", it will output:
+      This is the <b>Main</b> page > &lt;script&gt; Profile
+
 In your view, you can render the breadcrumb menu with the `render_breadcrumbs` helper.
 
     <!DOCTYPE html>
@@ -62,7 +75,7 @@ In your view, you can render the breadcrumb menu with the `render_breadcrumbs` h
     <head>
       <title>untitled</title>
     </head>
-    
+
     <body>
       <%= render_breadcrumbs %>
     </body>
