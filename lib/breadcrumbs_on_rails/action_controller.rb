@@ -26,7 +26,7 @@ module BreadcrumbsOnRails
     def breadcrumbs_on_rails
       @breadcrumbs_on_rails ||= []
     end
-    alias_method :breadcrumbs_on_rails, :breadcrumbs
+    alias_method :breadcrumbs, :breadcrumbs_on_rails
 
 
     module Utils
