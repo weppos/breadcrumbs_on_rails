@@ -14,19 +14,19 @@ module BreadcrumbsOnRails
     included do
       extend          ClassMethods
       helper          HelperMethods
-      helper_method   :add_breadcrumb, :breadcrumbs_collection
+      helper_method   :add_breadcrumb, :breadcrumbs_on_rails
     end
 
     protected
 
     def add_breadcrumb(name, path = nil, options = {})
-      self.breadcrumbs_collection << Breadcrumbs::Element.new(name, path, options)
+      self.breadcrumbs_on_rails << Breadcrumbs::Element.new(name, path, options)
     end
 
-    def breadcrumbs
-      @breadcrumbs ||= []
+    def breadcrumbs_on_rails
+      @breadcrumbs_on_rails ||= []
     end
-    alias_method :breadcrumbs_collection, :breadcrumbs
+    alias_method :breadcrumbs_on_rails, :breadcrumbs
 
 
     module Utils
@@ -81,7 +81,7 @@ module BreadcrumbsOnRails
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
-        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs_collection, options)
+        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs_on_rails, options)
         content = builder.render.html_safe
         if block_given?
           capture(content, &block)
