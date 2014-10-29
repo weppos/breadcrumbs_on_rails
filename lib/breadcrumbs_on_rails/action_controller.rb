@@ -39,7 +39,7 @@ module BreadcrumbsOnRails
         end
       end
 
-      # This is an horrible method with an horrible name.
+      # This is a horrible method with a horrible name.
       #
       #   convert_to_set_of_strings(nil, [:foo, :bar])
       #   # => nil
