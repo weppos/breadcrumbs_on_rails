@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = "2014-01-25"
   s.description = "BreadcrumbsOnRails is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project."
   s.email = "weppos@weppos.net"
-  s.files = [".gitignore", ".ruby-gemset", ".ruby-version", ".travis.yml", "Appraisals", "CHANGELOG.md", "Gemfile", "LICENSE.txt", "README.md", "Rakefile", "breadcrumbs_on_rails.gemspec", "gemfiles/3.0.gemfile", "gemfiles/3.1.gemfile", "gemfiles/3.2.gemfile", "gemfiles/4.0.gemfile", "init.rb", "lib/breadcrumbs_on_rails.rb", "lib/breadcrumbs_on_rails/action_controller.rb", "lib/breadcrumbs_on_rails/breadcrumbs.rb", "lib/breadcrumbs_on_rails/railtie.rb", "lib/breadcrumbs_on_rails/version.rb", "test/dummy.rb", "test/test_helper.rb", "test/unit/action_controller_test.rb", "test/unit/builder_test.rb", "test/unit/element_test.rb", "test/unit/simple_builder_test.rb", "test/views/example/default.html.erb"]
+  s.files = [".gitignore", ".ruby-gemset", ".travis.yml", "Appraisals", "CHANGELOG.md", "Gemfile", "LICENSE.txt", "README.md", "Rakefile", "breadcrumbs_on_rails.gemspec", "gemfiles/3.0.gemfile", "gemfiles/3.1.gemfile", "gemfiles/3.2.gemfile", "gemfiles/4.0.gemfile", "init.rb", "lib/breadcrumbs_on_rails.rb", "lib/breadcrumbs_on_rails/action_controller.rb", "lib/breadcrumbs_on_rails/breadcrumbs.rb", "lib/breadcrumbs_on_rails/railtie.rb", "lib/breadcrumbs_on_rails/version.rb", "test/dummy.rb", "test/test_helper.rb", "test/unit/action_controller_test.rb", "test/unit/builder_test.rb", "test/unit/element_test.rb", "test/unit/simple_builder_test.rb", "test/views/example/default.html.erb"]
   s.homepage = "http://www.simonecarletti.com/code/breadcrumbs_on_rails"
   s.require_paths = ["lib"]
   s.rubygems_version = "2.0.14"
