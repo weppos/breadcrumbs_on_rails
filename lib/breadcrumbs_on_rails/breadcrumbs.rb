@@ -86,7 +86,7 @@ module BreadcrumbsOnRails
         if element.path == nil
           content = compute_name(element)
         else
-          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+          content = @context.link_to(compute_name(element), compute_path(element), element.options)
         end
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
@@ -110,7 +110,7 @@ module BreadcrumbsOnRails
       def render_element(element)
         url = (compute_path(element).present? ? compute_path(element) : '#')
         subcontent = @context.content_tag(:span, compute_name(element), :itemprop => 'title')
-        content = @context.link_to_unless_current(subcontent, url, element.options.merge({:itemprop => 'url', :title => compute_name(element)}))
+        content = @context.link_to(subcontent, url, element.options.merge({:itemprop => 'url', :title => compute_name(element)}))
         @context.content_tag(:div, content, :itemscope => "", :itemtype => "http://data-vocabulary.org/Breadcrumb")
       end
     end
