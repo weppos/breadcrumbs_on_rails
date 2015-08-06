@@ -21,15 +21,15 @@ spec = Gem::Specification.new do |s|
 
   s.author            = "Simone Carletti"
   s.email             = "weppos@weppos.net"
-  s.homepage          = "http://www.simonecarletti.com/code/breadcrumbs_on_rails"
+  s.homepage          = "http://simonecarletti.com/code/breadcrumbs_on_rails/"
 
   s.files             = `git ls-files`.split("\n")
   s.test_files        = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths     = %w( lib )
 
-  s.add_development_dependency "rails", ">= 3.0"
+  s.add_development_dependency "rails", ">= 4.0"
   s.add_development_dependency "appraisal"
-  s.add_development_dependency "mocha", "~> 1.0.0"
+  s.add_development_dependency "mocha", ">= 1.0"
   s.add_development_dependency "yard"
 end
 

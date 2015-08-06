@@ -1,18 +1,9 @@
 rvm:
-  - 1.9.2
-  - 1.9.3
   - 2.0.0
   - 2.1.0
   - 2.2.0
 gemfile:
-  - gemfiles/3.0.gemfile
-  - gemfiles/3.1.gemfile
-  - gemfiles/3.2.gemfile
   - gemfiles/4.0.gemfile
 notifications:
   recipients:
     - weppos@weppos.net
-matrix:
-  exclude:
-    - rvm: 1.9.2
-      gemfile: gemfiles/4.0.gemfile

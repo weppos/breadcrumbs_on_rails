@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = "BreadcrumbsOnRails is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project."
   s.email = "weppos@weppos.net"
   s.files = [".gitignore", ".ruby-gemset", ".ruby-version", ".travis.yml", "Appraisals", "CHANGELOG.md", "Gemfile", "LICENSE.txt", "README.md", "Rakefile", "breadcrumbs_on_rails.gemspec", "gemfiles/3.0.gemfile", "gemfiles/3.1.gemfile", "gemfiles/3.2.gemfile", "gemfiles/4.0.gemfile", "init.rb", "lib/breadcrumbs_on_rails.rb", "lib/breadcrumbs_on_rails/action_controller.rb", "lib/breadcrumbs_on_rails/breadcrumbs.rb", "lib/breadcrumbs_on_rails/railtie.rb", "lib/breadcrumbs_on_rails/version.rb", "test/dummy.rb", "test/test_helper.rb", "test/unit/action_controller_test.rb", "test/unit/builder_test.rb", "test/unit/element_test.rb", "test/unit/simple_builder_test.rb", "test/views/example/default.html.erb"]
-  s.homepage = "http://www.simonecarletti.com/code/breadcrumbs_on_rails"
+  s.homepage = "http://simonecarletti.com/code/breadcrumbs_on_rails/"
   s.rubygems_version = "2.4.7"
   s.summary = "A simple Ruby on Rails plugin for creating and managing a breadcrumb navigation."
   s.test_files = ["test/dummy.rb", "test/test_helper.rb", "test/unit/action_controller_test.rb", "test/unit/builder_test.rb", "test/unit/element_test.rb", "test/unit/simple_builder_test.rb", "test/views/example/default.html.erb"]
@@ -21,20 +21,20 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rails>, [">= 3.0"])
+      s.add_development_dependency(%q<rails>, [">= 4.0"])
       s.add_development_dependency(%q<appraisal>, [">= 0"])
-      s.add_development_dependency(%q<mocha>, ["~> 1.0.0"])
+      s.add_development_dependency(%q<mocha>, [">= 1.0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, [">= 3.0"])
+      s.add_dependency(%q<rails>, [">= 4.0"])
       s.add_dependency(%q<appraisal>, [">= 0"])
-      s.add_dependency(%q<mocha>, ["~> 1.0.0"])
+      s.add_dependency(%q<mocha>, [">= 1.0"])
       s.add_dependency(%q<yard>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, [">= 3.0"])
+    s.add_dependency(%q<rails>, [">= 4.0"])
     s.add_dependency(%q<appraisal>, [">= 0"])
-    s.add_dependency(%q<mocha>, ["~> 1.0.0"])
+    s.add_dependency(%q<mocha>, [">= 1.0"])
     s.add_dependency(%q<yard>, [">= 0"])
   end
 end
