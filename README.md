@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- Rails >= 3 or Rails 4
+- Rails 3 or Rails 4
 
 Please note 
 
