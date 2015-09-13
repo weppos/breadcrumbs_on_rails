@@ -222,14 +222,14 @@ end
 
 ## Credits
 
-<tt>BreadcrumbsOnRails</tt> was created and is maintained by [Simone Carletti](http://simonecarletti.com/). Many improvements and bugfixes were contributed by the [open source community](https://github.com/weppos/whois/graphs/contributors).
+<tt>BreadcrumbsOnRails</tt> was created and is maintained by [Simone Carletti](http://simonecarletti.com/). Many improvements and bugfixes were contributed by the [open source community](https://github.com/weppos/breadcrumbs_on_rails/graphs/contributors).
 
 
 ## Contributing
 
 Direct questions and discussions to [Stack Overflow](http://stackoverflow.com/questions/tagged/breadcrumbs-on-rails).
 
-[Pull requests](https://github.com/weppos/whois/breadcrumbs_on_rails) are very welcome! Please include tests for every patch, and create a topic branch for every separate change you make.
+[Pull requests](https://github.com/weppos/breadcrumbs_on_rails) are very welcome! Please include tests for every patch, and create a topic branch for every separate change you make.
 
 Report issues or feature requests to [GitHub Issues](https://github.com/weppos/breadcrumbs_on_rails/issues).
 
@@ -243,4 +243,4 @@ Report issues or feature requests to [GitHub Issues](https://github.com/weppos/b
 
 ## License
 
-<tt>BreadcrumbsOnRails</tt> is Copyright (c) 2009-2015 Simone Carletti. This is Free Software distributed under the MIT license.
+Copyright (c) 2009-2015 Simone Carletti. This is Free Software distributed under the MIT license.
