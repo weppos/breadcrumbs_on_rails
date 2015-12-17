@@ -61,6 +61,8 @@ module BreadcrumbsOnRails
     module ClassMethods
 
       def add_breadcrumb(name, path = nil, filter_options = {})
+        p "filter_options"
+        p filter_options
         # This isn't really nice here
         if eval = Utils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
           name = Utils.instance_proc(name) if eval.include?("name")
