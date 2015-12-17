@@ -90,13 +90,11 @@ module BreadcrumbsOnRails
 
         # TODO Get prepend option
         if element.options[:prepend]
-          prepend_option = element.options[:prepend]
           element_options.delete(:prepend)
         end
 
         # TODO get append option
         if element.options[:append]
-          append_option = element.options[:append]
           element_options.delete(:append)
         end
 
@@ -109,8 +107,8 @@ module BreadcrumbsOnRails
 
 
         # TODO add prepend option to content
-        if prepend_option
-          case prepend = prepend_option
+        if element.options[:prepend]
+          case prepend = element.options[:prepend]
             when String
               content = prepend.to_s.html_safe + content
             when Proc
@@ -120,8 +118,8 @@ module BreadcrumbsOnRails
         end
 
         # TODO add append option to content
-        if append_option
-          case append = append_option
+        if element.options[:append]
+          case append = element.options[:append]
             when String
               content = content + append.to_s.html_safe
             when Proc
