@@ -80,7 +80,7 @@ module BreadcrumbsOnRails
         p element_options.merge!(append_prepend_options)
 
         before_filter(filter_options) do |controller|
-          controller.send(:add_breadcrumb, name, path, element_options.merge!(append_prepend_options))
+          controller.send(:add_breadcrumb, name, path, {empty: "hash"})
         end
       end
 
