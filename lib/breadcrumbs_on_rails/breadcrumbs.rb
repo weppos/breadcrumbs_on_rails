@@ -89,7 +89,7 @@ module BreadcrumbsOnRails
         p "element.options"
         p element.options
 
-        element_options = element.options
+        element_options = element.options.each.map{|k, v| [k,v] unless [:append, :prepend].include?(k)}.to_h
         p "element_options"
         p element_options
 
@@ -112,7 +112,7 @@ module BreadcrumbsOnRails
         if element.path == nil
           content = compute_name(element)
         else
-          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options.each.map{|k, v| [k,v] unless [:append, :prepend].include?(k)}.to_h || {})
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element_options)
         end
 
 
