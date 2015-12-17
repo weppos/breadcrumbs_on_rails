@@ -69,10 +69,12 @@ module BreadcrumbsOnRails
           path = Utils.instance_proc(path) if eval.include?("path")
         end
 
+
+        append_prepend_options = filter_options[:options].slice(:append, :prepend)
         element_options = filter_options.delete(:options) || {}
 
         before_filter(filter_options) do |controller|
-          controller.send(:add_breadcrumb, name, path, element_options)
+          controller.send(:add_breadcrumb, name, path, element_options.merge!(append_prepend_options))
         end
       end
 
