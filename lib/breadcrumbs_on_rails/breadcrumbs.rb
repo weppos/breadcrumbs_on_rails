@@ -85,11 +85,37 @@ module BreadcrumbsOnRails
       end
 
       def render_element(element)
+
         if element.path == nil
           content = compute_name(element)
         else
-          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options.except(:append, :prepend))
         end
+
+
+        # TODO add prepend option to content
+        if element.options[:prepend]
+          case prepend = element.options[:prepend]
+            when String
+              content = prepend.to_s.html_safe + content
+            when Proc
+              content = prepend.call.to_s.html_safe + content
+          end
+          content
+        end
+
+        # TODO add append option to content
+        if element.options[:append]
+          case append = element.options[:append]
+            when String
+              content = content + append.to_s.html_safe
+            when Proc
+              content = content + append.call.to_s.html_safe
+          end
+          content
+        end
+
+
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
