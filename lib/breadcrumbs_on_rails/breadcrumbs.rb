@@ -89,7 +89,7 @@ module BreadcrumbsOnRails
         p "element.options"
         p element.options
 
-        element_options = element.options.each.map{|k, v| [k,v] unless [:append, :prepend].include?(k)}.to_h
+        element_options = element.options.except(:append, :prepend)
         p "element_options"
         p element_options
 
@@ -107,12 +107,12 @@ module BreadcrumbsOnRails
         p "after delets element.options"
         p element.options
         p "after delets element_options"
-        element_options
+        p element_options
 
         if element.path == nil
           content = compute_name(element)
         else
-          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element_options)
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options.except(:append, :prepend))
         end
 
 
