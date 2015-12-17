@@ -20,6 +20,8 @@ module BreadcrumbsOnRails
     protected
 
     def add_breadcrumb(name, path = nil, options = {})
+      p "add_breadcrumb"
+      p options
       self.breadcrumbs << Breadcrumbs::Element.new(name, path, options)
     end
 
@@ -80,7 +82,7 @@ module BreadcrumbsOnRails
         p element_options.merge!(append_prepend_options)
 
         before_filter(filter_options) do |controller|
-          controller.send(:add_breadcrumb, name, path, {empty: "hash"})
+          controller.send(:add_breadcrumb, name, path, element_options.merge!(append_prepend_options))
         end
       end
 
