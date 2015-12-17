@@ -86,22 +86,25 @@ module BreadcrumbsOnRails
 
       def render_element(element)
 
+        element_options = element.options
+
         # TODO Get prepend option
         if element.options[:prepend]
           prepend_option = element.options[:prepend]
-          element.options.delete(:prepend)
+          element_options.delete(:prepend)
         end
 
         # TODO get append option
         if element.options[:append]
           append_option = element.options[:append]
-          element.options.delete(:append)
+          element_options.delete(:append)
         end
+
 
         if element.path == nil
           content = compute_name(element)
         else
-          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element_options)
         end
 
 
