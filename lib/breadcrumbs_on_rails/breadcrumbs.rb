@@ -86,7 +86,14 @@ module BreadcrumbsOnRails
 
       def render_element(element)
 
+        p "element.options"
+        p element.options
+
         element_options = element.options
+        p "element_options"
+        p element_options
+
+
 
         # TODO Get prepend option
         if element.options[:prepend]
@@ -97,7 +104,9 @@ module BreadcrumbsOnRails
         if element.options[:append]
           element_options.delete(:append)
         end
-
+        p "after delets element.options"
+        p element.options
+        p "after delets element_options"
 
         if element.path == nil
           content = compute_name(element)
