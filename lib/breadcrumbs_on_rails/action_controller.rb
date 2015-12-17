@@ -89,7 +89,9 @@ module BreadcrumbsOnRails
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
-        builder = (Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
+        p "render_breadcrumbs options"
+        p options
+        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
         content = builder.render.html_safe
         if block_given?
           capture(content, &block)
