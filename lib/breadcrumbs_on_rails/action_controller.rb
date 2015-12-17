@@ -20,8 +20,6 @@ module BreadcrumbsOnRails
     protected
 
     def add_breadcrumb(name, path = nil, options = {})
-      p "add_breadcrumb"
-      p options
       self.breadcrumbs << Breadcrumbs::Element.new(name, path, options)
     end
 
@@ -63,23 +61,13 @@ module BreadcrumbsOnRails
     module ClassMethods
 
       def add_breadcrumb(name, path = nil, filter_options = {})
-        p "filter_options"
-        p filter_options
         # This isn't really nice here
         if eval = Utils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
           name = Utils.instance_proc(name) if eval.include?("name")
           path = Utils.instance_proc(path) if eval.include?("path")
         end
 
-
-        append_prepend_options = filter_options.slice(:append, :prepend)
-        p "append_prepend_options"
-        p append_prepend_options
-
         element_options = filter_options.delete(:options) || {}
-
-        p "append_prepend_options merge"
-        p element_options.merge!(append_prepend_options)
 
         before_filter(filter_options) do |controller|
           controller.send(:add_breadcrumb, name, path, element_options)
@@ -91,8 +79,6 @@ module BreadcrumbsOnRails
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
-        p "render_breadcrumbs options"
-        p options
         builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
         content = builder.render.html_safe
         if block_given?
