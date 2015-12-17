@@ -76,7 +76,7 @@ module BreadcrumbsOnRails
 
         element_options = filter_options.delete(:options) || {}
 
-        p "element_options.merge!(append_prepend_options)"
+        p "append_prepend_options merge"
         p element_options.merge!(append_prepend_options)
 
         before_filter(filter_options) do |controller|
@@ -89,7 +89,7 @@ module BreadcrumbsOnRails
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
-        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
+        builder = (Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
         content = builder.render.html_safe
         if block_given?
           capture(content, &block)
