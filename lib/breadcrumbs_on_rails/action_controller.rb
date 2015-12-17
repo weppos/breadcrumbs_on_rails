@@ -71,7 +71,13 @@ module BreadcrumbsOnRails
 
 
         append_prepend_options = filter_options[:options].slice(:append, :prepend)
+        p "append_prepend_options"
+        p append_prepend_options
+
         element_options = filter_options.delete(:options) || {}
+
+        p "element_options.merge!(append_prepend_options)"
+        p element_options.merge!(append_prepend_options)
 
         before_filter(filter_options) do |controller|
           controller.send(:add_breadcrumb, name, path, element_options.merge!(append_prepend_options))
