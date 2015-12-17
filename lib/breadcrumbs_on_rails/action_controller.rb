@@ -72,7 +72,7 @@ module BreadcrumbsOnRails
         end
 
 
-        append_prepend_options = filter_options[:options].slice(:append, :prepend)
+        append_prepend_options = filter_options.slice(:append, :prepend)
         p "append_prepend_options"
         p append_prepend_options
 
