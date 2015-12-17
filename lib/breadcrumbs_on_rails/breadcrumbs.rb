@@ -112,7 +112,7 @@ module BreadcrumbsOnRails
         if element.path == nil
           content = compute_name(element)
         else
-          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options.each.map{|k, v| [k,v] if k != :append && k != :prepend}.to_h)
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options.each.map{|k, v| [k,v] unless [:append, :prepend].include?(k)}.to_h)
         end
 
 
