@@ -97,16 +97,17 @@ module BreadcrumbsOnRails
 
         # TODO Get prepend option
         if element.options[:prepend]
-          element_options.delete(:prepend)
+          # element_options.delete(:prepend)
         end
 
         # TODO get append option
         if element.options[:append]
-          element_options.delete(:append)
+          # element_options.delete(:append)
         end
         p "after delets element.options"
         p element.options
         p "after delets element_options"
+        element_options
 
         if element.path == nil
           content = compute_name(element)
