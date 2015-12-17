@@ -97,12 +97,12 @@ module BreadcrumbsOnRails
 
         # TODO Get prepend option
         if element.options[:prepend]
-          # element_options.delete(:prepend)
+          element.options.delete(:prepend)
         end
 
         # TODO get append option
         if element.options[:append]
-          # element_options.delete(:append)
+          element.options.delete(:append)
         end
         p "after delets element.options"
         p element.options
@@ -112,13 +112,13 @@ module BreadcrumbsOnRails
         if element.path == nil
           content = compute_name(element)
         else
-          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element_options)
+          content = @context.link_to_unless_current(compute_name(element), compute_path(element), element.options)
         end
 
 
         # TODO add prepend option to content
-        if element.options[:prepend]
-          case prepend = element.options[:prepend]
+        if element_options[:prepend]
+          case prepend = element_options[:prepend]
             when String
               content = prepend.to_s.html_safe + content
             when Proc
@@ -128,8 +128,8 @@ module BreadcrumbsOnRails
         end
 
         # TODO add append option to content
-        if element.options[:append]
-          case append = element.options[:append]
+        if element_options[:append]
+          case append = element_options[:append]
             when String
               content = content + append.to_s.html_safe
             when Proc
