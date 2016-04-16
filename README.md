@@ -72,7 +72,7 @@ In your view, you can render the breadcrumb menu with the `render_breadcrumbs` h
 </head>
 
 <body>
-  <%= render_breadcrumbs %>
+  <%= render_breadcrumbs if breadcrumbs.any? %>
 </body>
 </html>
 ```
