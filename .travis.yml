@@ -1,9 +1,10 @@
 rvm:
   - 2.0.0
   - 2.1.0
-  - 2.2.0
+  - 2.2.2
 gemfile:
   - gemfiles/4.0.gemfile
+  - gemfiles/5.0.gemfile
 notifications:
   recipients:
     - weppos@weppos.net
