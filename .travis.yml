@@ -8,7 +8,7 @@ gemfile:
 matrix:
   exclude:
     - rvm: 2.0.0
-      gemfile: gemfiles/4.0.gemfile
+      gemfile: gemfiles/5.0.gemfile
     - rvm: 2.1.0
       gemfile: gemfiles/5.0.gemfile
 notifications:
