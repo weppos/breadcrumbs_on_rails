@@ -16,7 +16,7 @@ module BreadcrumbsOnRails
       helper          HelperMethods
       if respond_to?(:helper_method)
  +         helper_method   :add_breadcrumb, :breadcrumbs
- +        end
+ +    end
      
     end
 
