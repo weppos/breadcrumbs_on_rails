@@ -85,6 +85,7 @@ In your view, you can render the breadcrumb menu with the `render_breadcrumbs` h
 ```
 
 Current possible options are:
+
 - `:separator`
 - `:tag`
 
@@ -98,7 +99,26 @@ To use with Bootstrap you might use the following:
 </body>
 ```
 
-More complex customizations require a custom @Builder@.
+More complex customizations require a custom `Builder`.
+
+### HTML Escaping
+
+The text of the breadcrumb is html-escaped by default unless it is a SafeBuffer, to prevent XSS attacks.
+
+```ruby
+class MyController
+  add_breadcrumb "This is the <b>Main</b> page".html_safe
+
+  def profile
+    add_breadcrumb "#{@user_name} Profile", users_profile
+  end
+end
+```
+
+In this case, if `@user_name` is "<script>", it will output:
+
+    This is the <b>Main</b> page > &lt;script&gt; Profile
+
 
 ### Breadcrumb Element
 
