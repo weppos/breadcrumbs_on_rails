@@ -115,7 +115,7 @@ class MyController
 end
 ```
 
-In this case, if `@user_name` is "<script>", it will output:
+In this case, if `@user_name` is `<script>`, it will output:
 
     This is the <b>Main</b> page > &lt;script&gt; Profile
 
