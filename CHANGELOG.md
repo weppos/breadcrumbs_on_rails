@@ -5,6 +5,7 @@
 
 - FIXED: Fixed compatibility with Rails 5.0 (GH-80). [Thanks @ochko]
 - FIXED: Fixed initialization error (GH-75). [Thanks @soulcutter]
+- FIXED: Escape user input by default to avoid XSS attacks (GH-63). [Thanks @rdunlop]
 
 - CHANGED: Minimum requirements Rails >= 4 and Ruby >= 2.
 
