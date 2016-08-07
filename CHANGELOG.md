@@ -4,6 +4,7 @@
 #### master
 
 - FIXED: Fixed compatibility with Rails 5.0 (GH-80). [Thanks @ochko]
+- FIXED: Fixed initialization error (GH-75). [Thanks @soulcutter]
 
 - CHANGED: Minimum requirements Rails >= 4 and Ruby >= 2.
 
