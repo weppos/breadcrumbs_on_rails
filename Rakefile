@@ -3,6 +3,8 @@ require 'appraisal'
 
 if !ENV["APPRAISAL_INITIALIZED"] && !ENV["TRAVIS"]
   task :default => :appraisal
+else
+  task :default => :test
 end
 
 
