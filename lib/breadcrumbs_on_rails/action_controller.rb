@@ -12,11 +12,11 @@ module BreadcrumbsOnRails
     extend ActiveSupport::Concern
 
     included do
-      extend          ClassMethods
-         if respond_to?(:helper_method)
- +         helper_method  :add_breadcrumb, :breadcrumbs
- +    end
-     
+        if respond_to?(:helper_method)
+          extend          ClassMethods
+          helper          HelperMethods
+          helper_method  :add_breadcrumb, :breadcrumbs
+        end
     end
 
     protected
