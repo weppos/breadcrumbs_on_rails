@@ -1,7 +1,7 @@
 # Changelog
 
 
-#### master
+#### Release 3.0.0
 
 - FIXED: Fixed compatibility with Rails 5.0 (GH-80). [Thanks @ochko]
 - FIXED: Fixed initialization error (GH-75). [Thanks @soulcutter]
