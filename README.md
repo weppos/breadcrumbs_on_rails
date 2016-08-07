@@ -28,6 +28,14 @@ Use [Bundler](http://bundler.io/) and the `:git` option if you want to grab the 
 
 ## Usage
 
+Include the Gem in your controller:
+
+```ruby
+class MyController
+  include BreadcrumbsOnRails::ActionController
+end
+```
+
 Creating a breadcrumb navigation menu in your Rails app using <tt>BreadcrumbsOnRails</tt> is really straightforward.
 
 In your controller, call `add_breadcrumb` to push a new element on the breadcrumb stack. `add_breadcrumb` requires two arguments: the name of the breadcrumb and the target path.
