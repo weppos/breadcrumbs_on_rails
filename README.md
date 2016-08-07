@@ -8,23 +8,20 @@
 
 ## Requirements
 
-- Rails 3 or Rails 4
+- Rails 4 or Rails 5
 
-Please note 
-
-- <tt>BreadcrumbsOnRails</tt> 2.x requires Rails 3. Use <tt>BreadcrumbsOnRails</tt> 1.x with Rails 2.
-- <tt>BreadcrumbsOnRails</tt> doesn't work with Rails 2.1 or lower.
+For older versions of Ruby or Ruby on Rails, see the [CHANGELOG](CHANGELOG.md).
 
 
 ## Installation
 
-[RubyGems](https://rubygems.org) is the preferred way to install <tt>BreadcrumbsOnRails</tt> and the best way if you want install a stable version.
-
-    $ gem install breadcrumbs_on_rails
-
-Specify the Gem dependency in the [Bundler](http://bundler.io/) `Gemfile`.
+Add this line to your application's `Gemfile`:
 
     gem "breadcrumbs_on_rails"
+
+And then execute `bundle` to install the dependencies:
+
+    $ bundle
 
 Use [Bundler](http://bundler.io/) and the `:git` option if you want to grab the latest version from the Git repository.
 
