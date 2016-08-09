@@ -10,7 +10,10 @@ module BreadcrumbsOnRails
 
   class Railtie < Rails::Railtie
     ActiveSupport.on_load(:action_controller) do
-      include BreadcrumbsOnRails::ActionController
+      # There is no need to include breadcrumbs on an API controller
+      unless self.name == 'ActionController::API'
+        include BreadcrumbsOnRails::ActionController
+      end
     end
   end
 
