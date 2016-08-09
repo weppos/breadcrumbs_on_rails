@@ -8,7 +8,7 @@
 
 ## Requirements
 
-- Rails 4 or Rails 5
+- Rails 4.2 or Rails 5
 
 For older versions of Ruby or Ruby on Rails, see the [CHANGELOG](CHANGELOG.md).
 
