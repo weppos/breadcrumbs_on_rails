@@ -10,7 +10,7 @@ module BreadcrumbsOnRails
 
   class Railtie < Rails::Railtie
     ActiveSupport.on_load(:action_controller) do
-      ::ActionController::Base.include BreadcrumbsOnRails::ActionController
+      ::ActionController::Base.send(:include, BreadcrumbsOnRails::ActionController)
     end
   end
 
