@@ -1,6 +1,11 @@
 # Changelog
 
 
+#### master
+
+- FIXED: Fixed compatibility with Rails 5.0 and ActionController::API (GH-99). [Thanks @jcoyne]
+
+
 #### Release 3.0.0
 
 - FIXED: Fixed compatibility with Rails 5.0 (GH-80). [Thanks @ochko]
