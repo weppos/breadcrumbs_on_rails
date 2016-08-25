@@ -108,14 +108,14 @@ module BreadcrumbsOnRails
       attr_accessor :name
       # @return [String] The element/link URL.
       attr_accessor :path
-      # @return [Hash] The element/link URL.
+      # @return [Hash] The element/link options.
       attr_accessor :options
 
       # Initializes the Element with given parameters.
       #
       # @param  [String] name The element/link name.
       # @param  [String] path The element/link URL.
-      # @param  [Hash] options The element/link URL.
+      # @param  [Hash] options The element/link options.
       # @return [Element]
       #
       def initialize(name, path = nil, options = {})
