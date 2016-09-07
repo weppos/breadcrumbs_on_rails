@@ -31,7 +31,7 @@ module BreadcrumbsOnRails
       @breadcrumbs ||= []
     end
 
-    module Utils
+    module ActionControllerUtils
 
       def self.instance_proc(string)
         if string.kind_of?(String)
@@ -66,9 +66,9 @@ module BreadcrumbsOnRails
 
       def add_breadcrumb(name, path = nil, filter_options = {})
         # This isn't really nice here
-        if eval = Utils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
-          name = Utils.instance_proc(name) if eval.include?("name")
-          path = Utils.instance_proc(path) if eval.include?("path")
+        if eval = ActionControllerUtils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
+          name = ActionControllerUtils.instance_proc(name) if eval.include?("name")
+          path = ActionControllerUtils.instance_proc(path) if eval.include?("path")
         end
 
         element_options = filter_options.delete(:options) || {}
