@@ -26,6 +26,10 @@ module BreadcrumbsOnRails
     def add_breadcrumb(name, path = nil, options = {})
       self.breadcrumbs << Breadcrumbs::Element.new(name, path, options)
     end
+    
+    def reset_breadcrumbs
+      self.breadcrumbs.clear
+    end
 
     def breadcrumbs
       @breadcrumbs ||= []
@@ -75,6 +79,12 @@ module BreadcrumbsOnRails
 
         before_action(filter_options) do |controller|
           controller.send(:add_breadcrumb, name, path, element_options)
+        end
+      end
+      
+      def reset_breadcrumbs                                                                    
+        before_filter do |controller|
+          controller.send(:reset_breadcrumbs)
         end
       end
 
