@@ -93,9 +93,11 @@ To use with Bootstrap you might use the following:
 
 ```html
 <body>
-  <ol class="breadcrumb">
-    <%= render_breadcrumbs :tag => :li, :separator => "" %>
-  </ol>
+  <% if breadcrumbs.any? %>
+    <ol class="breadcrumb">
+	  <%= render_breadcrumbs tag: :li, separator: "" %>
+    </ol>
+  <% end %>
 </body>
 ```
 
