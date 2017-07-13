@@ -47,6 +47,25 @@ class MyController
 end
 ```
 
+Take into account that if you define `add_breadcrumb` before or after a `before_action` filter, *matters*:
+
+```ruby
+class MyController
+
+  add_breadcrumb "home", :root_path
+  before_action :find_record
+  add_breadcrumb "details", :record_details_path
+
+  def find_record
+    @record = Model.find params[:id]
+    add_breadcrumb "record", record_path
+  end
+
+end
+```
+
+Will output `home > record > details`.
+
 See the section "Breadcrumb Element" for more details about name and target class types.
 
 The third, optional argument is a Hash of options to customize the breadcrumb link.
