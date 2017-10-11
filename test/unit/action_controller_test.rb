@@ -17,6 +17,9 @@ class ExampleController < ActionController::Base
     add_breadcrumb "String", "/"
     add_breadcrumb "Proc", proc { |c| "/?proc" }
     add_breadcrumb "Polymorphic", [:admin, :namespace]
+    add_breadcrumb "/name_block" do
+      "Name Block"
+    end
     execute("action_default")
   end
 
@@ -47,7 +50,7 @@ class ExampleControllerTest < ActionController::TestCase
 
   def test_render_compute_paths
     get :action_compute_paths
-    assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a> &raquo; <a href="/?polymorphic">Polymorphic</a>),
+    assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a> &raquo; <a href="/?polymorphic">Polymorphic</a> &raquo; <a href="/name_block">Name Block</a>),
                       @response.body.to_s
   end
 
@@ -60,6 +63,9 @@ class ClassLevelExampleController < ActionController::Base
   add_breadcrumb "Proc", proc { |c| "/?proc" }
   add_breadcrumb "Polymorphic", [:admin, :namespace]
   add_breadcrumb "With options", "/", :options => { :title => "Awesome" }
+  add_breadcrumb "/", :options => { :title => "Title Options" } do
+    "Name Block"
+  end
 
   def action_default
     render 'example/default'
@@ -82,10 +88,11 @@ class ClassLevelExampleControllerTest < ActionController::TestCase
       links << '<a href="/?proc">Proc</a>'
       links << '<a href="/?polymorphic">Polymorphic</a>'
       links << '<a title="Awesome" href="/">With options</a>'
+      links << '<a title="Title Options" href="/">Name Block</a>'
     }
 
     get :action_default
-    assert_dom_equal  expected.join(" &raquo; "), 
+    assert_dom_equal  expected.join(" &raquo; "),
                       @response.body.to_s
   end
 
@@ -107,4 +114,3 @@ class ExampleHelpersTest < ActionView::TestCase
   end
 
 end
-

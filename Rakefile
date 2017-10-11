@@ -1,5 +1,6 @@
 require 'bundler/gem_tasks'
 require 'appraisal'
+require 'rake/clean'
 
 if !ENV["APPRAISAL_INITIALIZED"] && !ENV["TRAVIS"]
   task :default => :appraisal
