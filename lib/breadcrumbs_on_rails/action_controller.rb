@@ -23,7 +23,9 @@ module BreadcrumbsOnRails
 
     protected
 
-    def add_breadcrumb(name, path = nil, options = {})
+    def add_breadcrumb(name = nil, path = nil, options = nil, &block)
+      options, path, name = path, name, block if block_given?
+      options ||= {}
       self.breadcrumbs << Breadcrumbs::Element.new(name, path, options)
     end
 
@@ -64,7 +66,10 @@ module BreadcrumbsOnRails
 
     module ClassMethods
 
-      def add_breadcrumb(name, path = nil, filter_options = {})
+      def add_breadcrumb(name = nil, path = nil, filter_options = nil, &block)
+        filter_options, path, name = path, name, block if block_given?
+        filter_options ||= {}
+
         # This isn't really nice here
         if eval = Utils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
           name = Utils.instance_proc(name) if eval.include?("name")
