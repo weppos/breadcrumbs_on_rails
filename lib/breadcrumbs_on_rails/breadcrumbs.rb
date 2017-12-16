@@ -92,6 +92,9 @@ module BreadcrumbsOnRails
         end
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
+        elsif @options[:wrapper]
+          is_current_page = element.path && @context.current_page?(compute_path(element))
+          @options[:wrapper].call(content, is_current_page)
         else
           ERB::Util.h(content)
         end

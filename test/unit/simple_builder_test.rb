@@ -84,6 +84,17 @@ class SimpleBuilderTest < ActionView::TestCase
                      simplebuilder(@template, elements, {tag: :li} ).render)
   end
 
+  def test_render_with_wrapper
+    @template.expects(:current_page?).times(2).returns(true, true)
+    assert_dom_equal(
+      "<li class='breadcrumb-item active'>Element 1</li>",
+      simplebuilder(@template,
+                    generate_elements(1),
+                    wrapper: ->(el, is_current_page) {
+                      tag.li(el, class: is_current_page ? 'breadcrumb-item active' : 'breadcrumb-item')
+                    }).render)
+  end
+
   protected
 
   def simplebuilder(*args)
