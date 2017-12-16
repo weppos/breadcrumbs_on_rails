@@ -84,6 +84,18 @@ class SimpleBuilderTest < ActionView::TestCase
                      simplebuilder(@template, elements, {tag: :li} ).render)
   end
 
+  def test_render_with_current_page_and_wrapper
+    @template.expects(:current_page?).times(2).returns(true, true)
+    assert_dom_equal(
+      "<li class='active'>Element 1</li>",
+      simplebuilder(@template,
+                    generate_elements(1),
+                    wrapper: lambda do |el, current|
+                      content_tag(:li, el, class: current ? 'active' : '')
+                    end).render
+    )
+  end
+
   protected
 
   def simplebuilder(*args)
