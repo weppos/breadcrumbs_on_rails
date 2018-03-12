@@ -88,13 +88,14 @@ Current possible options are:
 
 - `:separator`
 - `:tag`
+- `:tag_class`
 
 To use with Bootstrap you might use the following:
 
 ```html
 <body>
   <ol class="breadcrumb">
-    <%= render_breadcrumbs :tag => :li, :separator => "" %>
+    <%= render_breadcrumbs :tag => :li, :separator => "", :tag_class => "your-class-from-tag" %>
   </ol>
 </body>
 ```
