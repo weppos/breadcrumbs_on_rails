@@ -39,3 +39,8 @@ class ActiveSupport::TestCase
   end
 
 end
+
+# Trigger lazy loading and causes the load_hooks to be executed on
+# ActionController::API.  This is important because breacrumbs_on_rails includes
+# BreadcrumbsOnRails::ActionController on any module that executes these hooks
+ActionController::API rescue NameError

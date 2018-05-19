@@ -48,7 +48,7 @@ class ExampleControllerTest < ActionController::TestCase
   def test_render_compute_paths
     get :action_compute_paths
     assert_dom_equal  %(<a href="/">String</a> &raquo; <a href="/?proc">Proc</a> &raquo; <a href="/?polymorphic">Polymorphic</a>),
-                      @response.body
+                      @response.body.to_s
   end
 
 end
@@ -78,14 +78,15 @@ class ClassLevelExampleControllerTest < ActionController::TestCase
 
   def test_render_default
     expected = [].tap { |links|
-      links << "<a href=\"/\">String</a>"
-      links << "<a href=\"/?proc\">Proc</a>"
-      links << "<a href=\"/?polymorphic\">Polymorphic</a>"
-      links << "<a href=\"/\" title=\"Awesome\">With options</a>"
+      links << '<a href="/">String</a>'
+      links << '<a href="/?proc">Proc</a>'
+      links << '<a href="/?polymorphic">Polymorphic</a>'
+      links << '<a title="Awesome" href="/">With options</a>'
     }
 
     get :action_default
-    assert_dom_equal %(#{expected.join(" &raquo; ")}), @response.body
+    assert_dom_equal  expected.join(" &raquo; "), 
+                      @response.body.to_s
   end
 
 end

@@ -1,17 +1,28 @@
 rvm:
-  - 1.9.2
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
+  - 2.0
+  - 2.1
+  - 2.2.5
+  - 2.3.1
+
 gemfile:
-  - gemfiles/3.0.gemfile
-  - gemfiles/3.1.gemfile
-  - gemfiles/3.2.gemfile
   - gemfiles/4.0.gemfile
+  - gemfiles/4.1.gemfile
+  - gemfiles/4.2.gemfile
+  - gemfiles/5.0.gemfile
+
+before_install:
+  - gem install bundler
+
+matrix:
+  exclude:
+    - rvm: 2.0
+      gemfile: gemfiles/5.0.gemfile
+    - rvm: 2.1
+      gemfile: gemfiles/5.0.gemfile
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
 notifications:
   recipients:
     - weppos@weppos.net
-matrix:
-  exclude:
-    - rvm: 1.9.2
-      gemfile: gemfiles/4.0.gemfile

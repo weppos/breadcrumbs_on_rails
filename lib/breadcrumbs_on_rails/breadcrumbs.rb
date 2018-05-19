@@ -3,7 +3,7 @@
 #
 # A simple Ruby on Rails plugin for creating and managing a breadcrumb navigation.
 #
-# Copyright (c) 2009-2014 Simone Carletti <weppos@weppos.net>
+# Copyright (c) 2009-2016 Simone Carletti <weppos@weppos.net>
 #++
 
 module BreadcrumbsOnRails
@@ -93,7 +93,7 @@ module BreadcrumbsOnRails
         if @options[:tag]
           @context.content_tag(@options[:tag], content)
         else
-          content
+          ERB::Util.h(content)
         end
       end
 
@@ -108,14 +108,14 @@ module BreadcrumbsOnRails
       attr_accessor :name
       # @return [String] The element/link URL.
       attr_accessor :path
-      # @return [Hash] The element/link URL.
+      # @return [Hash] The element/link options.
       attr_accessor :options
 
       # Initializes the Element with given parameters.
       #
       # @param  [String] name The element/link name.
       # @param  [String] path The element/link URL.
-      # @param  [Hash] options The element/link URL.
+      # @param  [Hash] options The element/link options.
       # @return [Element]
       #
       def initialize(name, path = nil, options = {})
