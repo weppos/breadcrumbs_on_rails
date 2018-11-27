@@ -54,7 +54,7 @@ The third, optional argument is a Hash of options to customize the breadcrumb li
 ```ruby
 class MyController
   def index
-    add_breadcrumb "index", index_path, :title => "Back to the Index"
+    add_breadcrumb "index", index_path, options: { title: "Back to the Index" } }
   end
 end
 ```
