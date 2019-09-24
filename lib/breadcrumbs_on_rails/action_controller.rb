@@ -15,7 +15,8 @@ module BreadcrumbsOnRails
       extend          ClassMethods
       helper          HelperMethods
       helper_method   :add_breadcrumb_on_rails, :add_breadcrumb,
-                      :breadcrumbs_on_rails, :breadcrumbs
+                      :breadcrumbs_on_rails, :breadcrumbs,
+                      :next_breadcrumbs, :breadcrumbs_list
 
       unless base.respond_to?(:before_action)
         base.alias_method :before_action, :before_filter
@@ -31,18 +32,32 @@ module BreadcrumbsOnRails
     # @param  options [Hash]
     # @return [void]
     def add_breadcrumb_on_rails(name, path = nil, options = {})
-      breadcrumbs_on_rails << Breadcrumbs::Element.new(name, path, options)
+      option_index = options.delete(:index)
+
+      breadcrumbs_on_rails(option_index) << Breadcrumbs::Element.new(name, path, options)
     end
     alias add_breadcrumb add_breadcrumb_on_rails
 
     # Gets the list of all breadcrumb element in the collection.
     #
     # @return [Array<Breadcrumbs::Element>]
-    def breadcrumbs_on_rails
-      @breadcrumbs_on_rails ||= []
+    def breadcrumbs_on_rails(index = nil)
+      @breadcrumbs_on_rails = self.breadcrumbs_list.last # for compatible to single breadcrumbs version. 
+      if index
+        breadcrumbs_list[index]
+      else
+        @breadcrumbs_on_rails
+      end
+    end
+
+    def next_breadcrumbs
+      @breadcrumbs_list << []
+    end
+
+    def breadcrumbs_list
+      @breadcrumbs_list ||= [[]]
     end
     alias breadcrumbs breadcrumbs_on_rails
-
 
     module ClassMethods
 
@@ -60,15 +75,18 @@ module BreadcrumbsOnRails
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
-        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs_on_rails, options)
-        content = builder.render.html_safe
-        if block_given?
-          capture(content, &block)
-        else
-          content
-        end
+        option_builder = options.delete(:builder)
+        option_list_separator = options.delete(:list_separator)
+        breadcrumbs_list.map do |bcs|
+          builder = (option_builder || Breadcrumbs::SimpleBuilder).new(self, bcs, options)
+          content = builder.render
+          if block_given?
+            capture(content, &block)
+          else
+            content
+          end
+        end.join(option_list_separator).html_safe
       end
-
     end
 
   end
