@@ -15,6 +15,7 @@ module BreadcrumbsOnRails
       extend          ClassMethods
       helper          HelperMethods
       helper_method   :add_breadcrumb, :breadcrumbs
+      helper_method   :next_breadcrumbs, :breadcrumbs_list
 
       unless base.respond_to?(:before_action)
         base.alias_method :before_action, :before_filter
@@ -24,11 +25,26 @@ module BreadcrumbsOnRails
     protected
 
     def add_breadcrumb(name, path = nil, options = {})
-      self.breadcrumbs << Breadcrumbs::Element.new(name, path, options)
+      option_index = options.delete(:index)
+
+      self.breadcrumbs(option_index) << Breadcrumbs::Element.new(name, path, options)
     end
 
-    def breadcrumbs
-      @breadcrumbs ||= []
+    def breadcrumbs(index = nil)
+      @breadcrumbs = self.breadcrumbs_list.last # for compatible to single breadcrumbs version. 
+      if index
+        self.breadcrumbs_list[index]
+      else
+        @breadcrumbs
+      end
+    end
+
+    def next_breadcrumbs
+      self.breadcrumbs_list << []
+    end
+
+    def breadcrumbs_list
+      @breadcrumbs_list ||= [[]]
     end
 
     module Utils
@@ -83,15 +99,18 @@ module BreadcrumbsOnRails
     module HelperMethods
 
       def render_breadcrumbs(options = {}, &block)
-        builder = (options.delete(:builder) || Breadcrumbs::SimpleBuilder).new(self, breadcrumbs, options)
-        content = builder.render.html_safe
-        if block_given?
-          capture(content, &block)
-        else
-          content
-        end
+        option_builder = options.delete(:builder)
+        option_list_separator = options.delete(:list_separator)
+        breadcrumbs_list.map do |bcs|
+          builder = (option_builder || Breadcrumbs::SimpleBuilder).new(self, bcs, options)
+          content = builder.render
+          if block_given?
+            capture(content, &block)
+          else
+            content
+          end
+        end.join(option_list_separator).html_safe
       end
-
     end
 
   end
