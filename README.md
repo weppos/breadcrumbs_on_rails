@@ -3,12 +3,11 @@
 <tt>BreadcrumbsOnRails</tt> is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project. It provides helpers for creating navigation elements with a flexible interface.
 
 [![Build Status](https://travis-ci.org/weppos/breadcrumbs_on_rails.svg?branch=master)](https://travis-ci.org/weppos/breadcrumbs_on_rails)
-[![Code Climate](https://codeclimate.com/github/weppos/breadcrumbs_on_rails.png)](https://codeclimate.com/github/weppos/breadcrumbs_on_rails)
 
 
 ## Requirements
 
-- Rails 4 or Rails 5
+- Rails 5 or greater
 
 For older versions of Ruby or Ruby on Rails, see the [CHANGELOG](CHANGELOG.md).
 
@@ -17,11 +16,15 @@ For older versions of Ruby or Ruby on Rails, see the [CHANGELOG](CHANGELOG.md).
 
 Add this line to your application's `Gemfile`:
 
-    gem "breadcrumbs_on_rails"
+```
+gem "breadcrumbs_on_rails"
+```
 
 And then execute `bundle` to install the dependencies:
 
-    $ bundle
+```
+bundle
+```
 
 Use [Bundler](http://bundler.io/) and the `:git` option if you want to grab the latest version from the Git repository.
 
@@ -54,7 +57,7 @@ The third, optional argument is a Hash of options to customize the breadcrumb li
 ```ruby
 class MyController
   def index
-    add_breadcrumb "index", index_path, :title => "Back to the Index"
+    add_breadcrumb "index", index_path, title: "Back to the Index"
   end
 end
 ```
@@ -117,7 +120,9 @@ end
 
 In this case, if `@user_name` is `<script>`, it will output:
 
-    This is the <b>Main</b> page > &lt;script&gt; Profile
+```
+This is the <b>Main</b> page > &lt;script&gt; Profile
+```
 
 
 ### Breadcrumb Element
@@ -188,11 +193,11 @@ Taking advantage of Rails filter options, you can restrict a tab to a selected g
 ```ruby
 class PostsController < ApplicationController
   add_breadcrumb "admin", :admin_path
-  add_breadcrumb "posts", :posts_path, :only => %w(index show)
+  add_breadcrumb "posts", :posts_path, only: [:index, :show]
 end
 
 class ApplicationController < ActionController::Base
-  add_breadcrumb "admin", :admin_path, :if => :admin_controller?
+  add_breadcrumb "admin", :admin_path, if: :admin_controller?
   
   def admin_controller?
     self.class.name =~ /^Admin(::|Controller)/
@@ -229,8 +234,8 @@ In your controller, use the `I18n.t` method.
 ```ruby
 class PostsController < ApplicationController
   add_breadcrumb I18n.t("breadcrumbs.first"),  :first_path
-  add_breadcrumb I18n.t("breadcrumbs.second"), :second_path, :only => %w(second)
-  add_breadcrumb I18n.t("breadcrumbs.third"),  :third_path,  :only => %w(third)
+  add_breadcrumb I18n.t("breadcrumbs.second"), :second_path, only: [:second]
+  add_breadcrumb I18n.t("breadcrumbs.third"),  :third_path,  only: [:third]
 end
 
 class ApplicationController < ActionController::Base
