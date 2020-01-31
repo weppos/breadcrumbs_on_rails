@@ -1,9 +1,18 @@
+language: ruby
+
 rvm:
   - 2.4
   - 2.5
   - 2.6
   - 2.7
-  - tip
+  - ruby-head
+
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
+cache:
+  - bundler
 
 gemfile:
   - gemfiles/5.0.gemfile
@@ -11,9 +20,9 @@ gemfile:
   - gemfiles/5.2.gemfile
   - gemfiles/6.0.gemfile
 
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+
 before_install:
   - gem install bundler -v 1.17.3
-
-env:
-  global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
