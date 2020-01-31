@@ -1,6 +1,7 @@
 # Bundler
 /.bundle
 /Gemfile.lock
+/gemfiles/*.gemfile.lock
 /pkg/*
 
 # YARD
