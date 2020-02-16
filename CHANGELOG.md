@@ -9,7 +9,7 @@
 
 ### Enhancements
 
-- Prefixed shared helpers to reduce collision probability  (GH-65, GH-129). [Thanks @justame, @ngelx]
+- Prefixed shared helpers to reduce collision probability (GH-65, GH-129). [Thanks @justame, @ngelx]
 
 
 ## Release 3.0.1
