@@ -276,9 +276,15 @@ Full information and description of our security policy please visit [SECURITY.m
 
 ## Changelog
 
+<<<<<<< HEAD
 See the [CHANGELOG.md](CHANGELOG.md) file for details.
+=======
+- [Homepage](https://simonecarletti.com/code/breadcrumbs-on-rails)
+- [RubyGems](https://rubygems.org/gems/breadcrumbs_on_rails)
+- [Issues](https://github.com/weppos/breadcrumbs_on_rails/issues)
+>>>>>>> Update copyright
 
 
 ## License
 
-Copyright (c) 2009-2015 Simone Carletti. This is Free Software distributed under the MIT license.
+Copyright (c) 2009-2020 Simone Carletti. This is Free Software distributed under the MIT license.
