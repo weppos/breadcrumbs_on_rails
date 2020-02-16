@@ -97,3 +97,8 @@ q59MIs/Fb3SgaO+zN2FZTYp6dyRJHbeEz55JdOu6F+6ihZYH
 =j6Xr
 -----END PGP PUBLIC KEY BLOCK-----
 ```
+
+
+## Tracking Security Updates
+
+Information about security vulnerabilities are published in the [Security Advisories](https://github.com/weppos/breadcrumbs_on_rails/security/advisories) page.
