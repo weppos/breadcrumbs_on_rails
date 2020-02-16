@@ -16,7 +16,7 @@ Older major versions are no longer supported.
 
 To make a report, please email weppos@weppos.net.
 
-Please consider encrypting your report with GPG using the key (0x420da82a989398df)[https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x420da82a989398df]
+Please consider encrypting your report with GPG using the key [0x420da82a989398df](https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x420da82a989398df).
 
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
