@@ -17,7 +17,7 @@
 
 - Rails 5 or greater
 
-For older versions of Ruby or Ruby on Rails, see the [CHANGELOG](CHANGELOG.md).
+For older versions of Ruby or Ruby on Rails, see the [changelog](CHANGELOG.md).
 
 
 ## Installation
@@ -276,13 +276,7 @@ Full information and description of our security policy please visit [SECURITY.m
 
 ## Changelog
 
-<<<<<<< HEAD
 See the [CHANGELOG.md](CHANGELOG.md) file for details.
-=======
-- [Homepage](https://simonecarletti.com/code/breadcrumbs-on-rails)
-- [RubyGems](https://rubygems.org/gems/breadcrumbs_on_rails)
-- [Issues](https://github.com/weppos/breadcrumbs_on_rails/issues)
->>>>>>> Update copyright
 
 
 ## License
