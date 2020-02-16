@@ -15,9 +15,10 @@
 
 ## Requirements
 
-- Rails 5 or greater
+- Ruby >= 2.4
+- Rails >= 5
 
-For older versions of Ruby or Ruby on Rails, see the [changelog](CHANGELOG.md).
+For older versions use a previous release.
 
 
 ## Installation
