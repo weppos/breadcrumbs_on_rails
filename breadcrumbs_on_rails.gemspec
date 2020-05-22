@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = "BreadcrumbsOnRails is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project."
   spec.licenses      = ["MIT"]
 
-  spec.required_ruby_version = ">= 2.4"
+  spec.required_ruby_version = ">= 2.5"
 
   spec.require_paths = ["lib"]
   spec.files         = `git ls-files`.split("\n")

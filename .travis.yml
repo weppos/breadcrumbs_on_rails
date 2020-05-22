@@ -1,7 +1,6 @@
 language: ruby
 
 rvm:
-  - 2.4
   - 2.5
   - 2.6
   - 2.7
@@ -23,9 +22,4 @@ gemfile:
 matrix:
   allow_failures:
     - rvm: ruby-head
-  exclude:
-    - rvm: 2.4
-      gemfile: gemfiles/6.0.gemfile
 
-before_install:
-  - gem install bundler -v 1.17.3
