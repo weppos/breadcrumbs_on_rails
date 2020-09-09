@@ -1,28 +1,31 @@
+language: ruby
+
 rvm:
-  - 2.0
-  - 2.1
-  - 2.2.5
-  - 2.3.1
+  - 2.4
+  - 2.5
+  - 2.6
+  - 2.7
+  - ruby-head
+
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
+cache:
+  - bundler
 
 gemfile:
-  - gemfiles/4.0.gemfile
-  - gemfiles/4.1.gemfile
-  - gemfiles/4.2.gemfile
   - gemfiles/5.0.gemfile
+  - gemfiles/5.1.gemfile
+  - gemfiles/5.2.gemfile
+  - gemfiles/6.0.gemfile
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+  exclude:
+    - rvm: 2.4
+      gemfile: gemfiles/6.0.gemfile
 
 before_install:
   - gem install bundler -v 1.17.3
-
-matrix:
-  exclude:
-    - rvm: 2.0
-      gemfile: gemfiles/5.0.gemfile
-    - rvm: 2.1
-      gemfile: gemfiles/5.0.gemfile
-env:
-  global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-
-notifications:
-  recipients:
-    - weppos@weppos.net

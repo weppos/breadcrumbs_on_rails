@@ -1,14 +1,14 @@
-require 'bundler/gem_tasks'
-require 'appraisal'
+require "bundler/gem_tasks"
+require "appraisal"
 
 if !ENV["APPRAISAL_INITIALIZED"] && !ENV["TRAVIS"]
-  task :default => :appraisal
+  task default: :appraisal
 else
-  task :default => :test
+  task default: :test
 end
 
 
-require 'rake/testtask'
+require "rake/testtask"
 
 Rake::TestTask.new do |t|
   t.libs << "test"
@@ -18,7 +18,7 @@ Rake::TestTask.new do |t|
 end
 
 
-require 'yard/rake/yardoc_task'
+require "yard/rake/yardoc_task"
 
 YARD::Rake::YardocTask.new(:yardoc) do |y|
   y.options = ["--output-dir", "yardoc"]
