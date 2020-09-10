@@ -2,26 +2,38 @@
 
 <tt>BreadcrumbsOnRails</tt> is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project. It provides helpers for creating navigation elements with a flexible interface.
 
-[![Build Status](https://travis-ci.org/weppos/breadcrumbs_on_rails.svg?branch=master)](https://travis-ci.org/weppos/breadcrumbs_on_rails)
-[![Code Climate](https://codeclimate.com/github/weppos/breadcrumbs_on_rails.png)](https://codeclimate.com/github/weppos/breadcrumbs_on_rails)
+[![Build Status](https://travis-ci.com/weppos/breadcrumbs_on_rails.svg?branch=master)](https://travis-ci.com/weppos/breadcrumbs_on_rails)
+[![Tidelift dependencies](https://tidelift.com/badges/package/rubygems/breadcrumbs_on_rails)](https://tidelift.com/subscription/pkg/rubygems-breadcrumbs.on.rails?utm_source=rubygems-breadcrumbs-on-rails&utm_medium=referral&utm_campaign=enterprise)
+
+
+## Links
+
+- [Homepage](https://simonecarletti.com/code/breadcrumbs-on-rails)
+- [Repository](https://github.com/weppos/breadcrumbs_on_rails)
+- [API Documentation](https://rubydoc.info/gems/breadcrumbs_on_rails)
 
 
 ## Requirements
 
-- Rails 4 or Rails 5
+- Ruby >= 2.4
+- Rails >= 5
 
-For older versions of Ruby or Ruby on Rails, see the [CHANGELOG](CHANGELOG.md).
+For older versions use a previous release.
 
 
 ## Installation
 
 Add this line to your application's `Gemfile`:
 
-    gem "breadcrumbs_on_rails"
+```
+gem "breadcrumbs_on_rails"
+```
 
 And then execute `bundle` to install the dependencies:
 
-    $ bundle
+```
+bundle
+```
 
 Use [Bundler](http://bundler.io/) and the `:git` option if you want to grab the latest version from the Git repository.
 
@@ -54,7 +66,7 @@ The third, optional argument is a Hash of options to customize the breadcrumb li
 ```ruby
 class MyController
   def index
-    add_breadcrumb "index", index_path, :title => "Back to the Index"
+    add_breadcrumb "index", index_path, title: "Back to the Index"
   end
 end
 ```
@@ -167,7 +179,9 @@ end
 
 In this case, if `@user_name` is `<script>`, it will output:
 
-    This is the <b>Main</b> page > &lt;script&gt; Profile
+```
+This is the <b>Main</b> page > &lt;script&gt; Profile
+```
 
 
 ### Breadcrumb Element
@@ -238,11 +252,11 @@ Taking advantage of Rails filter options, you can restrict a tab to a selected g
 ```ruby
 class PostsController < ApplicationController
   add_breadcrumb "admin", :admin_path
-  add_breadcrumb "posts", :posts_path, :only => %w(index show)
+  add_breadcrumb "posts", :posts_path, only: [:index, :show]
 end
 
 class ApplicationController < ActionController::Base
-  add_breadcrumb "admin", :admin_path, :if => :admin_controller?
+  add_breadcrumb "admin", :admin_path, if: :admin_controller?
   
   def admin_controller?
     self.class.name =~ /^Admin(::|Controller)/
@@ -279,8 +293,8 @@ In your controller, use the `I18n.t` method.
 ```ruby
 class PostsController < ApplicationController
   add_breadcrumb I18n.t("breadcrumbs.first"),  :first_path
-  add_breadcrumb I18n.t("breadcrumbs.second"), :second_path, :only => %w(second)
-  add_breadcrumb I18n.t("breadcrumbs.third"),  :third_path,  :only => %w(third)
+  add_breadcrumb I18n.t("breadcrumbs.second"), :second_path, only: [:second]
+  add_breadcrumb I18n.t("breadcrumbs.third"),  :third_path,  only: [:third]
 end
 
 class ApplicationController < ActionController::Base
@@ -289,27 +303,33 @@ end
 ```
 
 
+## Support
+
+Library documentation is auto-generated from the [README](https://github.com/weppos/breadcrumbs_on_rails/blob/master/README.md) and the source code, and it's available at https://rubydoc.info/gems/breadcrumbs_on_rails.
+
+- The bug tracker is here: https://github.com/weppos/breadcrumbs_on_rails/issues
+- The code repository is here: https://github.com/weppos/breadcrumbs_on_rails. Contributions are welcome! Please include tests and/or feature coverage for every patch, and create a topic branch for every separate change you make.
+
+**Commercial support available as part of the Tidelift Subscription** - [Learn more](https://tidelift.com/subscription/pkg/rubygems-breadcrumbs.on.rails?utm_source=rubygems-breadcrumbs-on-rails&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
+
+The maintainers of breadcrumbs_on_rails and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Consider subscribing to Tidelift which provides Enterprise support for this project.](https://tidelift.com/subscription/pkg/rubygems-breadcrumbs.on.rails?utm_source=rubygems-breadcrumbs-on-rails&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
+
+
 ## Credits
 
 <tt>BreadcrumbsOnRails</tt> was created and is maintained by [Simone Carletti](http://simonecarletti.com/). Many improvements and bugfixes were contributed by the [open source community](https://github.com/weppos/breadcrumbs_on_rails/graphs/contributors).
 
 
-## Contributing
+## Security and Vulnerability Reporting
 
-Direct questions and discussions to [Stack Overflow](http://stackoverflow.com/questions/tagged/breadcrumbs-on-rails).
-
-[Pull requests](https://github.com/weppos/breadcrumbs_on_rails) are very welcome! Please include tests for every patch, and create a topic branch for every separate change you make.
-
-Report issues or feature requests to [GitHub Issues](https://github.com/weppos/breadcrumbs_on_rails/issues).
+Full information and description of our security policy please visit [SECURITY.md](SECURITY.md)
 
 
-## More Information
+## Changelog
 
-- [Homepage](http://simonecarletti.com/code/breadcrumbs-on-rails)
-- [RubyGems](https://rubygems.org/gems/breadcrumbs_on_rails)
-- [Issues](https://github.com/weppos/breadcrumbs_on_rails/issues)
+See the [CHANGELOG.md](CHANGELOG.md) file for details.
 
 
 ## License
 
-Copyright (c) 2009-2015 Simone Carletti. This is Free Software distributed under the MIT license.
+Copyright (c) 2009-2020 Simone Carletti. This is Free Software distributed under the MIT license.

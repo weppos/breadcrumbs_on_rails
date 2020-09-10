@@ -3,7 +3,7 @@
 #
 # A simple Ruby on Rails plugin for creating and managing a breadcrumb navigation.
 #
-# Copyright (c) 2009-2016 Simone Carletti <weppos@weppos.net>
+# Copyright (c) 2009-2020 Simone Carletti <weppos@weppos.net>
 #++
 
 module BreadcrumbsOnRails
@@ -14,8 +14,9 @@ module BreadcrumbsOnRails
     included do |base|
       extend          ClassMethods
       helper          HelperMethods
-      helper_method   :add_breadcrumb, :breadcrumbs
-      helper_method   :next_breadcrumbs, :breadcrumbs_list
+      helper_method   :add_breadcrumb_on_rails, :add_breadcrumb,
+                      :breadcrumbs_on_rails, :breadcrumbs,
+                      :next_breadcrumbs, :breadcrumbs_list
 
       unless base.respond_to?(:before_action)
         base.alias_method :before_action, :before_filter
@@ -24,75 +25,52 @@ module BreadcrumbsOnRails
 
     protected
 
-    def add_breadcrumb(name, path = nil, options = {})
+    # Pushes a new breadcrumb element into the collection.
+    #
+    # @param  name [String]
+    # @param  path [String, nil]
+    # @param  options [Hash]
+    # @return [void]
+    def add_breadcrumb_on_rails(name, path = nil, options = {})
       option_index = options.delete(:index)
 
-      self.breadcrumbs(option_index) << Breadcrumbs::Element.new(name, path, options)
+      breadcrumbs_on_rails(option_index) << Breadcrumbs::Element.new(name, path, options)
     end
+    alias add_breadcrumb add_breadcrumb_on_rails
 
-    def breadcrumbs(index = nil)
-      @breadcrumbs = self.breadcrumbs_list.last # for compatible to single breadcrumbs version. 
+    # Gets the list of all breadcrumb element in the collection.
+    #
+    # @return [Array<Breadcrumbs::Element>]
+    def breadcrumbs_on_rails(index = nil)
+      @breadcrumbs_on_rails = breadcrumbs_list.last # for compatible to single breadcrumbs version. 
       if index
-        self.breadcrumbs_list[index]
+        breadcrumbs_list[index]
       else
-        @breadcrumbs
+        @breadcrumbs_on_rails
       end
     end
 
     def next_breadcrumbs
-      self.breadcrumbs_list << []
+      @breadcrumbs_list << []
     end
 
     def breadcrumbs_list
       @breadcrumbs_list ||= [[]]
     end
 
-    module Utils
+    alias breadcrumbs breadcrumbs_on_rails
 
-      def self.instance_proc(string)
-        if string.kind_of?(String)
-          proc { |controller| controller.instance_eval(string) }
-        else
-          string
-        end
-      end
-
-      # This is a horrible method with a horrible name.
-      #
-      #   convert_to_set_of_strings(nil, [:foo, :bar])
-      #   # => nil
-      #   convert_to_set_of_strings(true, [:foo, :bar])
-      #   # => ["foo", "bar"]
-      #   convert_to_set_of_strings(:foo, [:foo, :bar])
-      #   # => ["foo"]
-      #   convert_to_set_of_strings([:foo, :bar, :baz], [:foo, :bar])
-      #   # => ["foo", "bar", "baz"]
-      #
-      def self.convert_to_set_of_strings(value, keys)
-        if value == true
-          keys.map(&:to_s).to_set
-        elsif value
-          Array(value).map(&:to_s).to_set
-        end
-      end
-
-    end
 
     module ClassMethods
 
-      def add_breadcrumb(name, path = nil, filter_options = {})
-        # This isn't really nice here
-        if eval = Utils.convert_to_set_of_strings(filter_options.delete(:eval), %w(name path))
-          name = Utils.instance_proc(name) if eval.include?("name")
-          path = Utils.instance_proc(path) if eval.include?("path")
-        end
-
+      def add_breadcrumb_on_rails(name, path = nil, filter_options = {})
         element_options = filter_options.delete(:options) || {}
 
         before_action(filter_options) do |controller|
           controller.send(:add_breadcrumb, name, path, element_options)
         end
       end
+      alias add_breadcrumb add_breadcrumb_on_rails
 
     end
 
