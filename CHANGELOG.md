@@ -1,5 +1,12 @@
 # Changelog
 
+
+## master
+
+### Changed
+
+- Removed support Ruby 2.4/2.5 (EOL) (GH-130)
+
 ## Release 4.1.0
 
 ### Changed
