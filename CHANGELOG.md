@@ -1,5 +1,10 @@
 # Changelog
 
+## Release 4.1.0
+
+### Changed
+
+- Swapped dependency on "rails" to "railties" (GH-135)
 
 ## Release 4.0.0
 
