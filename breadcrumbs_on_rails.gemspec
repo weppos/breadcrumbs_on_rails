@@ -19,5 +19,5 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   spec.extra_rdoc_files = %w( LICENSE.txt )
 
-  spec.add_dependency "rails", ">= 5.0"
+  spec.add_dependency "railties", ">= 5.0"
 end
