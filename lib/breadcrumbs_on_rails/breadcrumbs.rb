@@ -117,7 +117,7 @@ module BreadcrumbsOnRails
         if element.path == nil
           content = content_wrap_tag
         else
-          element.options.merge! { :itemprop => :item }
+          element.options.merge!({ :itemprop => :item })
           content = @context.link_to_unless_current(content_wrap_tag, compute_path(element), element.options)
         end
 
