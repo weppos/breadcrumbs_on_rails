@@ -25,6 +25,8 @@ jobs:
           bundler-cache: true # 'bundle install' and cache gems
       - name: Run tests
         run: bundle exec rake
+        env:
+          BUNDLE_GEMFILE: gemfiles/6.0.gemfile
 
 # gemfile:
 #   - gemfiles/5.0.gemfile
