@@ -8,28 +8,32 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
-        ruby-version:
-          - "2.6"
-          - "2.7"
-          - "3.0"
-          - "3.1"
+        include:
+          - gemfile: rails_6_0
+            ruby-version: 2.6
+          - gemfile: rails_6_0
+            ruby-version: 2.7
+          - gemfile: rails_6_0
+            ruby-version: 3.0
+          - gemfile: rails_6_0
+            ruby-version: 3.1
         platform: [ubuntu-latest]
     runs-on: ${{ matrix.platform }}
-    env:
-      BUNDLE_GEMFILE: gemfiles/6.0.gemfile
+
+    name: ${{ matrix.gemfile }}, ruby ${{ matrix.ruby-version }}
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: true # 'bundle install' and cache gems
+          bundler-cache: false
+      - name: Bundle install
+        run: |
+          bundle config set gemfile "${GITHUB_WORKSPACE}/gemfiles/${{ matrix.gemfile }}.gemfile"
+          bundle install --jobs 4 --retry 3
       - name: Run tests
         run: bundle exec rake
-
-# gemfile:
-#   - gemfiles/5.0.gemfile
-#   - gemfiles/5.1.gemfile
-#   - gemfiles/5.2.gemfile
-#   - gemfiles/6.0.gemfile
