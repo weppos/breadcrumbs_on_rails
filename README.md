@@ -2,7 +2,7 @@
 
 <tt>BreadcrumbsOnRails</tt> is a simple Ruby on Rails plugin for creating and managing a breadcrumb navigation for a Rails project. It provides helpers for creating navigation elements with a flexible interface.
 
-[![Build Status](https://travis-ci.com/weppos/breadcrumbs_on_rails.svg?branch=master)](https://travis-ci.com/weppos/breadcrumbs_on_rails)
+[![Build Status](https://github.com/weppos/breadcrumbs_on_rails/actions/workflows/tests.yml/badge.svg)](https://github.com/weppos/breadcrumbs_on_rails/actions/workflows/tests.yml)
 [![Tidelift dependencies](https://tidelift.com/badges/package/rubygems/breadcrumbs_on_rails)](https://tidelift.com/subscription/pkg/rubygems-breadcrumbs.on.rails?utm_source=rubygems-breadcrumbs-on-rails&utm_medium=referral&utm_campaign=enterprise)
 
 
