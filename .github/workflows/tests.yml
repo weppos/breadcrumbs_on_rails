@@ -19,10 +19,8 @@ jobs:
             ruby-version: 3.0
           - gemfile: "6.0"
             ruby-version: 3.1
-        platform: [ubuntu-latest]
-    runs-on: ${{ matrix.platform }}
-
-    name: ${{ matrix.gemfile }}, ruby ${{ matrix.ruby-version }}
+    runs-on: ubuntu-latest
+    name: rails ${{ matrix.gemfile }}, ruby ${{ matrix.ruby-version }}
 
     steps:
       - uses: actions/checkout@v3
