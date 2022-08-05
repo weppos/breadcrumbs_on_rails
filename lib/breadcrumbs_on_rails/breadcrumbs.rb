@@ -104,7 +104,7 @@ module BreadcrumbsOnRails
     # pass the option <tt>:builder => BreadcrumbsOnRails::Breadcrumbs::SchemaDotOrgBuilder</tt> to use this.
     class SchemaDotOrgBuilder < Builder
       def render
-        @context.content_tag(@options[:tag] || @options[:root_tag],
+        @context.content_tag(@options[:tag] || @options[:root_tag] || :div,
           { :itemscope => :itemscope, :itemtype => "http://schema.org/BreadcrumbList" }) do
 
           @elements.each_with_index.map do |element, index|
@@ -124,7 +124,7 @@ module BreadcrumbsOnRails
         end
 
         children_tag = @context.content_tag(
-          @options[:tag] || @options[:children_tag],
+          @options[:tag] || @options[:children_tag] || :div,
           [content, meta_tag].join.html_safe,
           {
             itemscope: :itemscope,
