@@ -20,6 +20,19 @@ class ExampleController < ActionController::Base
     execute("action_default")
   end
 
+  def action_grouped_breadcrumbs
+    breadcrumbs_for(:first) do
+      add_breadcrumb "Alpha", "/alpha"
+      add_breadcrumb "Beta", "/beta"
+    end
+
+    breadcrumbs_for(:second) do
+      add_breadcrumb "Charlie", "/charlie"
+      add_breadcrumb "Delta", "/delta"
+    end
+
+    execute("action_default")
+  end
 
   private
 
@@ -51,6 +64,17 @@ class ExampleControllerTest < ActionController::TestCase
                       @response.body.to_s
   end
 
+  def test_render_first_group_of_breadcrumbs
+    get :action_grouped_breadcrumbs, params: {template: 'first_group'}
+    assert_dom_equal  %(<a href="/alpha">Alpha</a> &raquo; <a href="/beta">Beta</a>),
+                      @response.body.to_s
+  end
+
+  def test_render_second_group_of_breadcrumbs
+    get :action_grouped_breadcrumbs, params: {template: 'second_group'}
+    assert_dom_equal  %(<a href="/charlie">Charlie</a> &raquo; <a href="/delta">Delta</a>),
+                      @response.body.to_s
+  end
 end
 
 class ClassLevelExampleController < ActionController::Base
@@ -99,7 +123,7 @@ class ExampleHelpersTest < ActionView::TestCase
   attr_accessor :breadcrumbs_on_rails
 
   setup do
-    self.breadcrumbs_on_rails = []
+    self.breadcrumbs_on_rails = {default: []}
   end
 
   def test_render_breadcrumbs
