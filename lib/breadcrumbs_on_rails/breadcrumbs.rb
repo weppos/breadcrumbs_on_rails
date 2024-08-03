@@ -33,7 +33,7 @@ module BreadcrumbsOnRails
       # Renders Elements and returns the Breadcrumb navigation for the view.
       #
       # @abstract You must implement this method in your custom Builder.
-      # 
+      #
       # @return [String] the result of the breadcrumb rendering
       def render
         raise NotImplementedError
@@ -96,6 +96,45 @@ module BreadcrumbsOnRails
 
     end
 
+
+    # SchemaDotOrgBuilder is another implementation which will render breadcrumbs as per schema.org standard.
+    # ref: https://developers.google.com/search/docs/data-types/breadcrumb#year-genre%20example
+    #
+    # this builder supports :tag, :root_tag, :children_tag. To use this builder instead of the default,
+    # pass the option <tt>:builder => BreadcrumbsOnRails::Breadcrumbs::SchemaDotOrgBuilder</tt> to use this.
+    class SchemaDotOrgBuilder < Builder
+      def render
+        @context.content_tag(@options[:tag] || @options[:root_tag] || :div,
+          { :itemscope => :itemscope, :itemtype => "http://schema.org/BreadcrumbList" }) do
+
+          @elements.each_with_index.map do |element, index|
+            render_element(element, index)
+          end.join(@options[:separator] || " &raquo; ").html_safe
+        end
+      end
+
+      def render_element(element, index)
+        meta_tag = @context.content_tag(:meta, nil, { :itemprop => :position, :content => index + 1 })
+        content_wrap_tag = @context.content_tag(:span, compute_name(element), { :itemprop => :name })
+        if element.path == nil
+          content = content_wrap_tag
+        else
+          element.options.merge!({ :itemprop => :item })
+          content = @context.link_to_unless_current(content_wrap_tag, compute_path(element), element.options)
+        end
+
+        children_tag = @context.content_tag(
+          @options[:tag] || @options[:children_tag] || :div,
+          [content, meta_tag].join.html_safe,
+          {
+            itemscope: :itemscope,
+            itemtype:  'http://schema.org/ListItem',
+            itemprop:  :itemListElement
+          }
+        )
+        ERB::Util.h(children_tag)
+      end
+    end
 
     # Represents a navigation element in the breadcrumb collection.
     class Element
