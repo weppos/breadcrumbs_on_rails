@@ -16,7 +16,6 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
   spec.files         = `git ls-files`.split("\n")
-  spec.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   spec.extra_rdoc_files = %w( LICENSE.txt )
 
   spec.add_dependency "railties", ">= 5.0"
