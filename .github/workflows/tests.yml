@@ -10,15 +10,30 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - gemfile: "6.0"
-            ruby-version: "2.6"
-          - gemfile: "6.0"
-            ruby-version: "2.7"
-          - gemfile: "6.0"
-            ruby-version: "3.0"
-          - gemfile: "6.0"
-            ruby-version: "3.1"
+        ruby-version: ['3.3', '3.2', '3.1', '3.0', '2.7', '2.6']
+        gemfile: ['8.0', '7.2', '7.1', '7.0', '6.1', '6.0']
+        exclude:
+          # rails 8.0: support ruby 3.2+
+          - gemfile: '8.0'
+            ruby-version: '3.1'
+          - gemfile: '8.0'
+            ruby-version: '3.0'
+          - gemfile: '8.0'
+            ruby-version: '2.7'
+          - gemfile: '8.0'
+            ruby-version: '2.6'
+          # rails 7.2: support ruby 3.1+
+          - gemfile: '7.2'
+            ruby-version: '3.0'
+          - gemfile: '7.2'
+            ruby-version: '2.7'
+          - gemfile: '7.2'
+            ruby-version: '2.6'
+          # rails 7.1/7.0: support ruby 2.7+
+          - gemfile: '7.1'
+            ruby-version: '2.6'
+          - gemfile: '7.0'
+            ruby-version: '2.6'
     runs-on: ubuntu-latest
     name: rails ${{ matrix.gemfile }}, ruby ${{ matrix.ruby-version }}
 
