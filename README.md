@@ -71,6 +71,55 @@ class MyController
 end
 ```
 
+### Multiple breadcrumbs
+For using multiple breadcrumbs, call `next_breadcrumbs` to create a new breadcrumb stack.
+
+```ruby
+class MyController
+
+  def index
+    # ...
+
+    add_breadcrumb "home", :root_path
+    add_breadcrumb "my", :my_path
+    add_breadcrumb "index", index_path
+
+    next_breadcrumbs
+
+    add_breadcrumb "home", :root_path
+    add_breadcrumb "another", :another_path
+    add_breadcrumb "index", index_path
+
+  end
+
+end
+```
+
+You can push a new element to an arbitrary stack by specifying an `index` option.
+
+```ruby
+class MyController
+
+  add_breadcrumb "home", :root_path
+  next_breadcrumbs
+  add_breadcrumb "home", :root_path
+
+  def index
+    # ...
+
+    add_breadcrumb "my", :my_path, index: 0
+    add_breadcrumb "index", index_path, index: 0
+
+    add_breadcrumb "another", :another_path, index: 1
+    add_breadcrumb "index", index_path, index: 1
+  end
+
+end
+```
+
+
+### Render
+
 In your view, you can render the breadcrumb menu with the `render_breadcrumbs` helper.
 
 ```html
@@ -100,6 +149,7 @@ Current possible options are:
 
 - `:separator`
 - `:tag`
+- `:list_separator`
 
 To use with Bootstrap you might use the following:
 
@@ -195,7 +245,7 @@ end
 
 ### Restricting breadcrumb scope
 
-The `add_breadcrumb` method understands all options you are used to pass to a Rails controller filter. In fact, behind the scenes this method uses a `before_filter` to store the tab in the `@breadcrumbs` variable.
+The `add_breadcrumb` method understands all options you are used to pass to a Rails controller filter. In fact, behind the scenes this method uses a `before_filter` to store the tab in the `@breadcrumbs` and `@breadcrumbs_list` variables.
 
 Taking advantage of Rails filter options, you can restrict a tab to a selected group of actions in the same controller.
 
